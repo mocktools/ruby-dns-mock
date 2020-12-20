@@ -11,9 +11,9 @@ assignees: bestwebua
 
 ### New question checklist
 
-- [ ] I have read the [Contribution Guidelines](https://github.com/truemail-rb/ruby-dns-mock/blob/master/CONTRIBUTING.md)
-- [ ] I have read the [documentation](https://truemail-rb.org/ruby-dns-mock)
-- [ ] I have searched for [existing GitHub issues](https://github.com/truemail-rb/ruby-dns-mock/issues)
+- [ ] I have read the [Contribution Guidelines](https://github.com/mocktools/ruby-dns-mock/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [documentation](https://github.com/mocktools/ruby-dns-mock/blob/master/README.md)
+- [ ] I have searched for [existing GitHub issues](https://github.com/mocktools/ruby-dns-mock/issues)
 
 <!-- Please use next pattern for your question title: [QUESTION] Your question title here -->
 

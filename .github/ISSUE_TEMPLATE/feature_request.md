@@ -12,9 +12,9 @@ assignees: bestwebua
 ### New feature request checklist
 
 - [ ] I have updated `dns_mock` to the latest version
-- [ ] I have read the [Contribution Guidelines](https://github.com/truemail-rb/ruby-dns-mock/blob/master/CONTRIBUTING.md)
-- [ ] I have read the [documentation](https://truemail-rb.org/ruby-dns-mock)
-- [ ] I have searched for [existing GitHub issues](https://github.com/truemail-rb/ruby-dns-mock/issues)
+- [ ] I have read the [Contribution Guidelines](https://github.com/mocktools/ruby-dns-mock/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [documentation](https://github.com/mocktools/ruby-dns-mock/blob/master/README.md)
+- [ ] I have searched for [existing GitHub issues](https://github.com/mocktools/ruby-dns-mock/issues)
 
 <!-- Please use next pattern for your feature request title: [FEATURE] Your feature request title here -->
 

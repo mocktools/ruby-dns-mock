@@ -13,15 +13,15 @@ Gem::Specification.new do |spec|
   spec.summary       = %(dns_mock)
   spec.description   = %(Ruby DNS mock)
 
-  spec.homepage      = 'https://github.com/truemail-rb/ruby-dns-mock'
+  spec.homepage      = 'https://github.com/mocktools/ruby-dns-mock'
   spec.license       = 'MIT'
 
   spec.metadata = {
-    'homepage_uri' => 'https://truemail-rb.org',
-    'changelog_uri' => 'https://github.com/truemail-rb/ruby-dns-mock/blob/master/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/truemail-rb/ruby-dns-mock',
-    'documentation_uri' => 'https://truemail-rb.org/ruby-dns-mock',
-    'bug_tracker_uri' => 'https://github.com/truemail-rb/ruby-dns-mock/issues'
+    'homepage_uri' => 'https://github.com/mocktools/ruby-dns-mock',
+    'changelog_uri' => 'https://github.com/mocktools/ruby-dns-mock/blob/master/CHANGELOG.md',
+    'source_code_uri' => 'https://github.com/mocktools/ruby-dns-mock',
+    'documentation_uri' => 'https://github.com/mocktools/ruby-dns-mock/blob/master/README.md',
+    'bug_tracker_uri' => 'https://github.com/mocktools/ruby-dns-mock/issues'
   }
 
   spec.required_ruby_version = '>= 2.5.0'

@@ -12,16 +12,16 @@ assignees: bestwebua
 ### New bug checklist
 
 - [ ] I have updated `dns_mock` to the latest version
-- [ ] I have read the [Contribution Guidelines](https://github.com/truemail-rb/ruby-dns-mock/blob/master/CONTRIBUTING.md)
-- [ ] I have read the [documentation](https://truemail-rb.org/ruby-dns-mock)
-- [ ] I have searched for [existing GitHub issues](https://github.com/truemail-rb/ruby-dns-mock/issues)
+- [ ] I have read the [Contribution Guidelines](https://github.com/mocktools/ruby-dns-mock/blob/master/CONTRIBUTING.md)
+- [ ] I have read the [documentation](https://github.com/mocktools/ruby-dns-mock/blob/master/README.md)
+- [ ] I have searched for [existing GitHub issues](https://github.com/mocktools/ruby-dns-mock/issues)
 
 <!-- Please use next pattern for your bug report title: [BUG] Your bug report title here -->
 
 ### Bug description
 <!-- Please include what's happening, expected behavior, and any relevant code samples -->
 
-##### Complete output when running truemail, including the stack trace and command used
+##### Complete output when running dns_mock, including the stack trace and command used
 
 <details>
   <pre>[INSERT OUTPUT HERE]</pre>

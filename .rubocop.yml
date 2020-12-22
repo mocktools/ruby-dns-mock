@@ -247,3 +247,6 @@ RSpec/MultipleDescribes:
 
 RSpec/MultipleMemoizedHelpers:
   Enabled: false
+
+RSpec/StubbedMock:
+  Enabled: false

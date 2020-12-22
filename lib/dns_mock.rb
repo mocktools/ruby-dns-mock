@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'dns_mock/version'
+require_relative 'dns_mock/core'
 
 module DnsMock
   # Your code goes here...

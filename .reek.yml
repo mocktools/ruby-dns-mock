@@ -1,3 +1,15 @@
 detectors:
   IrresponsibleModule:
     enabled: false
+
+  NestedIterators:
+    exclude:
+      - DnsMock::RecordsDictionaryBuilder#build
+
+  UtilityFunction:
+    exclude:
+      - DnsMock::RecordsDictionaryBuilder#build_records_instances_by_type
+
+  ControlParameter:
+    exclude:
+      - DnsMock::Helper::Error#raise_record_type_error

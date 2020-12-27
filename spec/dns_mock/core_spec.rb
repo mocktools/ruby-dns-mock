@@ -1,5 +1,11 @@
 # frozen_string_literal: true
 
+RSpec.describe DnsMock do
+  describe 'defined constants' do
+    it { expect(described_class).to be_const_defined(:AVAILABLE_DNS_RECORD_TYPES) }
+  end
+end
+
 RSpec.describe DnsMock::RecordTypeError do
   subject(:error_instance) { described_class.new('record_type') }
 
@@ -17,9 +23,9 @@ RSpec.describe DnsMock::RecordContextError do
 end
 
 RSpec.describe DnsMock::RecordContextTypeError do
-  subject(:error_instance) { described_class.new('record_context_type', 'expected_type') }
+  subject(:error_instance) { described_class.new('record_context_type', 'record_type', 'expected_type') }
 
-  let(:error_context) { 'record_context_type is invalid record context type. Should be a expected_type' }
+  let(:error_context) { 'record_context_type is invalid record context type for record_type record. Should be a expected_type' }
 
   it_behaves_like 'customized error'
 end

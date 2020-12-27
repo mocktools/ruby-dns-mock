@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module DnsMock
-  require_relative '../dns_mock/version'
+  AVAILABLE_DNS_RECORD_TYPES = %i[a aaaa cname mx ns soa txt].freeze
 
   RecordTypeError = Class.new(StandardError) do
     def initialize(record_type)
@@ -16,9 +16,17 @@ module DnsMock
   end
 
   RecordContextTypeError = Class.new(StandardError) do
-    def initialize(record_context_type, expected_type)
-      super("#{record_context_type} is invalid record context type. Should be a #{expected_type}")
+    def initialize(record_context_type, record_type, expected_record_context_type)
+      super(
+        "#{record_context_type} is invalid record context type for " \
+        "#{record_type} record. Should be a " \
+        "#{expected_record_context_type}"
+      )
     end
+  end
+
+  module Helper
+    require_relative '../dns_mock/helper/error'
   end
 
   module Record
@@ -46,4 +54,7 @@ module DnsMock
       require_relative '../dns_mock/record/builder/txt'
     end
   end
+
+  require_relative '../dns_mock/version'
+  require_relative '../dns_mock/records_dictionary_builder'
 end

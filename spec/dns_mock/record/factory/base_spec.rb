@@ -1,10 +1,6 @@
 # frozen_string_literal: true
 
 RSpec.describe DnsMock::Record::Factory::Base do
-  describe 'defined constants' do
-    specify { expect(described_class).to be_const_defined(:DNS_RECORD_TYPES) }
-  end
-
   describe '.record_type' do
     subject(:record_type) { Class.new(described_class).record_type(defined_record_type) }
 

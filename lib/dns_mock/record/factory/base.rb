@@ -5,8 +5,7 @@ module DnsMock
     module Factory
       class Base
         require 'resolv'
-
-        DNS_RECORD_TYPES = %i[a aaaa cname mx ns soa txt].freeze
+        extend DnsMock::Helper::Error
 
         class << self
           attr_reader :target_class
@@ -20,8 +19,7 @@ module DnsMock
           private
 
           def record_type_check(defined_record_type)
-            valid_record_type = DnsMock::Record::Factory::Base::DNS_RECORD_TYPES.include?(defined_record_type)
-            raise DnsMock::RecordTypeError, defined_record_type unless valid_record_type
+            raise_record_type_error(defined_record_type, DnsMock::AVAILABLE_DNS_RECORD_TYPES.include?(defined_record_type))
             defined_record_type
           end
         end

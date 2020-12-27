@@ -26,11 +26,24 @@ module DnsMock
       require_relative '../dns_mock/record/factory/base'
       require_relative '../dns_mock/record/factory/a'
       require_relative '../dns_mock/record/factory/aaaa'
-      require_relative '../dns_mock/record/factory/ns'
-      require_relative '../dns_mock/record/factory/mx'
-      require_relative '../dns_mock/record/factory/txt'
-      require_relative '../dns_mock/record/factory/soa'
       require_relative '../dns_mock/record/factory/cname'
+      require_relative '../dns_mock/record/factory/mx'
+      require_relative '../dns_mock/record/factory/ns'
+      require_relative '../dns_mock/record/factory/soa'
+      require_relative '../dns_mock/record/factory/txt'
+    end
+  end
+
+  module Record
+    module Builder
+      require_relative '../dns_mock/record/builder/base'
+      require_relative '../dns_mock/record/builder/a'
+      require_relative '../dns_mock/record/builder/aaaa'
+      require_relative '../dns_mock/record/builder/cname'
+      require_relative '../dns_mock/record/builder/mx'
+      require_relative '../dns_mock/record/builder/ns'
+      require_relative '../dns_mock/record/builder/soa'
+      require_relative '../dns_mock/record/builder/txt'
     end
   end
 end

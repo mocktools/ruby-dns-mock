@@ -29,3 +29,11 @@ RSpec.describe DnsMock::RecordContextTypeError do
 
   it_behaves_like 'customized error'
 end
+
+RSpec.describe DnsMock::RecordNotFoundError do
+  subject(:error_instance) { described_class.new('record_type', 'hostname') }
+
+  let(:error_context) { 'record_type not found for hostname in predefined records dictionary' }
+
+  it_behaves_like 'customized error'
+end

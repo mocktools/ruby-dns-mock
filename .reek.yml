@@ -9,6 +9,8 @@ detectors:
   UtilityFunction:
     exclude:
       - DnsMock::RecordsDictionaryBuilder#build_records_instances_by_type
+      - DnsMock::RecordsDictionaryHelper#hostname_records_by_type
+      - DnsMock::RecordsDictionaryHelper#random_hostname
 
   ControlParameter:
     exclude:

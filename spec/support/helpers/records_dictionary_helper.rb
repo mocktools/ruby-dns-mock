@@ -31,11 +31,5 @@ module DnsMock
     def hostname_records_by_type(records, hostname, record_type)
       records[hostname.to_s][record_type]
     end
-
-    private
-
-    def random_hostname
-      Faker::Internet.ip_v4_address
-    end
   end
 end

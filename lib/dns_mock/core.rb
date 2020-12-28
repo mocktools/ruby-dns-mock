@@ -63,6 +63,7 @@ module DnsMock
 
   module Response
     require_relative '../dns_mock/response/answer'
+    require_relative '../dns_mock/response/message'
   end
 
   require_relative '../dns_mock/version'

@@ -4,11 +4,11 @@ RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disa
   describe '#create_records_dictionary' do
     subject(:records_dictionary) { create_records_dictionary(hostname, *options) }
 
-    let(:hostname) { Faker::Internet.domain_name }
+    let(:hostname) { random_hostname }
     let(:options) { [] }
 
     context 'with Resolv::DNS::Name instance as hostname' do
-      let(:hostname) { Resolv::DNS::Name.create(Faker::Internet.domain_name) }
+      let(:hostname) { Resolv::DNS::Name.create(random_hostname) }
 
       it 'converts Resolv::DNS::Name instance to string' do
         expect(records_dictionary).to include(hostname.to_s)
@@ -39,8 +39,8 @@ RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disa
   end
 
   describe '#hostname_records_by_type' do
-    let(:hostname) { Faker::Internet.domain_name }
-    let(:record_type) { :a }
+    let(:hostname) { random_hostname }
+    let(:record_type) { random_dns_record_type }
     let(:records_instances) { %i[a b] }
     let(:records) { { hostname => { record_type => records_instances } } }
 

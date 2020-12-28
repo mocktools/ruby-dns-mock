@@ -19,7 +19,9 @@ RSpec.configure do |config|
   config.disable_monkey_patching!
   config.order = :random
 
+  config.include DnsMock::ContextGeneratorHelper
   config.include DnsMock::RecordsDictionaryHelper
+  config.include DnsMock::DnsMessageHelper
 
   Kernel.srand(config.seed)
 end

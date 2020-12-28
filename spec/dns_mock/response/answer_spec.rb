@@ -9,29 +9,34 @@ RSpec.describe DnsMock::Response::Answer do
   describe '#build' do
     subject(:dns_answer) { described_class.new(records).build(hostname, record_class) }
 
-    let(:record_type) { :txt }
     let(:records) { create_records_dictionary(hostname, record_type) }
-    let(:hostname) { Resolv::DNS::Name.create(Faker::Internet.domain_name) }
-    let(:record_class) { Resolv::DNS::Resource::IN::TXT }
+    let(:hostname) { Resolv::DNS::Name.create(random_hostname) }
 
     context 'when hostname record found in records dictionary' do
-      it 'returns array of arrays with answers' do
-        records_by_type = hostname_records_by_type(records, hostname, record_type)
-        first_dns_record, second_dns_record = records_by_type
-        expect(dns_answer.size).to eq(records_by_type.size)
-        expect(dns_answer).to eq(
-          [
-            [hostname, DnsMock::Response::Answer::TTL, first_dns_record],
-            [hostname, DnsMock::Response::Answer::TTL, second_dns_record]
-          ]
-        )
+      DnsMock::Response::Answer::REVERSE_TYPE_MAPPER.each do |r_class, r_type|
+        context "with #{r_type} dns record type" do
+          let(:record_class) { r_class }
+          let(:record_type) { r_type }
+
+          it 'returns array of arrays with answers' do
+            records_by_type = hostname_records_by_type(records, hostname, record_type)
+            expect(dns_answer.size).to eq(records_by_type.size)
+            expect(dns_answer).to eq(
+              Array.new(records_by_type.size).map.with_index do |_, index|
+                [hostname, DnsMock::Response::Answer::TTL, records_by_type[index]]
+              end
+            )
+          end
+        end
       end
     end
 
     context 'when hostname record not found in records dictionary' do
+      let(:record_type) { :a }
+      let(:record_class) { Resolv::DNS::Resource::IN::A }
       let(:records) do
         create_records_dictionary(
-          Resolv::DNS::Name.create(Faker::Internet.domain_name),
+          Resolv::DNS::Name.create(random_hostname),
           record_type
         )
       end

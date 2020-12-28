@@ -25,6 +25,12 @@ module DnsMock
     end
   end
 
+  RecordNotFoundError = Class.new(StandardError) do
+    def initialize(record_type, hostname)
+      super("#{record_type} not found for #{hostname} in predefined records dictionary")
+    end
+  end
+
   module Helper
     require_relative '../dns_mock/helper/error'
   end
@@ -53,6 +59,10 @@ module DnsMock
       require_relative '../dns_mock/record/builder/soa'
       require_relative '../dns_mock/record/builder/txt'
     end
+  end
+
+  module Response
+    require_relative '../dns_mock/response/answer'
   end
 
   require_relative '../dns_mock/version'

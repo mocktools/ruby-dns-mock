@@ -7,7 +7,7 @@ module DnsMock
         record_type :ns
 
         def instance_params
-          [dns_name.create(record_data)]
+          [create_dns_name(record_data)]
         end
       end
     end

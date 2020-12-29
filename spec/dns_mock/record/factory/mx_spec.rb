@@ -11,7 +11,7 @@ RSpec.describe DnsMock::Record::Factory::Mx do
     let(:record_data) { %w[mx_preference mx_domain] }
 
     it 'returns prepared target class instance params' do
-      expect(dns_name).to receive(:create).with(record_data.last).and_return(dns_name_instance)
+      expect(dns_name).to receive(:create).with("#{record_data.last}.").and_return(dns_name_instance)
       expect(instance_params).to eq([record_data.first, dns_name_instance])
     end
   end
@@ -20,7 +20,7 @@ RSpec.describe DnsMock::Record::Factory::Mx do
     subject(:create_factory) { described_class.new(record_data: record_data).create }
 
     context 'when valid record context' do
-      let(:record_data) { [10, Faker::Internet.domain_name] }
+      let(:record_data) { [10, random_hostname] }
 
       it 'returns instance of target class' do
         expect(create_factory).to be_an_instance_of(described_class.target_class)

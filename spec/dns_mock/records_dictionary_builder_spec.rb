@@ -11,8 +11,8 @@ RSpec.describe DnsMock::RecordsDictionaryBuilder do
     before { stub_const('DnsMock::RecordsDictionaryBuilder::TYPE_MAPPER', type_mapper) }
 
     describe 'Success' do
-      let(:target_domain_1) { Faker::Internet.domain_name }
-      let(:target_domain_2) { Faker::Internet.domain_name }
+      let(:target_domain_1) { random_hostname }
+      let(:target_domain_2) { random_hostname }
       let(:record_type_1) { :record_type_1 }
       let(:record_type_2) { :record_type_2 }
       let(:record_type_3) { :record_type_3 }
@@ -75,7 +75,7 @@ RSpec.describe DnsMock::RecordsDictionaryBuilder do
       let(:current_records_context_to_build) { 'record_context' }
       let(:expected_records_to_build_type) { ::Array }
       let(:type_mapper) { { record_type => ['target_builder', 'target_factory', expected_records_to_build_type] } }
-      let(:target_domain) { Faker::Internet.domain_name }
+      let(:target_domain) { random_hostname }
 
       context 'when invalid record type is defined' do
         let(:another_record_type) { :"another_#{record_type}" }

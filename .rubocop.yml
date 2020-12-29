@@ -216,7 +216,7 @@ Performance/ConstantRegexp:
   Enabled: true
 
 Performance/MethodObjectAsBlock:
-  Enabled: true
+  Enabled: false
 
 Performance/Sum:
   Enabled: true

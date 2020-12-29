@@ -44,6 +44,11 @@ module DnsMock
         def record_type
           self.class.name.split('::').last.upcase
         end
+
+        def create_dns_name(hostname)
+          raise ArgumentError, "cannot interpret as DNS name: #{hostname}" unless hostname.is_a?(::String)
+          dns_name.create("#{hostname}.")
+        end
       end
     end
   end

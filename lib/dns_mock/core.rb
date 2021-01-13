@@ -3,6 +3,12 @@
 module DnsMock
   AVAILABLE_DNS_RECORD_TYPES = %i[a aaaa cname mx ns soa txt].freeze
 
+  ArgumentTypeError = Class.new(StandardError) do
+    def initialize(argument_class)
+      super("Argument class is a #{argument_class}. Should be a Hash")
+    end
+  end
+
   RecordTypeError = Class.new(StandardError) do
     def initialize(record_type)
       super("#{record_type} is invalid record type")
@@ -67,5 +73,5 @@ module DnsMock
   end
 
   require_relative '../dns_mock/version'
-  require_relative '../dns_mock/records_dictionary_builder'
+  require_relative '../dns_mock/server/records_dictionary_builder'
 end

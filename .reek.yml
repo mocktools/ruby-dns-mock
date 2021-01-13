@@ -4,11 +4,11 @@ detectors:
 
   NestedIterators:
     exclude:
-      - DnsMock::RecordsDictionaryBuilder#build
+      - DnsMock::Server::RecordsDictionaryBuilder#build
 
   UtilityFunction:
     exclude:
-      - DnsMock::RecordsDictionaryBuilder#build_records_instances_by_type
+      - DnsMock::Server::RecordsDictionaryBuilder#build_records_instances_by_type
       - DnsMock::RecordsDictionaryHelper#hostname_records_by_type
       - DnsMock::DnsMessageHelper#to_dns_name
       - DnsMock::ContextGeneratorHelper#random_dns_record_type

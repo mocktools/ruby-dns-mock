@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::RecordsDictionaryBuilder do
+RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
   describe 'defined constants' do
     it { expect(described_class).to be_const_defined(:TYPE_MAPPER) }
   end
@@ -8,7 +8,7 @@ RSpec.describe DnsMock::RecordsDictionaryBuilder do
   describe '.call' do
     subject(:records_dictionary_builder) { described_class.call(records_to_build) }
 
-    before { stub_const('DnsMock::RecordsDictionaryBuilder::TYPE_MAPPER', type_mapper) }
+    before { stub_const('DnsMock::Server::RecordsDictionaryBuilder::TYPE_MAPPER', type_mapper) }
 
     describe 'Success' do
       let(:target_domain_1) { random_hostname }
@@ -76,6 +76,15 @@ RSpec.describe DnsMock::RecordsDictionaryBuilder do
       let(:expected_records_to_build_type) { ::Array }
       let(:type_mapper) { { record_type => ['target_builder', 'target_factory', expected_records_to_build_type] } }
       let(:target_domain) { random_hostname }
+
+      context 'when invalid records to build type passed' do
+        let(:records_to_build) { 42 }
+
+        it do
+          expect { records_dictionary_builder }
+            .to raise_error(DnsMock::ArgumentTypeError, "Argument class is a #{records_to_build.class}. Should be a Hash")
+        end
+      end
 
       context 'when invalid record type is defined' do
         let(:another_record_type) { :"another_#{record_type}" }

@@ -3,7 +3,7 @@
 module DnsMock
   module RecordsDictionaryHelper
     def create_records_dictionary(hostname, *options) # rubocop:disable Metrics/MethodLength)
-      DnsMock::RecordsDictionaryBuilder.call(
+      DnsMock::Server::RecordsDictionaryBuilder.call(
         {
           hostname.to_s => {
             a: [Faker::Internet.ip_v4_address],

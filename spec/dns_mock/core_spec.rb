@@ -6,6 +6,14 @@ RSpec.describe DnsMock do
   end
 end
 
+RSpec.describe DnsMock::ArgumentTypeError do
+  subject(:error_instance) { described_class.new('SomeClassName') }
+
+  let(:error_context) { 'Argument class is a SomeClassName. Should be a Hash' }
+
+  it_behaves_like 'customized error'
+end
+
 RSpec.describe DnsMock::RecordTypeError do
   subject(:error_instance) { described_class.new('record_type') }
 

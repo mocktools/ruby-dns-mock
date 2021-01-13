@@ -10,8 +10,20 @@ module DnsMock
       Faker::Internet.domain_name
     end
 
-    def create_dns_name(hostname, dns_name = Resolv::DNS::Name)
+    def create_dns_name(hostname, dns_name = ::Resolv::DNS::Name)
       dns_name.create("#{hostname}.")
+    end
+
+    def random_ip_v4_address
+      Faker::Internet.ip_v4_address
+    end
+
+    def random_ip_v6_address
+      Faker::Internet.ip_v6_address
+    end
+
+    def random_txt_record_context
+      Faker::Internet.uuid
     end
   end
 end

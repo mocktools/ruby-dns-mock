@@ -27,7 +27,7 @@ RSpec.describe DnsMock::Record::Builder::Soa do
           .with(record_data: record_data.values)
           .and_return(target_factory_instance)
       end
-      expect(builder).to eq(Array.new(records_data.size) { target_class_instance })
+      expect(builder).to eq(::Array.new(records_data.size) { target_class_instance })
     end
   end
 end

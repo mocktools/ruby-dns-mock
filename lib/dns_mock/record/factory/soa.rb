@@ -3,7 +3,7 @@
 module DnsMock
   module Record
     module Factory
-      Soa = Class.new(DnsMock::Record::Factory::Base) do
+      Soa = ::Class.new(DnsMock::Record::Factory::Base) do
         record_type :soa
 
         def instance_params

@@ -3,7 +3,7 @@
 module DnsMock
   module Record
     module Builder
-      Aaaa = Class.new(DnsMock::Record::Builder::Base)
+      Aaaa = ::Class.new(DnsMock::Record::Builder::Base)
     end
   end
 end

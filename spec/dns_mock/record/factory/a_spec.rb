@@ -17,7 +17,7 @@ RSpec.describe DnsMock::Record::Factory::A do
     subject(:create_factory) { described_class.new(record_data: record_data).create }
 
     context 'when valid record context' do
-      let(:record_data) { Faker::Internet.ip_v4_address }
+      let(:record_data) { random_ip_v4_address }
 
       it 'returns instance of target class' do
         expect(create_factory).to be_an_instance_of(described_class.target_class)

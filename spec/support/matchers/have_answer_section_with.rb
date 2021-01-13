@@ -2,8 +2,8 @@
 
 RSpec::Matchers.define(:have_answer_section_with) do |hostname, records_by_record_type|
   match do |binary_dns_message|
-    hostname = Resolv::DNS::Name.create("#{hostname}.")
-    Resolv::DNS::Message
+    hostname = ::Resolv::DNS::Name.create("#{hostname}.")
+    ::Resolv::DNS::Message
       .decode(binary_dns_message)
       .answer
       .zip(records_by_record_type)

@@ -3,7 +3,7 @@
 rspec_custom = File.join(File.dirname(__FILE__), 'support/**/*.rb')
 Dir[File.expand_path(rspec_custom)].sort.each { |file| require file unless file[/\A.+_spec\.rb\z/] }
 
-require 'dns_mock'
+require_relative '../lib/dns_mock'
 
 RSpec.configure do |config|
   config.expect_with(:rspec) do |expectations|
@@ -22,6 +22,7 @@ RSpec.configure do |config|
   config.include DnsMock::ContextGeneratorHelper
   config.include DnsMock::RecordsDictionaryHelper
   config.include DnsMock::DnsMessageHelper
+  config.include DnsMock::PortInUseHelper
 
-  Kernel.srand(config.seed)
+  ::Kernel.srand(config.seed)
 end

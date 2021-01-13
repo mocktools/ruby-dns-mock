@@ -4,14 +4,13 @@ module DnsMock
   module Record
     module Factory
       class Base
-        require 'resolv'
         extend DnsMock::Helper::Error
 
         class << self
           attr_reader :target_class
 
           def record_type(record_type)
-            @target_class = Resolv::DNS::Resource::IN.const_get(
+            @target_class = ::Resolv::DNS::Resource::IN.const_get(
               record_type_check(record_type).upcase
             )
           end
@@ -24,7 +23,7 @@ module DnsMock
           end
         end
 
-        def initialize(dns_name = Resolv::DNS::Name, record_data:)
+        def initialize(dns_name = ::Resolv::DNS::Name, record_data:)
           @dns_name = dns_name
           @record_data = record_data
         end
@@ -46,7 +45,7 @@ module DnsMock
         end
 
         def create_dns_name(hostname)
-          raise ArgumentError, "cannot interpret as DNS name: #{hostname}" unless hostname.is_a?(::String)
+          raise ::ArgumentError, "cannot interpret as DNS name: #{hostname}" unless hostname.is_a?(::String)
           dns_name.create("#{hostname}.")
         end
       end

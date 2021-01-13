@@ -6,11 +6,11 @@ module DnsMock
       DnsMock::Server::RecordsDictionaryBuilder.call(
         {
           hostname.to_s => {
-            a: [Faker::Internet.ip_v4_address],
-            aaaa: [Faker::Internet.ip_v6_address],
+            a: [random_ip_v4_address],
+            aaaa: [random_ip_v6_address],
             ns: [random_hostname],
             mx: [random_hostname],
-            txt: %w[txt_record_1 txt_record_2],
+            txt: [random_txt_record_context],
             cname: random_hostname,
             soa: [
               {

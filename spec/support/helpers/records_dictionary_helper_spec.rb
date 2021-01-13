@@ -8,7 +8,7 @@ RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disa
     let(:options) { [] }
 
     context 'with Resolv::DNS::Name instance as hostname' do
-      let(:hostname) { Resolv::DNS::Name.create(random_hostname) }
+      let(:hostname) { ::Resolv::DNS::Name.create(random_hostname) }
 
       it 'converts Resolv::DNS::Name instance to string' do
         expect(records_dictionary).to include(hostname.to_s)

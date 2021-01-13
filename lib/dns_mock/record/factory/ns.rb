@@ -3,7 +3,7 @@
 module DnsMock
   module Record
     module Factory
-      Ns = Class.new(DnsMock::Record::Factory::Base) do
+      Ns = ::Class.new(DnsMock::Record::Factory::Base) do
         record_type :ns
 
         def instance_params

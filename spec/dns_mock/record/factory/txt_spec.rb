@@ -16,7 +16,7 @@ RSpec.describe DnsMock::Record::Factory::Txt do
   describe '#create' do
     subject(:create_factory) { described_class.new(record_data: record_data).create }
 
-    let(:record_data) { Faker::Internet.uuid }
+    let(:record_data) { random_txt_record_context }
 
     it 'returns instance of target class' do
       expect(create_factory).to be_an_instance_of(described_class.target_class)

@@ -6,7 +6,7 @@ RSpec.describe DnsMock::Record::Factory::Soa do
   describe '#instance_params' do
     subject(:instance_params) { described_class.new(record_data: record_data).instance_params }
 
-    let(:dns_names) { Array.new(2) { random_hostname } }
+    let(:dns_names) { ::Array.new(2) { random_hostname } }
     let(:int_params) { (0..5).to_a }
     let(:record_data) { dns_names + int_params }
     let(:expected_data) do

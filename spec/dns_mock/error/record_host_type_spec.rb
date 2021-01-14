@@ -5,5 +5,5 @@ RSpec.describe DnsMock::Error::RecordHostType do
 
   let(:error_context) { 'Hostname hostname type is hostname_class. Should be a String' }
 
-  it_behaves_like 'customized standard error'
+  it_behaves_like 'customized argument error'
 end

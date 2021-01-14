@@ -17,15 +17,30 @@ detectors:
       - DnsMock::ContextGeneratorHelper#random_ip_v4_address
       - DnsMock::ContextGeneratorHelper#random_ip_v6_address
       - DnsMock::ContextGeneratorHelper#random_txt_record_context
-
-  TooManyStatements:
-    exclude:
-      - DnsMock::Server::RecordsDictionaryBuilder#build
+      - DnsMock::RecordsDictionaryHelper#create_records_dictionary_by_records
+      - DnsMock::ServerHelper#start_random_server
+      - DnsMock::ServerHelper#stop_all_running_servers
 
   ControlParameter:
     exclude:
       - DnsMock::Error::Helper#raise_unless
+      - DnsMock::Server#initialize
 
   MissingSafeMethod:
     exclude:
       - DnsMock::PortInUseHelper::TransportService
+      - DnsMock::Server
+
+  TooManyStatements:
+    exclude:
+      - DnsMock::Server::RecordsDictionaryBuilder#build
+      - DnsMock::Server#initialize
+      - DnsMock::Server#run
+
+  TooManyInstanceVariables:
+    exclude:
+      - DnsMock::Server
+
+  LongParameterList:
+    exclude:
+      - DnsMock::Server#initialize

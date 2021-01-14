@@ -23,6 +23,7 @@ RSpec.configure do |config|
   config.include DnsMock::RecordsDictionaryHelper
   config.include DnsMock::DnsMessageHelper
   config.include DnsMock::PortInUseHelper
+  config.include DnsMock::ServerHelper
 
   ::Kernel.srand(config.seed)
 end

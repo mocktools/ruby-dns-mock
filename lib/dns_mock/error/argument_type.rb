@@ -2,7 +2,7 @@
 
 module DnsMock
   module Error
-    ArgumentType = ::Class.new(::StandardError) do
+    ArgumentType = ::Class.new(::ArgumentError) do
       def initialize(argument_class)
         super("Argument class is a #{argument_class}. Should be a Hash")
       end

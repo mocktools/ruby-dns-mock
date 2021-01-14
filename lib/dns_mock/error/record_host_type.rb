@@ -2,7 +2,7 @@
 
 module DnsMock
   module Error
-    RecordHostType = ::Class.new(::StandardError) do
+    RecordHostType = ::Class.new(::ArgumentError) do
       def initialize(hostname, hostname_class)
         super("Hostname #{hostname} type is #{hostname_class}. Should be a String")
       end

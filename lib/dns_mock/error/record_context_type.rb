@@ -2,7 +2,7 @@
 
 module DnsMock
   module Error
-    RecordContextType = ::Class.new(::StandardError) do
+    RecordContextType = ::Class.new(::ArgumentError) do
       def initialize(record_context_type, record_type, expected_record_context_type)
         super(
           "#{record_context_type} is invalid record context type for " \

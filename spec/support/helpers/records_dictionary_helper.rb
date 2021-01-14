@@ -2,7 +2,7 @@
 
 module DnsMock
   module RecordsDictionaryHelper
-    def create_records_dictionary(hostname, *options) # rubocop:disable Metrics/MethodLength)
+    def create_records_dictionary(hostname = DnsMock::ContextGeneratorHelper.random_hostname, *options) # rubocop:disable Metrics/MethodLength)
       DnsMock::Server::RecordsDictionaryBuilder.call(
         {
           hostname.to_s => {
@@ -26,6 +26,10 @@ module DnsMock
           }.slice(*(options.empty? ? DnsMock::AVAILABLE_DNS_RECORD_TYPES : options))
         }
       )
+    end
+
+    def create_records_dictionary_by_records(records)
+      DnsMock::Server::RecordsDictionaryBuilder.call(records)
     end
 
     def hostname_records_by_type(records, hostname, record_type)

@@ -91,9 +91,6 @@ Style/RedundantRegexpEscape:
 Style/SlicingWithRange:
   Enabled: true
 
-Layout/LineLength:
-  Max: 140
-
 Style/ArgumentsForwarding:
   Enabled: true
 
@@ -114,6 +111,15 @@ Style/RedundantArgument:
 
 Style/SwapValues:
   Enabled: true
+
+Style/EndlessMethod:
+  Enabled: true
+
+Style/HashExcept:
+  Enabled: true
+
+Layout/LineLength:
+  Max: 140
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true
@@ -139,6 +145,9 @@ Layout/ClassStructure:
 
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
+
+Layout/SpaceBeforeBrackets:
+  Enabled: true
 
 Lint/NonDeterministicRequireOrder:
   Enabled: true
@@ -177,6 +186,18 @@ Lint/ToEnumArguments:
   Enabled: true
 
 Lint/UnexpectedBlockArity:
+  Enabled: true
+
+Lint/AmbiguousAssignment:
+  Enabled: true
+
+Lint/DeprecatedConstants:
+  Enabled: true
+
+Lint/LambdaWithoutLiteralBlock:
+  Enabled: true
+
+Lint/RedundantDirGlobSort:
   Enabled: true
 
 Lint/UnmodifiedReduceAccumulator:

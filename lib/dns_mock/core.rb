@@ -8,6 +8,7 @@ module DnsMock
 
   module Error
     require_relative '../dns_mock/error/argument_type'
+    require_relative '../dns_mock/error/port_in_use'
     require_relative '../dns_mock/error/random_free_port'
     require_relative '../dns_mock/error/record_context_type'
     require_relative '../dns_mock/error/record_context'
@@ -51,4 +52,5 @@ module DnsMock
   require_relative '../dns_mock/version'
   require_relative '../dns_mock/server/records_dictionary_builder'
   require_relative '../dns_mock/server/random_available_port'
+  require_relative '../dns_mock/server'
 end

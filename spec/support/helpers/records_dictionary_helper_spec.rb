@@ -7,11 +7,20 @@ RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disa
     let(:hostname) { random_hostname }
     let(:options) { [] }
 
-    context 'with Resolv::DNS::Name instance as hostname' do
+    context 'with Resolv::DNS::Name instance as hostname positional argument' do
       let(:hostname) { ::Resolv::DNS::Name.create(random_hostname) }
 
       it 'converts Resolv::DNS::Name instance to string' do
         expect(records_dictionary).to include(hostname.to_s)
+      end
+    end
+
+    context 'without positional and key words arguments' do
+      subject(:records_dictionary) { create_records_dictionary }
+
+      it 'returns records dictionary with random hostname and records' do
+        expect(DnsMock::ContextGeneratorHelper).to receive(:random_hostname).and_call_original
+        expect(records_dictionary).to be_an_instance_of(::Hash)
       end
     end
 
@@ -35,6 +44,17 @@ RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disa
       it 'has DnsMock::AVAILABLE_DNS_RECORD_TYPES as nested key values' do
         expect(records_dictionary[hostname].keys).to include(*options)
       end
+    end
+  end
+
+  describe '#create_records_dictionary_by_records' do
+    subject(:records_dictionary_by_records) { create_records_dictionary_by_records(records) }
+
+    let(:records) { {} }
+
+    it 'returns records dictionary' do
+      expect(DnsMock::Server::RecordsDictionaryBuilder).to receive(:call).with(records).and_call_original
+      expect(records_dictionary_by_records).to eq(records)
     end
   end
 

@@ -66,7 +66,7 @@ RSpec.describe DnsMock::Server::RandomAvailablePort do
       include_examples 'random free upd & tcp port'
     end
 
-    context 'when random free port not found' do
+    context 'when random free port not found, udp port is busy' do
       let(:attempts) { 1 }
       let(:max_dynamic_port_number) { 49_998 }
       let(:busy_port_number) { min_dynamic_port_number }
@@ -77,6 +77,27 @@ RSpec.describe DnsMock::Server::RandomAvailablePort do
       end
 
       after { udp_service.unbind! }
+
+      it do
+        expect { random_available_port }
+          .to raise_error(
+            DnsMock::RandomFreePortError,
+            "Impossible to find free random port in #{attempts} attempts"
+          )
+      end
+    end
+
+    context 'when random free port not found, tcp port is busy' do
+      let(:attempts) { 1 }
+      let(:max_dynamic_port_number) { 49_998 }
+      let(:busy_port_number) { min_dynamic_port_number }
+
+      before do
+        stub_const('DnsMock::Server::RandomAvailablePort::ATTEMPTS', attempts)
+        tcp_service(busy_port_number).bind!
+      end
+
+      after { tcp_service.unbind! }
 
       it do
         expect { random_available_port }

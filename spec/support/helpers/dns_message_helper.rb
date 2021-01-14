@@ -15,7 +15,7 @@ module DnsMock
     end
 
     def dns_record_class_by_type(record_type)
-      raise DnsMock::RecordTypeError, record_type unless DnsMock::AVAILABLE_DNS_RECORD_TYPES.include?(record_type)
+      raise DnsMock::Error::RecordType, record_type unless DnsMock::AVAILABLE_DNS_RECORD_TYPES.include?(record_type)
       ::Resolv::DNS::Resource::IN.const_get(record_type.upcase)
     end
   end

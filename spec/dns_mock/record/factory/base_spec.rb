@@ -9,7 +9,7 @@ RSpec.describe DnsMock::Record::Factory::Base do
 
       it do
         expect { record_type }
-          .to raise_error(DnsMock::RecordTypeError, "#{defined_record_type} is invalid record type")
+          .to raise_error(DnsMock::Error::RecordType, "#{defined_record_type} is invalid record type")
       end
     end
   end

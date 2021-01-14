@@ -18,7 +18,7 @@ module DnsMock
             )
             return port if port_free?(port)
           end
-          raise DnsMock::RandomFreePortError, DnsMock::Server::RandomAvailablePort::ATTEMPTS
+          raise DnsMock::Error::RandomFreePort, DnsMock::Server::RandomAvailablePort::ATTEMPTS
         end
 
         private

@@ -20,7 +20,7 @@ RSpec.describe DnsMock::DnsMessageHelper, type: :helper do # rubocop:disable RSp
 
         it do
           expect { request_binary_dns_message }
-            .to raise_error(DnsMock::RecordTypeError, "#{record_type} is invalid record type")
+            .to raise_error(DnsMock::Error::RecordType, "#{record_type} is invalid record type")
         end
       end
     end

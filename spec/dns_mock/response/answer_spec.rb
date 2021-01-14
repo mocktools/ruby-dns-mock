@@ -38,7 +38,7 @@ RSpec.describe DnsMock::Response::Answer do
 
       it do
         expect { dns_answer }.to raise_error(
-          DnsMock::RecordNotFoundError,
+          DnsMock::Error::RecordNotFound,
           "#{record_type} not found for #{hostname} in predefined records dictionary"
         )
       end

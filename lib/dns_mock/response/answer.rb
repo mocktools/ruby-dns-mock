@@ -24,7 +24,7 @@ module DnsMock
       def record_by_type(record_class)
         record_type = DnsMock::Response::Answer::REVERSE_TYPE_MAPPER[record_class]
         found_records = records.dig(hostname.to_s, record_type)
-        raise DnsMock::RecordNotFoundError.new(record_type, hostname) unless found_records
+        raise DnsMock::Error::RecordNotFound.new(record_type, hostname) unless found_records
         found_records
       end
     end

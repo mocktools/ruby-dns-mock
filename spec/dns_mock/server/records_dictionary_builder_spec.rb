@@ -82,7 +82,7 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
 
         it do
           expect { records_dictionary_builder }
-            .to raise_error(DnsMock::ArgumentTypeError, "Argument class is a #{records_to_build.class}. Should be a Hash")
+            .to raise_error(DnsMock::Error::ArgumentType, "Argument class is a #{records_to_build.class}. Should be a Hash")
         end
       end
 
@@ -92,7 +92,7 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
 
         it do
           expect { records_dictionary_builder }
-            .to raise_error(DnsMock::RecordTypeError, "#{another_record_type} is invalid record type")
+            .to raise_error(DnsMock::Error::RecordType, "#{another_record_type} is invalid record type")
         end
       end
 
@@ -102,7 +102,7 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
         it do
           expect { records_dictionary_builder }
             .to raise_error(
-              DnsMock::RecordContextTypeError,
+              DnsMock::Error::RecordContextType,
               "#{current_records_context_to_build.class} is invalid " \
               "record context type for #{record_type.upcase} record. " \
               "Should be a #{expected_records_to_build_type}"

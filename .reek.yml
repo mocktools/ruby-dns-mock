@@ -20,7 +20,7 @@ detectors:
 
   ControlParameter:
     exclude:
-      - DnsMock::Helper::Error#raise_record_type_error
+      - DnsMock::Error::Helper#raise_record_type_error
 
   MissingSafeMethod:
     exclude:

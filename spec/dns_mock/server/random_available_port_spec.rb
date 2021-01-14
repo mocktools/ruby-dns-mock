@@ -81,7 +81,7 @@ RSpec.describe DnsMock::Server::RandomAvailablePort do
       it do
         expect { random_available_port }
           .to raise_error(
-            DnsMock::RandomFreePortError,
+            DnsMock::Error::RandomFreePort,
             "Impossible to find free random port in #{attempts} attempts"
           )
       end
@@ -102,7 +102,7 @@ RSpec.describe DnsMock::Server::RandomAvailablePort do
       it do
         expect { random_available_port }
           .to raise_error(
-            DnsMock::RandomFreePortError,
+            DnsMock::Error::RandomFreePort,
             "Impossible to find free random port in #{attempts} attempts"
           )
       end

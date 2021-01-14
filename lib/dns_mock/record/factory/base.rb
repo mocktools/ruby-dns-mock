@@ -4,7 +4,7 @@ module DnsMock
   module Record
     module Factory
       class Base
-        extend DnsMock::Helper::Error
+        extend DnsMock::Error::Helper
 
         class << self
           attr_reader :target_class
@@ -33,7 +33,7 @@ module DnsMock
         def create
           self.class.target_class.public_send(:new, *instance_params)
         rescue => error
-          raise DnsMock::RecordContextError.new(error.message, record_type)
+          raise DnsMock::Error::RecordContext.new(error.message, record_type)
         end
 
         private

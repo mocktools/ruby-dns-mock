@@ -3,7 +3,7 @@
 module DnsMock
   module Record
     module Builder
-      Txt = Class.new(DnsMock::Record::Builder::Base)
+      Txt = ::Class.new(DnsMock::Record::Builder::Base)
     end
   end
 end

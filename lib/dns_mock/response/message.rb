@@ -3,9 +3,7 @@
 module DnsMock
   module Response
     class Message
-      require 'resolv'
-
-      def initialize(packet, records, dns_answer = DnsMock::Response::Answer, dns_message = Resolv::DNS::Message)
+      def initialize(packet, records, dns_answer = DnsMock::Response::Answer, dns_message = ::Resolv::DNS::Message)
         @dns_answer = dns_answer.new(records)
         @dns_message = dns_message.decode(packet)
       end

@@ -14,7 +14,14 @@ detectors:
       - DnsMock::ContextGeneratorHelper#random_dns_record_type
       - DnsMock::ContextGeneratorHelper#random_hostname
       - DnsMock::ContextGeneratorHelper#create_dns_name
+      - DnsMock::ContextGeneratorHelper#random_ip_v4_address
+      - DnsMock::ContextGeneratorHelper#random_ip_v6_address
+      - DnsMock::ContextGeneratorHelper#random_txt_record_context
 
   ControlParameter:
     exclude:
       - DnsMock::Helper::Error#raise_record_type_error
+
+  MissingSafeMethod:
+    exclude:
+      - DnsMock::PortInUseHelper::TransportService

@@ -3,11 +3,9 @@
 module DnsMock
   module Response
     class Answer
-      require 'resolv'
-
       TTL = 1
       REVERSE_TYPE_MAPPER = DnsMock::AVAILABLE_DNS_RECORD_TYPES.each_with_object({}) do |record_type, hash|
-        hash[Resolv::DNS::Resource::IN.const_get(record_type.upcase)] = record_type
+        hash[::Resolv::DNS::Resource::IN.const_get(record_type.upcase)] = record_type
       end.freeze
 
       def initialize(records)

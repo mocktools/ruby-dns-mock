@@ -1,27 +1,30 @@
 # frozen_string_literal: true
 
+require 'resolv'
+require 'socket'
+
 module DnsMock
   AVAILABLE_DNS_RECORD_TYPES = %i[a aaaa cname mx ns soa txt].freeze
 
-  ArgumentTypeError = Class.new(StandardError) do
+  ArgumentTypeError = ::Class.new(::StandardError) do
     def initialize(argument_class)
       super("Argument class is a #{argument_class}. Should be a Hash")
     end
   end
 
-  RecordTypeError = Class.new(StandardError) do
-    def initialize(record_type)
-      super("#{record_type} is invalid record type")
+  RandomFreePortError = ::Class.new(::RuntimeError) do
+    def initialize(attempts)
+      super("Impossible to find free random port in #{attempts} attempts")
     end
   end
 
-  RecordContextError = Class.new(StandardError) do
+  RecordContextError = ::Class.new(::StandardError) do
     def initialize(record_context, record_type)
       super("#{record_context}. Invalid #{record_type} record context")
     end
   end
 
-  RecordContextTypeError = Class.new(StandardError) do
+  RecordContextTypeError = ::Class.new(::StandardError) do
     def initialize(record_context_type, record_type, expected_record_context_type)
       super(
         "#{record_context_type} is invalid record context type for " \
@@ -31,9 +34,15 @@ module DnsMock
     end
   end
 
-  RecordNotFoundError = Class.new(StandardError) do
+  RecordNotFoundError = ::Class.new(::StandardError) do
     def initialize(record_type, hostname)
       super("#{record_type} not found for #{hostname} in predefined records dictionary")
+    end
+  end
+
+  RecordTypeError = ::Class.new(::StandardError) do
+    def initialize(record_type)
+      super("#{record_type} is invalid record type")
     end
   end
 
@@ -74,4 +83,5 @@ module DnsMock
 
   require_relative '../dns_mock/version'
   require_relative '../dns_mock/server/records_dictionary_builder'
+  require_relative '../dns_mock/server/random_available_port'
 end

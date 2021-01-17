@@ -28,9 +28,9 @@ module DnsMock
       end
 
       def build(records_to_build)
-        raise DnsMock::Error::ArgumentType, records_to_build.class unless records_to_build.is_a?(::Hash)
-
+        raise_unless(DnsMock::Error::ArgumentType.new(records_to_build.class), records_to_build.is_a?(::Hash))
         records_to_build.each do |hostname, dns_records|
+          raise_unless(DnsMock::Error::RecordHostType.new(hostname, hostname.class), hostname.is_a?(::String))
           records[hostname] = dns_records.each_with_object({}) do |(record_type, records_data), records_instances_by_type|
             records_instances_by_type[record_type] = build_records_instances_by_type(record_type, records_data)
           end

@@ -86,6 +86,19 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
         end
       end
 
+      context 'when invalid record host key passed' do
+        let(:record_hostname) { :'some_domain.com' }
+        let(:records_to_build) { { record_hostname => {} } }
+
+        it do
+          expect { records_dictionary_builder }
+            .to raise_error(
+              DnsMock::Error::RecordHostType,
+              "Hostname #{record_hostname} type is #{record_hostname.class}. Should be a String"
+            )
+        end
+      end
+
       context 'when invalid record type is defined' do
         let(:another_record_type) { :"another_#{record_type}" }
         let(:records_to_build) { { target_domain => { another_record_type => current_records_context_to_build } } }

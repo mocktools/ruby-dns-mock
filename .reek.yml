@@ -18,9 +18,13 @@ detectors:
       - DnsMock::ContextGeneratorHelper#random_ip_v6_address
       - DnsMock::ContextGeneratorHelper#random_txt_record_context
 
+  TooManyStatements:
+    exclude:
+      - DnsMock::Server::RecordsDictionaryBuilder#build
+
   ControlParameter:
     exclude:
-      - DnsMock::Error::Helper#raise_record_type_error
+      - DnsMock::Error::Helper#raise_unless
 
   MissingSafeMethod:
     exclude:

@@ -11,6 +11,7 @@ module DnsMock
     require_relative '../dns_mock/error/random_free_port'
     require_relative '../dns_mock/error/record_context_type'
     require_relative '../dns_mock/error/record_context'
+    require_relative '../dns_mock/error/record_host_type'
     require_relative '../dns_mock/error/record_not_found'
     require_relative '../dns_mock/error/record_type'
     require_relative '../dns_mock/error/helper'

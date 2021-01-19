@@ -1,10 +1,14 @@
 # Ruby DnsMock
 
+[![Maintainability](https://api.codeclimate.com/v1/badges/5ea9da61ef468b8ad4c4/maintainability)](https://codeclimate.com/github/mocktools/ruby-dns-mock/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/5ea9da61ef468b8ad4c4/test_coverage)](https://codeclimate.com/github/mocktools/ruby-dns-mock/test_coverage)
 [![CircleCI](https://circleci.com/gh/mocktools/ruby-dns-mock/tree/develop.svg?style=svg)](https://circleci.com/gh/mocktools/ruby-dns-mock/tree/develop)
 [![Gem Version](https://badge.fury.io/rb/dns_mock.svg)](https://badge.fury.io/rb/dns_mock)
 [![Downloads](https://img.shields.io/gem/dt/dns_mock.svg?colorA=004d99&colorB=0073e6)](https://rubygems.org/gems/dns_mock)
 [![GitHub](https://img.shields.io/github/license/mocktools/ruby-dns-mock)](LICENSE.txt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+
+💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.
 
 ## Table of Contents
 

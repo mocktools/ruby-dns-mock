@@ -3,7 +3,7 @@ defaults: &defaults
   docker:
     - image: circleci/ruby:2.5.0-node
   environment:
-    CC_TEST_REPORTER_ID: codeclimate_id
+    CC_TEST_REPORTER_ID: 18fba9e7d6885c48453a80a0f019a60d9ffa3fd80467652a6b3c95fef5ea9a50
 
 references:
   restore_bundle_cache: &restore_bundle_cache
@@ -77,9 +77,9 @@ jobs:
           path: /tmp/test-results
           destination: test-results
 
-      # - deploy:
-      #     command: |
-      #       ./cc-test-reporter sum-coverage --output - --parts $CIRCLE_NODE_TOTAL coverage/codeclimate.*.json | ./cc-test-reporter upload-coverage --debug --input -
+      - deploy:
+          command: |
+            ./cc-test-reporter sum-coverage --output - --parts $CIRCLE_NODE_TOTAL coverage/codeclimate.*.json | ./cc-test-reporter upload-coverage --debug --input -
 
 workflows:
   version: 2

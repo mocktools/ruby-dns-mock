@@ -9,6 +9,7 @@ module DnsMock
             a: [random_ip_v4_address],
             aaaa: [random_ip_v6_address],
             ns: [random_hostname],
+            ptr: [random_hostname],
             mx: [random_hostname],
             txt: [random_txt_record_context],
             cname: random_hostname,

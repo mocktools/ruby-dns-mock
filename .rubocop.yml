@@ -119,7 +119,7 @@ Style/HashExcept:
   Enabled: true
 
 Layout/LineLength:
-  Max: 140
+  Max: 150
 
 Layout/EmptyLinesAroundAttributeAccessor:
   Enabled: true

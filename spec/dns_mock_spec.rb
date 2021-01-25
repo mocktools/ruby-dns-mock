@@ -101,6 +101,13 @@ RSpec.describe DnsMock do
         .config(**rspec_dns_config)
     end
 
+    it 'returns predefined PTR record' do
+      expect(domain).to have_dns
+        .with_type('PTR')
+        .and_domainname(records_by_domain[:ptr].first)
+        .config(**rspec_dns_config)
+    end
+
     it 'returns predefined MX record' do
       expect(domain).to have_dns
         .with_type('MX')

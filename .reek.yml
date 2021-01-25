@@ -20,6 +20,7 @@ detectors:
       - DnsMock::RecordsDictionaryHelper#create_records_dictionary_by_records
       - DnsMock::ServerHelper#start_random_server
       - DnsMock::ServerHelper#stop_all_running_servers
+      - DnsMock::Server::RecordsDictionaryBuilder#rdns_lookup_prefix
 
   ControlParameter:
     exclude:

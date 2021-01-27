@@ -2,7 +2,7 @@
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/5ea9da61ef468b8ad4c4/maintainability)](https://codeclimate.com/github/mocktools/ruby-dns-mock/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5ea9da61ef468b8ad4c4/test_coverage)](https://codeclimate.com/github/mocktools/ruby-dns-mock/test_coverage)
-[![CircleCI](https://circleci.com/gh/mocktools/ruby-dns-mock/tree/develop.svg?style=svg)](https://circleci.com/gh/mocktools/ruby-dns-mock/tree/develop)
+[![CircleCI](https://circleci.com/gh/mocktools/ruby-dns-mock/tree/master.svg?style=svg)](https://circleci.com/gh/mocktools/ruby-dns-mock/tree/master)
 [![Gem Version](https://badge.fury.io/rb/dns_mock.svg)](https://badge.fury.io/rb/dns_mock)
 [![Downloads](https://img.shields.io/gem/dt/dns_mock.svg?colorA=004d99&colorB=0073e6)](https://rubygems.org/gems/dns_mock)
 [![GitHub](https://img.shields.io/github/license/mocktools/ruby-dns-mock)](LICENSE.txt)
@@ -23,10 +23,6 @@
 - [Versioning](#versioning)
 - [Changelog](CHANGELOG.md)
 
-## Requirements
-
-Ruby MRI 2.5.0+
-
 ## Features
 
 - Ability to mimic any DNS records (`A`, `AAAA`, `CNAME`, `MX`, `NS`, `PTR`, `SOA` and `TXT`)
@@ -34,6 +30,10 @@ Ruby MRI 2.5.0+
 - Lightweight UDP DNS mock server with dynamic/manual port assignment
 - Test framework agnostic (it's PORO, so you can use it outside of `RSpec`, `Test::Unit` or `MiniTest`)
 - Simple and intuitive DSL
+
+## Requirements
+
+Ruby MRI 2.5.0+
 
 ## Installation
 
@@ -77,7 +77,7 @@ records = {
       }
     ]
   },
-  '1.1.1.1' => {
+  '1.2.3.4' => {
     ptr: %w[domain_1.com domain_2.com]
   }
 }

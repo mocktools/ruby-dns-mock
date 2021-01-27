@@ -3,7 +3,8 @@
 RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
   describe 'defined constants' do
     it { expect(described_class).to be_const_defined(:IP_ADDRESS_PATTERN) }
-    it { expect(described_class).to be_const_defined(:RDNS_LOOKUP_PREFIX) }
+    it { expect(described_class).to be_const_defined(:IP_OCTET_GROUPS) }
+    it { expect(described_class).to be_const_defined(:RDNS_LOOKUP_REPRESENTATION) }
     it { expect(described_class).to be_const_defined(:TYPE_MAPPER) }
   end
 
@@ -64,7 +65,7 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
               record_type_1 => builder_result_1,
               record_type_2 => builder_result_2
             },
-            "#{target_domain_2}.in-addr.arpa" => {
+            "#{target_domain_2.split('.').reverse.join('.')}.in-addr.arpa" => {
               record_type_3 => builder_result_3
             }
           }

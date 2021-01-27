@@ -72,8 +72,10 @@ RSpec.describe DnsMock do
   describe 'DNS mock server integration tests' do
     let(:port) { 5300 }
     let(:domain) { random_hostname }
-    let(:records) { create_records(domain) }
+    let(:ip_address) { random_ip_v4_address }
+    let(:records) { create_records(domain).merge(create_records(ip_address, :ptr)) }
     let(:records_by_domain) { records[domain] }
+    let(:records_by_ip_address) { records[ip_address] }
     let(:rspec_dns_config) { { nameserver: 'localhost', port: port } }
 
     before { described_class.start_server(records: records, port: port) }
@@ -101,10 +103,17 @@ RSpec.describe DnsMock do
         .config(**rspec_dns_config)
     end
 
-    it 'returns predefined PTR record' do
+    it 'returns predefined host name PTR record' do
       expect(domain).to have_dns
         .with_type('PTR')
         .and_domainname(records_by_domain[:ptr].first)
+        .config(**rspec_dns_config)
+    end
+
+    it 'returns predefined host address PTR record' do
+      expect(ip_address).to have_dns
+        .with_type('PTR')
+        .and_domainname(records_by_ip_address[:ptr].first)
         .config(**rspec_dns_config)
     end
 

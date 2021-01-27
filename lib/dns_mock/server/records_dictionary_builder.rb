@@ -6,7 +6,8 @@ module DnsMock
       include DnsMock::Error::Helper
 
       IP_ADDRESS_PATTERN = /\A((1\d|[1-9]|2[0-4])?\d|25[0-5])(\.\g<1>){3}\z/.freeze
-      RDNS_LOOKUP_PREFIX = '.in-addr.arpa'
+      IP_OCTET_GROUPS = /(\d+).(\d+).(\d+).(\d+)/.freeze
+      RDNS_LOOKUP_REPRESENTATION = '\4.\3.\2.\1.in-addr.arpa'
       TYPE_MAPPER = DnsMock::AVAILABLE_DNS_RECORD_TYPES.zip(
         [
           [DnsMock::Record::Builder::A, DnsMock::Record::Factory::A, ::Array],
@@ -47,7 +48,10 @@ module DnsMock
       def rdns_lookup_prefix(hostname)
         return hostname unless hostname[DnsMock::Server::RecordsDictionaryBuilder::IP_ADDRESS_PATTERN]
 
-        "#{hostname}#{DnsMock::Server::RecordsDictionaryBuilder::RDNS_LOOKUP_PREFIX}"
+        hostname.gsub(
+          DnsMock::Server::RecordsDictionaryBuilder::IP_OCTET_GROUPS,
+          DnsMock::Server::RecordsDictionaryBuilder::RDNS_LOOKUP_REPRESENTATION
+        )
       end
 
       def build_records_instances_by_type(record_type, records_to_build)

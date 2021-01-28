@@ -7,9 +7,12 @@ RSpec.describe DnsMock::Response::Answer do
   end
 
   describe '#build' do
-    subject(:dns_answer) { described_class.new(records).build(hostname, record_class) }
+    subject(:dns_answer) do
+      described_class.new(records, exception_if_not_found).build(hostname, record_class)
+    end
 
     let(:records) { create_records_dictionary(hostname, record_type) }
+    let(:exception_if_not_found) { false }
     let(:hostname) { ::Resolv::DNS::Name.create(random_hostname) }
 
     context 'when hostname record found in records dictionary' do
@@ -32,15 +35,27 @@ RSpec.describe DnsMock::Response::Answer do
     end
 
     context 'when hostname record not found in records dictionary' do
-      let(:record_type) { :a }
-      let(:record_class) { ::Resolv::DNS::Resource::IN::A }
-      let(:records) { create_records_dictionary(random_hostname, record_type) }
+      context 'when exception strategy disabled' do
+        let(:exception_if_not_found) { false }
+        let(:record_type) { :a }
+        let(:record_class) { ::Resolv::DNS::Resource::IN::A }
+        let(:records) { create_records_dictionary(random_hostname, record_type) }
 
-      it do
-        expect { dns_answer }.to raise_error(
-          DnsMock::Error::RecordNotFound,
-          "#{record_type.upcase} record not found for #{hostname} in predefined records dictionary"
-        )
+        it { expect(dns_answer).to eq([]) }
+      end
+
+      context 'when exception strategy enabled' do
+        let(:exception_if_not_found) { true }
+        let(:record_type) { :a }
+        let(:record_class) { ::Resolv::DNS::Resource::IN::A }
+        let(:records) { create_records_dictionary(random_hostname, record_type) }
+
+        it do
+          expect { dns_answer }.to raise_error(
+            DnsMock::Error::RecordNotFound,
+            "#{record_type.upcase} record not found for #{hostname} in predefined records dictionary"
+          )
+        end
       end
     end
   end

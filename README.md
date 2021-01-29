@@ -82,10 +82,12 @@ records = {
   }
 }
 
-# Main DnsMock interface. records:Hash, port:Integer are an
-# optional params. By default creates dns mock server with empty
-# records. A free port for server will be randomly assigned in
-# the range from 49152 to 65535. Returns current dns mock server
+# Main DnsMock interface
+# records:Hash, port:Integer, exception_if_not_found:Boolean
+# are optional params. By default creates dns mock server with
+# empty records. A free port for server will be randomly assigned
+# in the range from 49152 to 65535, if record not found exception
+# won't raises. Returns current dns mock server
 dns_mock_server = DnsMock.start_server(records: records) # => DnsMock::Server instance
 
 # returns current dns mock server port

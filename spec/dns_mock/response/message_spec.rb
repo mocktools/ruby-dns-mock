@@ -2,11 +2,12 @@
 
 RSpec.describe DnsMock::Response::Message do
   describe '#as_binary_string' do
-    subject(:binary_dns_message) { described_class.new(packet, records).as_binary_string }
+    subject(:binary_dns_message) { described_class.new(packet, records, exception_if_not_found).as_binary_string }
 
     let(:hostname) { random_hostname }
     let(:packet) { create_request_binary_dns_message(hostname, record_type) }
     let(:records) { create_records_dictionary(hostname, record_type) }
+    let(:exception_if_not_found) { false }
 
     DnsMock::AVAILABLE_DNS_RECORD_TYPES.each do |type|
       context "with #{type} dns record type" do

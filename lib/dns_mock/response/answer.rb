@@ -8,8 +8,9 @@ module DnsMock
         hash[::Resolv::DNS::Resource::IN.const_get(record_type.upcase)] = record_type
       end.freeze
 
-      def initialize(records)
+      def initialize(records, exception_if_not_found)
         @records = records
+        @exception_if_not_found = exception_if_not_found
       end
 
       def build(hostname, record_class)
@@ -19,13 +20,13 @@ module DnsMock
 
       private
 
-      attr_reader :records, :hostname
+      attr_reader :records, :exception_if_not_found, :hostname
 
       def record_by_type(record_class)
         record_type = DnsMock::Response::Answer::REVERSE_TYPE_MAPPER[record_class]
         found_records = records.dig(hostname.to_s, record_type)
-        raise DnsMock::Error::RecordNotFound.new(record_type, hostname) unless found_records
-        found_records
+        raise DnsMock::Error::RecordNotFound.new(record_type, hostname) unless found_records || !exception_if_not_found
+        Array(found_records)
       end
     end
   end

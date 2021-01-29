@@ -4,8 +4,8 @@ require_relative 'dns_mock/core'
 
 module DnsMock
   class << self
-    def start_server(server = DnsMock::Server, records: {}, port: nil)
-      server.new(records: records, port: port)
+    def start_server(server = DnsMock::Server, records: {}, port: nil, exception_if_not_found: false)
+      server.new(records: records, port: port, exception_if_not_found: exception_if_not_found)
     end
 
     def running_servers

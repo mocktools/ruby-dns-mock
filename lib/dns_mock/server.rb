@@ -15,13 +15,15 @@ module DnsMock
       random_available_port = DnsMock::Server::RandomAvailablePort,
       thread_class = ::Thread,
       records: nil,
-      port: nil
+      port: nil,
+      exception_if_not_found: false
     )
       @socket = socket
       @records_dictionary_builder = records_dictionary_builder
       @thread_class = thread_class
       @records = records_dictionary_builder.call(records || {})
       @port = port || random_available_port.call
+      @exception_if_not_found = exception_if_not_found
       prepare_server_thread
     end
 
@@ -34,7 +36,7 @@ module DnsMock
           break if packet.size.zero?
 
           address, port = addr.values_at(3, 1)
-          socket.send(DnsMock::Response::Message.new(packet, records).as_binary_string, 0, address, port)
+          socket.send(DnsMock::Response::Message.new(packet, records, exception_if_not_found).as_binary_string, 0, address, port)
         end
       ensure
         socket.close
@@ -63,7 +65,7 @@ module DnsMock
 
     private
 
-    attr_reader :socket, :records_dictionary_builder, :thread_class
+    attr_reader :socket, :records_dictionary_builder, :thread_class, :exception_if_not_found
     attr_accessor :records, :thread
 
     def prepare_socket_for_session

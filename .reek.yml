@@ -45,3 +45,9 @@ detectors:
   LongParameterList:
     exclude:
       - DnsMock::Server#initialize
+      - DnsMock#start_server
+
+  BooleanParameter:
+    exclude:
+      - DnsMock::Server#initialize
+      - DnsMock#start_server

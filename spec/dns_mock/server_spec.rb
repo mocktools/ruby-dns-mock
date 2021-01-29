@@ -32,13 +32,14 @@ RSpec.describe DnsMock::Server do
           expect(random_available_port_service).to receive(:call).and_call_original
           expect(server_instance.without_mocks?).to be(true)
           expect(server_instance.alive?).to be(true)
+          expect(server_instance.send(:exception_if_not_found)).to be(false)
         end
       end
 
       context 'with keyword args' do
         let(:records) { random_records }
         let(:port) { 5300 }
-        let(:kwargs) { { records: records, port: port } }
+        let(:kwargs) { { records: records, port: port, exception_if_not_found: true } }
 
         it 'creates UDP DNS mock server with records binded on passed port' do
           expect(records_dictionary_builder_service).to receive(:call).with(records).and_call_original
@@ -46,6 +47,7 @@ RSpec.describe DnsMock::Server do
           expect(server_instance.port).to eq(port)
           expect(server_instance.without_mocks?).to be(false)
           expect(server_instance.alive?).to be(true)
+          expect(server_instance.send(:exception_if_not_found)).to be(true)
         end
       end
     end
@@ -65,6 +67,20 @@ RSpec.describe DnsMock::Server do
               DnsMock::Error::PortInUse,
               "Impossible to bind UDP DNS mock server on #{DnsMock::Server::CURRENT_HOST_NAME}:#{port}. Address already in use"
             )
+        end
+      end
+
+      context 'when exception strategy for not found record enabled' do
+        let(:kwargs) { { exception_if_not_found: true } }
+
+        before { server_instance }
+
+        it do
+          expect(random_hostname).not_to have_dns
+            .with_type('A')
+            .and_address(random_ip_v4_address)
+            .config(nameserver: 'localhost', port: server_instance.port)
+          expect(server_instance.alive?).to be(false)
         end
       end
     end

@@ -22,7 +22,7 @@ RSpec.describe DnsMock do
     context 'with keyword args' do
       let(:records) { random_records }
       let(:port) { 42_998 }
-      let(:options) { { records: records, port: port } }
+      let(:options) { { records: records, port: port, exception_if_not_found: true } }
 
       it 'creates and runs DNS mock server instance with custom settings' do
         expect(server_class).to receive(:new).with(**options)
@@ -168,6 +168,13 @@ RSpec.describe DnsMock do
       expect(domain).to have_dns
         .with_type('SOA')
         .and_minimum(soa_record[:minimum])
+        .config(**rspec_dns_config)
+    end
+
+    it 'returns empty answer for not found record' do
+      expect(random_hostname).not_to have_dns
+        .with_type('A')
+        .and_address(random_ip_v4_address)
         .config(**rspec_dns_config)
     end
   end

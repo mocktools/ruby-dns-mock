@@ -118,6 +118,9 @@ Style/EndlessMethod:
 Style/HashExcept:
   Enabled: true
 
+Style/IfWithBooleanLiteralBranches:
+  Enabled: true
+
 Layout/LineLength:
   Max: 150
 
@@ -201,6 +204,18 @@ Lint/RedundantDirGlobSort:
   Enabled: true
 
 Lint/UnmodifiedReduceAccumulator:
+  Enabled: true
+
+Lint/NumberedParameterAssignment:
+  Enabled: true
+
+Lint/OrAssignmentToConstant:
+  Enabled: true
+
+Lint/SymbolConversion:
+  Enabled: true
+
+Lint/TripleQuotes:
   Enabled: true
 
 Performance/AncestorsInclude:

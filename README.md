@@ -16,6 +16,7 @@
 - [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
+  - [RSpec](#rspec)
 - [Contributing](#contributing)
 - [License](#license)
 - [Code of Conduct](#code-of-conduct)
@@ -108,6 +109,68 @@ DnsMock.running_servers # => [DnsMock::Server instance]
 
 # interface to stop all running dns mock servers
 DnsMock.stop_running_servers! # => true
+```
+
+### RSpec
+
+Require this either in your Gemfile or in RSpec's support scripts. So either:
+
+```ruby
+# Gemfile
+group :test do
+  gem 'rspec'
+  gem 'dns_mock', require: 'dns_mock/test_framework/rspec'
+end
+```
+
+or
+
+```ruby
+# spec/support/config/dns_mock.rb
+require 'dns_mock/test_framework/rspec'
+```
+
+#### DnsMock RSpec helper
+
+Just add `DnsMock::TestFramework::RSpec::Helper` if you wanna have shortcut for DnsMock server instance into your RSpec.describe blocks:
+
+```ruby
+# spec/support/config/dns_mock.rb
+RSpec.configure do |config|
+  config.include DnsMock::TestFramework::RSpec::Helper
+end
+```
+
+```ruby
+# your awesome first_a_record_spec.rb
+RSpec.describe FirstARecord do
+  subject(:service) do
+    described_class.call(
+      hostname,
+      dns_gateway_host: 'localhost',
+      dns_gateway_port: dns_mock_server.port
+    )
+  end
+
+  let(:hostname) { 'example.com' }
+  let(:first_a_record) { '1.2.3.4' }
+  let(:records) { { hostname => { a: [first_a_record] } } }
+
+  before { dns_mock_server.assign_mocks(records) }
+
+  it { is_expected.to eq(first_a_record) }
+end
+```
+
+#### DnsMock RSpec interface
+
+If you won't use `DnsMock::TestFramework::RSpec::Helper` you can use `DnsMock::TestFramework::RSpec::Interface` directly instead:
+
+```ruby
+DnsMock::TestFramework::RSpec::Interface.start_server  # creates and runs DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.stop_server!  # stops current DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.reset_mocks!  # resets mocks in current DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.clear_server! # stops and clears current DnsMock server instance
 ```
 
 ## Contributing

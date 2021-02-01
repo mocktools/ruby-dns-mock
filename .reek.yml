@@ -21,6 +21,8 @@ detectors:
       - DnsMock::ServerHelper#start_random_server
       - DnsMock::ServerHelper#stop_all_running_servers
       - DnsMock::Server::RecordsDictionaryBuilder#rdns_lookup_prefix
+      - DnsMock::ContextGeneratorHelper#random_port_number
+      - DnsMock::TestFramework::RSpec::Helper#dns_mock_server
 
   ControlParameter:
     exclude:

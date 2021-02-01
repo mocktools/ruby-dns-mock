@@ -59,6 +59,10 @@ module DnsMock
       { hostname => records[hostname].slice(*random_dns_record_types) }
     end
 
+    def random_port_number
+      ::Random.rand(DnsMock::Server::RandomAvailablePort::MIN_DYNAMIC_PORT_NUMBER..DnsMock::Server::RandomAvailablePort::MAX_DYNAMIC_PORT_NUMBER)
+    end
+
     module_function
 
     def random_hostname

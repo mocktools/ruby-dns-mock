@@ -2,6 +2,40 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.0] - 2021-02-01
+
+### RSpec native support
+
+Added DnsMock helper which can simplify integration with RSpec.
+
+```ruby
+# spec/support/config/dns_mock.rb
+require 'dns_mock/test_framework/rspec'
+
+RSpec.configure do |config|
+  config.include DnsMock::TestFramework::RSpec::Helper
+end
+
+# your awesome first_a_record_spec.rb
+RSpec.describe FirstARecord do
+  subject(:service) do
+    described_class.call(
+      hostname,
+      dns_gateway_host: 'localhost',
+      dns_gateway_port: dns_mock_server.port
+    )
+  end
+
+  let(:hostname) { 'example.com' }
+  let(:first_a_record) { '1.2.3.4' }
+  let(:records) { { hostname => { a: [first_a_record] } } }
+
+  before { dns_mock_server.assign_mocks(records) }
+
+  it { is_expected.to eq(first_a_record) }
+end
+```
+
 ## [1.0.0] - 2021-01-29
 
 ### Configurable record not found behaviour

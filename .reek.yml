@@ -53,3 +53,7 @@ detectors:
     exclude:
       - DnsMock::Server#initialize
       - DnsMock#start_server
+
+  NilCheck:
+    exclude:
+      - DnsMock::Record::Builder::Mx#build

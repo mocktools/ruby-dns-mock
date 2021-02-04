@@ -57,13 +57,13 @@ Or install it yourself as:
 ## Usage
 
 ```ruby
-# Example of mocked DNS records structure
+# Example of mocked DNS records, please follow this data structure
 records = {
   'example.com' => {
     a: %w[1.1.1.1 2.2.2.2],
     aaaa: %w[2a00:1450:4001:81e::200e],
     ns: %w[ns1.domain.com ns2.domain.com],
-    mx: %w[mx1.domain.com mx2.domain.com],
+    mx: %w[mx1.domain.com mx2.domain.com:50], # you can specify host(s) or host(s) with priority
     txt: %w[txt_record_1 txt_record_2],
     cname: 'some.domain.com',
     soa: [
@@ -132,7 +132,7 @@ require 'dns_mock/test_framework/rspec'
 
 #### DnsMock RSpec helper
 
-Just add `DnsMock::TestFramework::RSpec::Helper` if you wanna have shortcut for DnsMock server instance into your RSpec.describe blocks:
+Just add `DnsMock::TestFramework::RSpec::Helper` if you wanna use shortcut `dns_mock_server` for DnsMock server instance into your `RSpec.describe` blocks:
 
 ```ruby
 # spec/support/config/dns_mock.rb

@@ -2,6 +2,41 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2021-02-04
+
+### Ability to specify MX record priority
+
+Added ability to specify custom priority of MX record if it needed. Now it impossible to define null or backup MX records. Please note, if you haven't specified a priority of MX record, it will be assigned automatically. MX records builder is assigning priority with step 10 from first item of defined MX records array.
+
+```ruby
+records = {
+  'example.com' => {
+    mx: %w[.:0 mx1.domain.com:10 mx2.domain.com:10 mx3.domain.com]
+  }
+}
+
+DnsMock.start_server(records: records)
+```
+
+```bash
+dig @localhost -p 5300 MX example.com
+```
+
+```
+; <<>> DiG 9.10.6 <<>> @localhost -p 5300 MX example.com
+
+;; ANSWER SECTION:
+example.com.		1	IN	MX	0 .
+example.com.		1	IN	MX	10 mx1.domain.com.
+example.com.		1	IN	MX	10 mx2.domain.com.
+example.com.		1	IN	MX	40 mx3.domain.com.
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.1#5300(127.0.0.1)
+;; WHEN: Wed Feb 03 20:19:51 EET 2021
+;; MSG SIZE  rcvd: 102
+```
+
 ## [1.1.0] - 2021-02-01
 
 ### RSpec native support

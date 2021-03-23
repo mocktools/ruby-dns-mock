@@ -21,7 +21,7 @@ RSpec.describe DnsMock::Record::Factory::Aaaa do
 
       it 'returns instance of target class' do
         expect(create_factory).to be_an_instance_of(described_class.target_class)
-        expect(create_factory.address.to_s).to eq(record_data.upcase)
+        expect(create_factory.address.to_s).to eq(::RUBY_VERSION < '2.7' ? record_data.upcase : record_data)
       end
     end
 

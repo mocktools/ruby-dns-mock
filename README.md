@@ -17,6 +17,8 @@
 - [Installation](#installation)
 - [Usage](#usage)
   - [RSpec](#rspec)
+    - [DnsMock RSpec helper](#dnsmock-rspec-helper)
+    - [DnsMock RSpec interface](#dnsmock-rspec-interface)
 - [Contributing](#contributing)
 - [License](#license)
 - [Code of Conduct](#code-of-conduct)
@@ -63,7 +65,7 @@ records = {
     a: %w[1.1.1.1 2.2.2.2],
     aaaa: %w[2a00:1450:4001:81e::200e],
     ns: %w[ns1.domain.com ns2.domain.com],
-    mx: %w[mx1.domain.com mx2.domain.com:50], # you can specify host(s) or host(s) with priority
+    mx: %w[mx1.domain.com mx2.domain.com:50], # you can specify host(s) or host(s) with priority, use '.:0' for definition null MX record
     txt: %w[txt_record_1 txt_record_2],
     cname: 'some.domain.com',
     soa: [

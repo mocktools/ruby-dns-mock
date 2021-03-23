@@ -121,6 +121,9 @@ Style/HashExcept:
 Style/IfWithBooleanLiteralBranches:
   Enabled: true
 
+Style/HashConversion:
+  Enabled: true
+
 Layout/LineLength:
   Max: 150
 
@@ -218,6 +221,9 @@ Lint/SymbolConversion:
 Lint/TripleQuotes:
   Enabled: true
 
+Gemspec/DateAssignment:
+  Enabled: true
+
 Performance/AncestorsInclude:
   Enabled: true
 
@@ -255,6 +261,12 @@ Performance/MethodObjectAsBlock:
   Enabled: false
 
 Performance/Sum:
+  Enabled: true
+
+Performance/RedundantEqualityComparisonBlock:
+  Enabled: true
+
+Performance/RedundantSplitRegexpArgument:
   Enabled: true
 
 RSpec/ExampleLength:

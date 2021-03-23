@@ -2,6 +2,15 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.1] - 2021-03-23
+
+### Changed
+
+- Updated gem development dependencies
+- Updated rubocop/codeclimate config
+- Updated gem documentation
+- Updated tests
+
 ## [1.2.0] - 2021-02-04
 
 ### Ability to specify MX record priority
@@ -11,7 +20,7 @@ Added ability to specify custom priority of MX record if it needed. Now it impos
 ```ruby
 records = {
   'example.com' => {
-    mx: %w[.:0 mx1.domain.com:10 mx2.domain.com:10 mx3.domain.com]
+    mx: %w[.:0 mx1.domain.com:10 mx2.domain.com:10 mx3.domain.com] # .:0 - null MX record
   }
 }
 

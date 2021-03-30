@@ -1,0 +1,76 @@
+version: 2.1
+
+executors:
+  default:
+    description: The official CircleCI Docker image
+    parameters:
+      image-name:
+        description: The circleci Docker image
+        type: string
+        default: ruby:latest
+    docker:
+      - image: circleci/<< parameters.image-name >>
+    environment:
+      - BUNDLE_JOBS: 4
+      - BUNDLE_PATH: vendor/bundle
+      - BUNDLE_RETRY: 3
+    working_directory: ~/ruby-dns-mock
+
+jobs:
+  checkout:
+    executor: default
+    steps:
+      # - restore_cache:
+      #     key: checkout-{{ .Branch }}-{{ .Revision }}
+      - checkout
+      # - save_cache:
+      #     key: checkout-{{ .Branch }}-{{ .Revision }}
+      #     paths:
+      #       - .
+      - persist_to_workspace:
+          root: ~/ruby-dns-mock
+          paths:
+            - .
+
+  rspec:
+    parameters:
+      image-name:
+        type: string
+    executor:
+      name: default
+      image-name: << parameters.image-name >>
+    steps:
+      - attach_workspace:
+          at: ~/ruby-dns-mock
+      - restore_cache:
+          keys:
+            - ruby-dns-mock-v1-<< parameters.image-name >>-{{ checksum "dns_mock.gemspec" }}
+            - ruby-dns-mock-v1-<< parameters.image-name >>
+            - ruby-dns-mock-v1
+      - run: bundle install
+      - save_cache:
+          key: ruby-dns-mock-v1-<< parameters.image-name >>-{{ checksum "dns_mock.gemspec" }}
+          paths:
+            - vendor/bundle
+      - run:
+          name: Run RSpec
+          command: bundle exec rspec
+
+workflows:
+  version: 2
+  default: &default
+    jobs:
+      - checkout
+      - rspec:
+          requires:
+            - checkout
+          matrix:
+            parameters:
+              image-name: [
+                "ruby:2.5",
+                "ruby:2.6",
+                "ruby:2.7",
+                "ruby:3.0",
+                "ruby:latest",
+                "jruby"
+              ]

@@ -56,6 +56,25 @@ jobs:
           name: Run RSpec
           command: bundle exec rspec
 
+  overcommit:
+    executor:
+      name: default
+      image-name: ruby:2.5
+    steps:
+      - attach_workspace:
+          at: ~/ruby-dns-mock
+      - restore_cache:
+          keys:
+            - ruby-dns-mock-v1-ruby:2.5-{{ checksum "dns_mock.gemspec" }}
+            - ruby-dns-mock-v1-ruby:2.5
+            - ruby-dns-mock-v1
+      - run: bundle install
+
+      - run:
+          name: Run Overcommit
+          command: bundle exec overcommit -s && SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
+
+
 workflows:
   version: 2
   default: &default
@@ -74,3 +93,6 @@ workflows:
                 "ruby:latest",
                 "jruby"
               ]
+      - overcommit:
+          requires:
+            - rspec

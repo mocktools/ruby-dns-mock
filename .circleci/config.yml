@@ -20,13 +20,7 @@ jobs:
   checkout:
     executor: default
     steps:
-      # - restore_cache:
-      #     key: checkout-{{ .Branch }}-{{ .Revision }}
       - checkout
-      # - save_cache:
-      #     key: checkout-{{ .Branch }}-{{ .Revision }}
-      #     paths:
-      #       - .
       - persist_to_workspace:
           root: ~/ruby-dns-mock
           paths:
@@ -69,7 +63,6 @@ jobs:
             - ruby-dns-mock-v1-ruby:2.5
             - ruby-dns-mock-v1
       - run: bundle install
-
       - run:
           name: Run Overcommit
           command: bundle exec overcommit -s && SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
@@ -90,8 +83,8 @@ workflows:
                 "ruby:2.6",
                 "ruby:2.7",
                 "ruby:3.0",
-                "ruby:latest",
-                "jruby"
+                "ruby:latest"
+                # "jruby"
               ]
       - overcommit:
           requires:

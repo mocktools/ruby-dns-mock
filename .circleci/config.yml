@@ -67,6 +67,14 @@ jobs:
           name: Run Overcommit
           command: bundle exec overcommit -s && SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
 
+  codeclimate:
+    executor:
+      name: default
+      image-name: ruby:2.5
+    steps:
+      - attach_workspace:
+          at: ~/ruby-dns-mock
+      # TODO: CodeClimate stuff
 
 workflows:
   version: 2
@@ -87,5 +95,8 @@ workflows:
                 # "jruby"
               ]
       - overcommit:
+          requires:
+            - rspec
+      - codeclimate:
           requires:
             - rspec

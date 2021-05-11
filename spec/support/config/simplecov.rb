@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-if ::RUBY_VERSION.eql?('2.5.0')
+if ::RUBY_VERSION[/\A2\.5.+\z/]
   require 'simplecov'
 
   SimpleCov.minimum_coverage(100)

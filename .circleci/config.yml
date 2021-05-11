@@ -3,14 +3,19 @@ version: 2.1
 defaults: &defaults
   working_directory: ~/ruby-dns-mock
   docker:
-    - image: circleci/ruby:2.5.0-node
+    - image: cimg/ruby:<< parameters.ruby-version >>
   environment:
     CC_TEST_REPORTER_ID: 18fba9e7d6885c48453a80a0f019a60d9ffa3fd80467652a6b3c95fef5ea9a50
 
 orbs:
-  ruby: circleci/ruby@1.1.2
+  ruby: circleci/ruby@1.1.3
 
 references:
+  install_bundler: &install_bundler
+    run:
+      name: Installing bundler
+      command: gem i bundler -v $(tail -1 Gemfile.lock | tr -d ' ')
+
   restore_bundle_cache: &restore_bundle_cache
     restore_cache:
       keys:
@@ -29,18 +34,23 @@ references:
 
   install_codeclimate_reporter: &install_codeclimate_reporter
     run:
-      name: Install Code Climate Test Reporter
+      name: Install Code Climate test reporter
       command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
 
 jobs:
-  linters:
+  linters-with-ruby:
+    parameters:
+      ruby-version:
+        type: string
+
     <<: *defaults
 
     steps:
       - checkout
 
+      - <<: *install_bundler
       - <<: *restore_bundle_cache
       - <<: *bundle_install
       - <<: *save_bundle_cache
@@ -51,12 +61,17 @@ jobs:
             bundle exec overcommit -s
             SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
 
-  tests:
+  tests-and-coverage-with-ruby:
+    parameters:
+      ruby-version:
+        type: string
+
     <<: *defaults
 
     steps:
       - checkout
 
+      - <<: *install_bundler
       - <<: *restore_bundle_cache
       - <<: *bundle_install
       - <<: *save_bundle_cache
@@ -65,7 +80,6 @@ jobs:
       - run:
           name: Running tests
           command: |
-            mkdir /tmp/test-results
             ./cc-test-reporter before-build
             bundle exec rspec
 
@@ -74,12 +88,9 @@ jobs:
           command: |
             ./cc-test-reporter format-coverage -t simplecov -o "coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
 
-      - store_test_results:
-          path: /tmp/test-results
-
       - store_artifacts:
-          path: /tmp/test-results
-          destination: test-results
+          path: ~/ruby-dns-mock/coverage
+          destination: coverage
 
       - deploy:
           command: |
@@ -94,7 +105,6 @@ jobs:
     steps:
       - checkout
       - ruby/install-deps:
-          bundler-version: '1.16.6'
           with-cache: false
           path: './vendor/custom_bundle'
       - run:
@@ -104,8 +114,14 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - linters
-      - tests
+      - linters-with-ruby:
+          matrix:
+            parameters:
+              ruby-version: ["2.5"]
+      - tests-and-coverage-with-ruby:
+          matrix:
+            parameters:
+              ruby-version: ["2.5"]
       - compatibility-with-ruby:
           matrix:
             parameters:

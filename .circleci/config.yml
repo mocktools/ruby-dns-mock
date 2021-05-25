@@ -13,7 +13,7 @@ orbs:
 references:
   install_bundler: &install_bundler
     run:
-      name: Installing bundler
+      name: Installing Bundler
       command: gem i bundler -v $(tail -1 Gemfile.lock | tr -d ' ')
 
   restore_bundle_cache: &restore_bundle_cache
@@ -34,13 +34,13 @@ references:
 
   install_codeclimate_reporter: &install_codeclimate_reporter
     run:
-      name: Install Code Climate test reporter
+      name: Installing CodeClimate test reporter
       command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
 
 jobs:
-  linters-with-ruby:
+  linters-ruby:
     parameters:
       ruby-version:
         type: string
@@ -56,12 +56,12 @@ jobs:
       - <<: *save_bundle_cache
 
       - run:
-          name: Running overcommit
+          name: Running Overcommit
           command: |
             bundle exec overcommit -s
             SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
 
-  tests-and-coverage-with-ruby:
+  tests-ruby:
     parameters:
       ruby-version:
         type: string
@@ -78,25 +78,27 @@ jobs:
       - <<: *install_codeclimate_reporter
 
       - run:
-          name: Running tests
+          name: Running RSpec
           command: |
             ./cc-test-reporter before-build
             bundle exec rspec
 
       - run:
-          name: Code Climate Test Coverage
+          name: Creating CodeClimate test coverage report
           command: |
             ./cc-test-reporter format-coverage -t simplecov -o "coverage/codeclimate.$CIRCLE_NODE_INDEX.json"
 
       - store_artifacts:
+          name: Saving Simplecov coverage artifacts
           path: ~/ruby-dns-mock/coverage
           destination: coverage
 
       - deploy:
+          name: Uploading CodeClimate test coverage report
           command: |
             ./cc-test-reporter sum-coverage --output - --parts $CIRCLE_NODE_TOTAL coverage/codeclimate.*.json | ./cc-test-reporter upload-coverage --debug --input -
 
-  compatibility-with-ruby:
+  compatibility-ruby:
     parameters:
       ruby-version:
         type: string
@@ -114,15 +116,15 @@ jobs:
 workflows:
   build_and_test:
     jobs:
-      - linters-with-ruby:
+      - linters-ruby:
           matrix:
             parameters:
               ruby-version: ["2.5"]
-      - tests-and-coverage-with-ruby:
+      - tests-ruby:
           matrix:
             parameters:
               ruby-version: ["2.5"]
-      - compatibility-with-ruby:
+      - compatibility-ruby:
           matrix:
             parameters:
               ruby-version: ["2.6", "2.7", "3.0"]

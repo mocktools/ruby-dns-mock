@@ -114,14 +114,9 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
 
     let(:port_number) { 42 }
 
-    before do
-      stub_const('DnsMock::Server::RandomAvailablePort::MIN_DYNAMIC_PORT_NUMBER', port_number)
-      stub_const('DnsMock::Server::RandomAvailablePort::MAX_DYNAMIC_PORT_NUMBER', port_number)
-    end
-
     it 'returns random port number as Integer' do
-      expect(::Random).to receive(:rand).and_call_original
-      expect(helper).to eq(port_number)
+      expect(::Random).to receive(:rand).with((49_152..65_535)).and_call_original
+      expect(helper).to be_an_instance_of(::Integer)
     end
   end
 end

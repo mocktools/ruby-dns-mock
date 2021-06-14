@@ -44,13 +44,14 @@ RSpec.describe DnsMock do
 
     context 'when servers found' do
       let(:servers_count) { 2 }
-      let(:running_servers) { start_random_server(total: 2) }
+
+      before { start_random_server(total: servers_count) }
 
       after { stop_all_running_servers }
 
       it 'returns list of running servers' do
         expect(running_servers).to be_an_instance_of(::Array)
-        expect(running_servers).to eq(running_servers)
+        expect(running_servers.size).to eq(servers_count)
       end
     end
   end

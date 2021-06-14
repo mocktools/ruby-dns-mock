@@ -4,6 +4,8 @@ RSpec.describe DnsMock::Server do
   after { stop_all_running_servers }
 
   describe 'defined constants' do
+    it { expect(described_class).to be_const_defined(:CURRENT_HOST_NAME) }
+    it { expect(described_class).to be_const_defined(:CURRENT_HOST_ADDRESS) }
     it { expect(described_class).to be_const_defined(:WARMUP_DELAY) }
     it { expect(described_class).to be_const_defined(:PACKET_MAX_BYTES_SIZE) }
   end
@@ -13,41 +15,52 @@ RSpec.describe DnsMock::Server do
       described_class.new(
         socket_instance,
         records_dictionary_builder_service,
-        random_available_port_service,
         **kwargs
       )
     end
 
     let(:socket_instance) { ::UDPSocket.new }
     let(:records_dictionary_builder_service) { DnsMock::Server::RecordsDictionaryBuilder }
-    let(:random_available_port_service) { DnsMock::Server::RandomAvailablePort }
 
     describe 'Success' do
-      context 'without keyword args' do
-        let(:records_dictionary_builder_service) { instance_double('CallableObject') }
-        let(:kwargs) { {} }
-
-        it 'creates UDP DNS mock server without records binded on random port' do
-          expect(records_dictionary_builder_service).to receive(:call).with({}).and_return({})
-          expect(random_available_port_service).to receive(:call).and_call_original
+      shared_examples 'creates UDP DNS mock server binded on random port' do
+        it 'creates UDP DNS mock server binded on random port' do
+          expect(records_dictionary_builder_service).to receive(:call).with(records).and_call_original
           expect(server_instance.without_mocks?).to be(true)
           expect(server_instance.alive?).to be(true)
           expect(server_instance.send(:exception_if_not_found)).to be(false)
+          expect(server_instance.port).not_to be_zero
         end
       end
 
-      context 'with keyword args' do
-        let(:records) { random_records }
-        let(:port) { 5300 }
-        let(:kwargs) { { records: records, port: port, exception_if_not_found: true } }
+      context 'without keyword args' do
+        let(:records) { {} }
+        let(:kwargs) { {} }
 
-        it 'creates UDP DNS mock server with records binded on passed port' do
-          expect(records_dictionary_builder_service).to receive(:call).with(records).and_call_original
-          expect(random_available_port_service).not_to receive(:call)
-          expect(server_instance.port).to eq(port)
-          expect(server_instance.without_mocks?).to be(false)
-          expect(server_instance.alive?).to be(true)
-          expect(server_instance.send(:exception_if_not_found)).to be(true)
+        include_examples 'creates UDP DNS mock server binded on random port'
+      end
+
+      context 'with keyword args' do
+        context 'when port is not equal to zero' do
+          let(:records) { random_records }
+          let(:port) { 5300 }
+          let(:kwargs) { { records: records, port: port, exception_if_not_found: true } }
+
+          it 'creates UDP DNS mock server with records binded on passed port' do
+            expect(records_dictionary_builder_service).to receive(:call).with(records).and_call_original
+            expect(server_instance.port).to eq(port)
+            expect(server_instance.without_mocks?).to be(false)
+            expect(server_instance.alive?).to be(true)
+            expect(server_instance.send(:exception_if_not_found)).to be(true)
+          end
+        end
+
+        context 'when port is equal to zero' do
+          let(:records) { {} }
+          let(:port) { 0 }
+          let(:kwargs) { { port: port } }
+
+          include_examples 'creates UDP DNS mock server binded on random port'
         end
       end
     end

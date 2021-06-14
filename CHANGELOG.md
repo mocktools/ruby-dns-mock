@@ -2,6 +2,24 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2021-06-14
+
+Detecting random available port via OS features. Thanks [@ioquatix](https://github.com/ioquatix) for [suggestion](https://github.com/mocktools/ruby-dns-mock/issues/42) 🚀
+
+### Removed
+
+- Removed `DnsMock::Server::RandomAvailablePort`
+
+### Changed
+
+- Updated `DnsMock::Server` class
+- Updated tests helpers/tests
+- Updated gem development dependencies
+
+### Fixed
+
+- Test coverage issues
+
 ## [1.2.4] - 2021-05-25
 
 ### Changed
@@ -150,7 +168,7 @@ DnsMock.start_server(exception_if_not_found: true)
 
 ## [0.2.1] - 2021-01-27
 
-### Fixed RDNS lookup representation
+### Fixed
 
 Fixed RDNS lookup representatin for IP address in PTR record feature.
 

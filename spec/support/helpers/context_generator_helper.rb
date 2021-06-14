@@ -60,7 +60,7 @@ module DnsMock
     end
 
     def random_port_number
-      ::Random.rand(DnsMock::Server::RandomAvailablePort::MIN_DYNAMIC_PORT_NUMBER..DnsMock::Server::RandomAvailablePort::MAX_DYNAMIC_PORT_NUMBER)
+      ::Random.rand(49_152..65_535)
     end
 
     module_function

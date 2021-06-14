@@ -53,6 +53,5 @@ module DnsMock
 
   require_relative '../dns_mock/version'
   require_relative '../dns_mock/server/records_dictionary_builder'
-  require_relative '../dns_mock/server/random_available_port'
   require_relative '../dns_mock/server'
 end

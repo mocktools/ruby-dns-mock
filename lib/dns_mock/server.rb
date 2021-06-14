@@ -4,6 +4,8 @@ module DnsMock
   class Server
     include DnsMock::Error::Helper
 
+    CURRENT_HOST_NAME = 'localhost'
+    CURRENT_HOST_ADDRESS = '127.0.0.1'
     WARMUP_DELAY = 0.1
     PACKET_MAX_BYTES_SIZE = 65_535
 
@@ -12,7 +14,6 @@ module DnsMock
     def initialize( # rubocop:disable Metrics/ParameterLists
       socket = ::UDPSocket.new,
       records_dictionary_builder = DnsMock::Server::RecordsDictionaryBuilder,
-      random_available_port = DnsMock::Server::RandomAvailablePort,
       thread_class = ::Thread,
       records: nil,
       port: nil,
@@ -22,13 +23,14 @@ module DnsMock
       @records_dictionary_builder = records_dictionary_builder
       @thread_class = thread_class
       @records = records_dictionary_builder.call(records || {})
-      @port = port || random_available_port.call
+      @port = port || 0
       @exception_if_not_found = exception_if_not_found
       prepare_server_thread
     end
 
     def run
       prepare_socket_for_session
+      update_server_port
 
       begin
         loop do
@@ -66,6 +68,7 @@ module DnsMock
     private
 
     attr_reader :socket, :records_dictionary_builder, :thread_class, :exception_if_not_found
+    attr_writer :port
     attr_accessor :records, :thread
 
     def prepare_socket_for_session
@@ -74,6 +77,10 @@ module DnsMock
       socket.bind(DnsMock::Server::CURRENT_HOST_NAME, port)
     rescue ::Errno::EADDRINUSE
       raise DnsMock::Error::PortInUse.new(DnsMock::Server::CURRENT_HOST_NAME, port)
+    end
+
+    def update_server_port
+      self.port = socket.addr[1] if port.zero?
     end
 
     def prepare_server_thread

@@ -31,18 +31,18 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ['lib']
 
-  spec.add_development_dependency 'bundler', '~> 2.2', '>= 2.2.17'
+  spec.add_development_dependency 'bundler', '~> 2.2', '>= 2.2.20'
   spec.add_development_dependency 'bundler-audit', '~> 0.8.0'
   spec.add_development_dependency 'faker', '~> 2.18'
   spec.add_development_dependency 'fasterer', '~> 0.9.0'
-  spec.add_development_dependency 'overcommit', '~> 0.57.0'
+  spec.add_development_dependency 'overcommit', '~> 0.58.0'
   spec.add_development_dependency 'pry-byebug', '~> 3.9'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.3'
   spec.add_development_dependency 'reek', '~> 6.0', '>= 6.0.4'
   spec.add_development_dependency 'rspec', '~> 3.10'
   spec.add_development_dependency 'rspec-dns', '~> 0.1.8'
-  spec.add_development_dependency 'rubocop', '~> 1.15'
+  spec.add_development_dependency 'rubocop', '~> 1.16', '>= 1.16.1'
   spec.add_development_dependency 'rubocop-performance', '~> 1.11', '>= 1.11.3'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.3'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.4'
   spec.add_development_dependency 'simplecov', '~> 0.17.1'
 end

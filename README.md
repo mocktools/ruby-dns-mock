@@ -1,4 +1,4 @@
-# Ruby DnsMock
+# ![Ruby DnsMock - mimic any DNS records for your test environment and even more!](https://repository-images.githubusercontent.com/323097031/ba2a0780-df26-11eb-954b-5e3204587eb2)
 
 [![Maintainability](https://api.codeclimate.com/v1/badges/5ea9da61ef468b8ad4c4/maintainability)](https://codeclimate.com/github/mocktools/ruby-dns-mock/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/5ea9da61ef468b8ad4c4/test_coverage)](https://codeclimate.com/github/mocktools/ruby-dns-mock/test_coverage)
@@ -80,7 +80,7 @@ records = {
       }
     ]
   },
-  '1.2.3.4' => {
+  '1.2.3.4' => { # You can define RDNS host address without lookup prefix. It will be converted to 4.3.2.1.in-addr.arpa automatically
     ptr: %w[domain_1.com domain_2.com]
   }
 }

@@ -2,6 +2,14 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.1] - 2021-07-07
+
+### Changed
+
+- Updated gem development dependencies
+- Updated rubocop/codeclimate config
+- Updated gem documentation, version
+
 ## [1.3.0] - 2021-06-14
 
 Detecting random available port via OS features. Thanks [@ioquatix](https://github.com/ioquatix) for [suggestion](https://github.com/mocktools/ruby-dns-mock/issues/42) 🚀
@@ -180,7 +188,7 @@ Added ability to mock PTR records. Please note, you can define host address with
 
 ```ruby
 records = {
-  '1.1.1.1' => {
+  '1.2.3.4' => {
     ptr: %w[domain_1.com domain_2.com]
   }
 }
@@ -189,7 +197,7 @@ DnsMock.start_server(records: records)
 ```
 
 ```bash
-dig @localhost -p 5300 -x 1.1.1.1
+dig @localhost -p 5300 -x 1.2.3.4
 ```
 
 ```
@@ -197,8 +205,8 @@ dig @localhost -p 5300 -x 1.1.1.1
 ; (2 servers found)
 
 ;; ANSWER SECTION:
-1.1.1.1.in-addr.arpa.	1	IN	PTR	domain_1.com.
-1.1.1.1.in-addr.arpa.	1	IN	PTR	domain_2.com.
+4.3.2.1.in-addr.arpa.	1	IN	PTR	domain_1.com.
+4.3.2.1.in-addr.arpa.	1	IN	PTR	domain_2.com.
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#5300(127.0.0.1)

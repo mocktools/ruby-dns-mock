@@ -3,8 +3,6 @@
 RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
   describe 'defined constants' do
     it { expect(described_class).to be_const_defined(:IP_ADDRESS_PATTERN) }
-    it { expect(described_class).to be_const_defined(:IP_OCTET_GROUPS) }
-    it { expect(described_class).to be_const_defined(:RDNS_LOOKUP_REPRESENTATION) }
     it { expect(described_class).to be_const_defined(:TYPE_MAPPER) }
   end
 
@@ -16,30 +14,38 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
     describe 'Success' do
       let(:target_domain_1) { random_hostname }
       let(:target_domain_2) { random_ip_v4_address }
+      let(:target_domain_3) { random_non_ascii_hostname }
       let(:record_type_1) { :record_type_1 }
       let(:record_type_2) { :record_type_2 }
       let(:record_type_3) { :record_type_3 }
+      let(:record_type_4) { :record_type_4 }
       let(:target_builder_1) { class_double('TargetBuilderOne') }
       let(:target_builder_2) { class_double('TargetBuilderTwo') }
       let(:target_builder_3) { class_double('TargetBuilderThree') }
+      let(:target_builder_4) { class_double('TargetBuilderFour') }
       let(:target_factory_1) { class_double('TargetFactoryOne') }
       let(:target_factory_2) { class_double('TargetFactoryTwo') }
       let(:target_factory_3) { class_double('TargetFactoryThree') }
+      let(:target_factory_4) { class_double('TargetFactoryFour') }
       let(:builder_result_1) { [instance_double('TargetClassOne')] }
       let(:builder_result_2) { [instance_double('TargetClassTwo')] }
       let(:builder_result_3) { [instance_double('TargetClassThree')] * 2 }
+      let(:builder_result_4) { [instance_double('TargetClassFour')] }
       let(:records_context_1) { %w[a b c] }
       let(:records_context_2) { 'record_context' }
       let(:records_context_3) { %w[d e f] }
+      let(:records_context_4) { %w[x y z] }
       let(:expected_records_to_build_type_1) { records_context_1.class }
       let(:expected_records_to_build_type_2) { records_context_2.class }
       let(:expected_records_to_build_type_3) { records_context_3.class }
+      let(:expected_records_to_build_type_4) { records_context_4.class }
 
       let(:type_mapper) do
         {
           record_type_1 => [target_builder_1, target_factory_1, expected_records_to_build_type_1],
           record_type_2 => [target_builder_2, target_factory_2, expected_records_to_build_type_2],
-          record_type_3 => [target_builder_3, target_factory_3, expected_records_to_build_type_3]
+          record_type_3 => [target_builder_3, target_factory_3, expected_records_to_build_type_3],
+          record_type_4 => [target_builder_4, target_factory_4, expected_records_to_build_type_4]
         }
       end
 
@@ -51,14 +57,20 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
           },
           target_domain_2 => {
             record_type_3 => records_context_3
+          },
+          target_domain_3 => {
+            record_type_4 => records_context_4
           }
         }
       end
 
       it 'returns dictionary with coerced records' do
+        expect(DnsMock::Representer::Punycode).to receive(:call).twice.and_call_original
+        expect(DnsMock::Representer::RdnsLookup).to receive(:call).and_call_original
         expect(target_builder_1).to receive(:call).with(target_factory_1, records_context_1).and_return(builder_result_1)
         expect(target_builder_2).to receive(:call).with(target_factory_2, records_context_2).and_return(builder_result_2)
         expect(target_builder_3).to receive(:call).with(target_factory_3, records_context_3).and_return(builder_result_3)
+        expect(target_builder_4).to receive(:call).with(target_factory_4, records_context_4).and_return(builder_result_4)
         expect(records_dictionary_builder).to eq(
           {
             target_domain_1 => {
@@ -67,6 +79,9 @@ RSpec.describe DnsMock::Server::RecordsDictionaryBuilder do
             },
             "#{target_domain_2.split('.').reverse.join('.')}.in-addr.arpa" => {
               record_type_3 => builder_result_3
+            },
+            to_punycode_hostname(target_domain_3) => {
+              record_type_4 => builder_result_4
             }
           }
         )

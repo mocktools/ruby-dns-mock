@@ -72,111 +72,214 @@ RSpec.describe DnsMock do
 
   describe 'DNS mock server integration tests' do
     let(:port) { 5300 }
-    let(:domain) { random_hostname }
     let(:ip_address) { random_ip_v4_address }
-    let(:records) { create_records(domain).merge(create_records(ip_address, :ptr)) }
-    let(:records_by_domain) { records[domain] }
-    let(:records_by_ip_address) { records[ip_address] }
     let(:rspec_dns_config) { { nameserver: 'localhost', port: port } }
 
     before { described_class.start_server(records: records, port: port) }
 
     after { stop_all_running_servers }
 
-    it 'returns predefined A record' do
-      expect(domain).to have_dns
-        .with_type('A')
-        .and_address(records_by_domain[:a].first)
-        .config(**rspec_dns_config)
+    context 'when not internationalized records' do
+      let(:domain) { random_hostname }
+      let(:records) { create_records(domain).merge(create_records(ip_address, :ptr)) }
+      let(:records_by_domain) { records[domain] }
+      let(:records_by_ip_address) { records[ip_address] }
+
+      it 'returns predefined A record' do
+        expect(domain).to have_dns
+          .with_type('A')
+          .and_address(records_by_domain[:a].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined AAAA record' do
+        expect(domain).to have_dns
+          .with_type('AAAA')
+          .and_address(records_by_domain[:aaaa].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined NS record' do
+        expect(domain).to have_dns
+          .with_type('NS')
+          .and_domainname(records_by_domain[:ns].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined host name PTR record' do
+        expect(domain).to have_dns
+          .with_type('PTR')
+          .and_domainname(records_by_domain[:ptr].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined host address PTR record' do
+        expect(ip_address).to have_dns
+          .with_type('PTR')
+          .and_domainname(records_by_ip_address[:ptr].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined MX record' do
+        expect(domain).to have_dns
+          .with_type('MX')
+          .and_exchange(records_by_domain[:mx].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined TXT record' do
+        expect(domain).to have_dns
+          .with_type('TXT')
+          .and_data(records_by_domain[:txt].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined CNAME record' do
+        expect(domain).to have_dns
+          .with_type('CNAME')
+          .and_domainname(records_by_domain[:cname])
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined SOA record' do
+        soa_record = records_by_domain[:soa].first
+
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_mname(soa_record[:mname])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_rname(soa_record[:rname])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_serial(soa_record[:serial])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_refresh(soa_record[:refresh])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_retry(soa_record[:retry])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_expire(soa_record[:expire])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_minimum(soa_record[:minimum])
+          .config(**rspec_dns_config)
+      end
     end
 
-    it 'returns predefined AAAA record' do
-      expect(domain).to have_dns
-        .with_type('AAAA')
-        .and_address(records_by_domain[:aaaa].first)
-        .config(**rspec_dns_config)
+    context 'when internationalized records' do
+      let(:domain) { random_non_ascii_hostname }
+      let(:records) { create_records(domain).merge(create_records(ip_address, ptr: [random_non_ascii_hostname])) }
+      let(:records_by_domain) { records[domain] }
+      let(:records_by_ip_address) { records[ip_address] }
+
+      it 'returns predefined A record' do
+        expect(domain).to have_dns
+          .with_type('A')
+          .and_address(records_by_domain[:a].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined AAAA record' do
+        expect(domain).to have_dns
+          .with_type('AAAA')
+          .and_address(records_by_domain[:aaaa].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined NS record' do
+        expect(domain).to have_dns
+          .with_type('NS')
+          .and_domainname(to_punycode_hostname(records_by_domain[:ns].first, rspec_dns: true))
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined host name PTR record' do
+        expect(domain).to have_dns
+          .with_type('PTR')
+          .and_domainname(to_punycode_hostname(records_by_domain[:ptr].first, rspec_dns: true))
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined host address PTR record' do
+        expect(to_rdns_hostaddress(ip_address)).to have_dns
+          .with_type('PTR')
+          .and_domainname(to_punycode_hostname(records_by_ip_address[:ptr].first, rspec_dns: true))
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined MX record' do
+        expect(domain).to have_dns
+          .with_type('MX')
+          .and_exchange(to_punycode_hostname(records_by_domain[:mx].first, rspec_dns: true))
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined TXT record' do
+        expect(domain).to have_dns
+          .with_type('TXT')
+          .and_data(records_by_domain[:txt].first)
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined CNAME record' do
+        expect(domain).to have_dns
+          .with_type('CNAME')
+          .and_domainname(to_punycode_hostname(records_by_domain[:cname], rspec_dns: true))
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined SOA record' do
+        soa_record = records_by_domain[:soa].first
+
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_mname(to_punycode_hostname(soa_record[:mname], rspec_dns: true))
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_rname(to_punycode_hostname(soa_record[:rname], rspec_dns: true))
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_serial(soa_record[:serial])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_refresh(soa_record[:refresh])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_retry(soa_record[:retry])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_expire(soa_record[:expire])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SOA')
+          .and_minimum(soa_record[:minimum])
+          .config(**rspec_dns_config)
+      end
     end
 
-    it 'returns predefined NS record' do
-      expect(domain).to have_dns
-        .with_type('NS')
-        .and_domainname(records_by_domain[:ns].first)
-        .config(**rspec_dns_config)
-    end
+    context 'when records not found' do
+      let(:records) { {} }
 
-    it 'returns predefined host name PTR record' do
-      expect(domain).to have_dns
-        .with_type('PTR')
-        .and_domainname(records_by_domain[:ptr].first)
-        .config(**rspec_dns_config)
-    end
-
-    it 'returns predefined host address PTR record' do
-      expect(ip_address).to have_dns
-        .with_type('PTR')
-        .and_domainname(records_by_ip_address[:ptr].first)
-        .config(**rspec_dns_config)
-    end
-
-    it 'returns predefined MX record' do
-      expect(domain).to have_dns
-        .with_type('MX')
-        .and_exchange(records_by_domain[:mx].first)
-        .config(**rspec_dns_config)
-    end
-
-    it 'returns predefined TXT record' do
-      expect(domain).to have_dns
-        .with_type('TXT')
-        .and_data(records_by_domain[:txt].first)
-        .config(**rspec_dns_config)
-    end
-
-    it 'returns predefined CNAME record' do
-      expect(domain).to have_dns
-        .with_type('CNAME')
-        .and_domainname(records_by_domain[:cname])
-        .config(**rspec_dns_config)
-    end
-
-    it 'returns predefined SOA record' do
-      soa_record = records_by_domain[:soa].first
-
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_mname(soa_record[:mname])
-        .config(**rspec_dns_config)
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_rname(soa_record[:rname])
-        .config(**rspec_dns_config)
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_serial(soa_record[:serial])
-        .config(**rspec_dns_config)
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_refresh(soa_record[:refresh])
-        .config(**rspec_dns_config)
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_retry(soa_record[:retry])
-        .config(**rspec_dns_config)
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_expire(soa_record[:expire])
-        .config(**rspec_dns_config)
-      expect(domain).to have_dns
-        .with_type('SOA')
-        .and_minimum(soa_record[:minimum])
-        .config(**rspec_dns_config)
-    end
-
-    it 'returns empty answer for not found record' do
-      expect(random_hostname).not_to have_dns
-        .with_type('A')
-        .and_address(random_ip_v4_address)
-        .config(**rspec_dns_config)
+      it 'returns empty answer for not found record' do
+        expect(random_hostname).not_to have_dns
+          .with_type('A')
+          .and_address(random_ip_v4_address)
+          .config(**rspec_dns_config)
+      end
     end
   end
 end

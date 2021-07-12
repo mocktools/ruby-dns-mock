@@ -17,17 +17,23 @@ detectors:
       - DnsMock::ContextGeneratorHelper#random_ip_v4_address
       - DnsMock::ContextGeneratorHelper#random_ip_v6_address
       - DnsMock::ContextGeneratorHelper#random_txt_record_context
+      - DnsMock::ContextGeneratorHelper#to_punycode_hostname
       - DnsMock::RecordsDictionaryHelper#create_records_dictionary_by_records
       - DnsMock::ServerHelper#start_random_server
       - DnsMock::ServerHelper#stop_all_running_servers
-      - DnsMock::Server::RecordsDictionaryBuilder#rdns_lookup_prefix
       - DnsMock::ContextGeneratorHelper#random_port_number
       - DnsMock::TestFramework::RSpec::Helper#dns_mock_server
+      - DnsMock::ContextGeneratorHelper#to_rdns_hostaddress
+
+  DuplicateMethodCall:
+    exclude:
+      - DnsMock::ContextGeneratorHelper#create_records
 
   ControlParameter:
     exclude:
       - DnsMock::Error::Helper#raise_unless
       - DnsMock::Server#initialize
+      - DnsMock::ContextGeneratorHelper#to_punycode_hostname
 
   MissingSafeMethod:
     exclude:

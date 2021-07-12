@@ -2,6 +2,8 @@
 
 module DnsMock
   module ContextGeneratorHelper
+    NON_ASCII_WORDS = %w[mañana ĉapelo dấu παράδειγμα 買@屋企].freeze
+
     def random_dns_record_type
       DnsMock::AVAILABLE_DNS_RECORD_TYPES.sample
     end
@@ -17,31 +19,37 @@ module DnsMock
     end
 
     def random_ip_v4_address
-      Faker::Internet.ip_v4_address
+      faker.ip_v4_address
     end
 
     def random_ip_v6_address
-      Faker::Internet.ip_v6_address
+      faker.ip_v6_address
     end
 
     def random_txt_record_context
-      Faker::Internet.uuid
+      faker.uuid
     end
 
-    def create_records(hostname = DnsMock::ContextGeneratorHelper.random_hostname, *options) # rubocop:disable Metrics/MethodLength)
+    def random_hostname_by_ascii(hostname)
+      hostname.ascii_only? ? random_hostname : random_non_ascii_hostname
+    end
+
+    def create_records(hostname = DnsMock::ContextGeneratorHelper.random_hostname, *records, **options) # rubocop:disable Metrics/MethodLength)
+      return { hostname => options } unless options.empty?
+
       {
         hostname => {
           a: [random_ip_v4_address],
           aaaa: [random_ip_v6_address],
-          ns: [random_hostname],
-          ptr: [random_hostname],
-          mx: [random_hostname],
+          ns: [random_hostname_by_ascii(hostname)],
+          ptr: [random_hostname_by_ascii(hostname)],
+          mx: [random_hostname_by_ascii(hostname)],
           txt: [random_txt_record_context],
-          cname: random_hostname,
+          cname: random_hostname_by_ascii(hostname),
           soa: [
             {
-              mname: random_hostname,
-              rname: random_hostname,
+              mname: random_hostname_by_ascii(hostname),
+              rname: random_hostname_by_ascii(hostname),
               serial: 2_035_971_683,
               refresh: 10_000,
               retry: 2_400,
@@ -49,7 +57,7 @@ module DnsMock
               minimum: 3_600
             }
           ]
-        }.slice(*(options.empty? ? DnsMock::AVAILABLE_DNS_RECORD_TYPES : options))
+        }.slice(*(records.empty? ? DnsMock::AVAILABLE_DNS_RECORD_TYPES : records))
       }
     end
 
@@ -63,10 +71,30 @@ module DnsMock
       ::Random.rand(49_152..65_535)
     end
 
+    def random_non_ascii_hostname
+      "#{DnsMock::ContextGeneratorHelper::NON_ASCII_WORDS.sample}.#{faker.domain_suffix}"
+    end
+
+    def to_rdns_hostaddress(ip_address)
+      DnsMock::Representer::RdnsLookup.call(ip_address)
+    end
+
+    def to_punycode_hostname(hostname, rspec_dns: nil)
+      # TODO: remove rspec_dns option after fix https://github.com/spotify/rspec-dns/issues/33
+      punycode = SimpleIDN.to_ascii(hostname)
+      return punycode unless rspec_dns
+
+      punycode.gsub(/@/, '\@')
+    end
+
     module_function
 
+    def faker
+      Faker::Internet
+    end
+
     def random_hostname
-      Faker::Internet.domain_name
+      faker.domain_name
     end
   end
 end

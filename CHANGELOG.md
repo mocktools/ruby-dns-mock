@@ -2,6 +2,65 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.4.0] - 2021-07-13
+
+### Added
+
+- Added ability to use internationalized hostnames. All hostnames in UTF-8 will be represented as [Punycode](https://en.wikipedia.org/wiki/Punycode)
+- Added `simpleidn` as runtime dependency
+- Added `DnsMock::Representer::Punycode`, tests
+
+```ruby
+records = {
+  'mañana.com' => {
+    mx: %w[másletras.mañana.com]
+  }
+}
+
+DnsMock.start_server(port: 5300, records: records)
+```
+
+```bash
+dig @localhost -p 5300 MX xn--maana-pta.com
+```
+
+```
+; <<>> DiG 9.10.6 <<>> @localhost -p 5300 MX xn--maana-pta.com
+; (2 servers found)
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 4612
+;; flags: rd; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1
+;; WARNING: recursion requested but not available
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+;; QUESTION SECTION:
+;xn--maana-pta.com.		IN	MX
+
+;; ANSWER SECTION:
+xn--maana-pta.com.	1	IN	MX	10 xn--msletras-8ya.xn--maana-pta.com.
+
+;; Query time: 0 msec
+;; SERVER: 127.0.0.1#5300(127.0.0.1)
+;; WHEN: Tue Jul 13 15:38:47 EEST 2021
+;; MSG SIZE  rcvd: 79
+```
+
+### Changed
+
+- Refactored `DnsMock::Representer::RdnsLookup`, tests
+- Updated `DnsMock::Record::Factory::Base`
+- Updated `DnsMock::Server::RecordsDictionaryBuilder`, tests
+- Updated `DnsMock::Record::Factory::Cname`, tests
+- Updated `DnsMock::Record::Factory::Mx`, tests
+- Updated `DnsMock::Record::Factory::Ns`, tests
+- Updated `DnsMock::Record::Factory::Ptr`, tests
+- Updated `DnsMock::Record::Factory::Soa`, tests
+- Updated `DnsMock::ContextGeneratorHelper`, tests
+- Updated reek config
+- Updated gem documentation, version
+
 ## [1.3.1] - 2021-07-07
 
 ### Changed
@@ -12,11 +71,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.3.0] - 2021-06-14
 
-Detecting random available port via OS features. Thanks [@ioquatix](https://github.com/ioquatix) for [suggestion](https://github.com/mocktools/ruby-dns-mock/issues/42) 🚀
+### Added
+
+- Detecting random available port via OS features. Thanks [@ioquatix](https://github.com/ioquatix) for [suggestion](https://github.com/mocktools/ruby-dns-mock/issues/42) 🚀
 
 ### Removed
 
-- Removed `DnsMock::Server::RandomAvailablePort`
+- Removed `DnsMock::Server::RandomAvailablePort`, tests
 
 ### Changed
 
@@ -61,9 +122,11 @@ Detecting random available port via OS features. Thanks [@ioquatix](https://gith
 
 ## [1.2.0] - 2021-02-04
 
-### Ability to specify MX record priority
+### Added
 
-Added ability to specify custom priority of MX record if it needed. Now it impossible to define null or backup MX records. Please note, if you haven't specified a priority of MX record, it will be assigned automatically. MX records builder is assigning priority with step 10 from first item of defined MX records array.
+- Ability to specify custom priority of MX record if it needed
+
+Now is possible to define null or backup MX records. Please note, if you haven't specified a priority of MX record, it will be assigned automatically. MX records builder is assigning priority with step 10 from first item of defined MX records array.
 
 ```ruby
 records = {
@@ -96,9 +159,9 @@ example.com.		1	IN	MX	40 mx3.domain.com.
 
 ## [1.1.0] - 2021-02-01
 
-### RSpec native support
+### Added
 
-Added DnsMock helper which can simplify integration with RSpec.
+- RSpec native support. DnsMock helper help you to simplify integration with RSpec
 
 ```ruby
 # spec/support/config/dns_mock.rb
@@ -130,9 +193,11 @@ end
 
 ## [1.0.0] - 2021-01-29
 
-### Configurable record not found behaviour
+### Added
 
-Added configurable strategy for record not found case. By default it won't raise an exception when DNS record not found in mocked records dictionary:
+- Configurable strategy for record not found case
+
+By default it won't raise an exception when DNS record not found in mocked records dictionary:
 
 ```ruby
 DnsMock.start_server(port: 5300)
@@ -178,13 +243,15 @@ DnsMock.start_server(exception_if_not_found: true)
 
 ### Fixed
 
-Fixed RDNS lookup representatin for IP address in PTR record feature.
+- RDNS lookup representatin for IP address in PTR record feature.
 
 ## [0.2.0] - 2021-01-26
 
-### PTR record support
+### Added
 
-Added ability to mock PTR records. Please note, you can define host address without RDNS lookup prefix (`.in-addr.arpa`). `DnsMock` will do it for you.
+- PTR record support. Ability to mock PTR records
+
+Please note, you can define host address without RDNS lookup prefix (`.in-addr.arpa`). `DnsMock` will do it for you.
 
 ```ruby
 records = {
@@ -216,6 +283,6 @@ dig @localhost -p 5300 -x 1.2.3.4
 
 ## [0.1.0] - 2021-01-19
 
-### First release
+### Added
 
-Implemented first version of `DnsMock`. Thanks [@le0pard](https://github.com/le0pard) for idea & support 🚀
+- First release of `DnsMock`. Thanks [@le0pard](https://github.com/le0pard) for idea & support 🚀

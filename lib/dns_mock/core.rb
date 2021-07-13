@@ -18,6 +18,11 @@ module DnsMock
     require_relative '../dns_mock/error/helper'
   end
 
+  module Representer
+    require_relative '../dns_mock/representer/punycode'
+    require_relative '../dns_mock/representer/rdns_lookup'
+  end
+
   module Record
     module Factory
       require_relative '../dns_mock/record/factory/base'

@@ -29,10 +29,11 @@
 ## Features
 
 - Ability to mimic any DNS records (`A`, `AAAA`, `CNAME`, `MX`, `NS`, `PTR`, `SOA` and `TXT`)
-- Zero runtime dependencies
+- Automatically converts hostnames to RDNS/[Punycode](https://en.wikipedia.org/wiki/Punycode) representation
 - Lightweight UDP DNS mock server with dynamic/manual port assignment
 - Test framework agnostic (it's PORO, so you can use it outside of `RSpec`, `Test::Unit` or `MiniTest`)
 - Simple and intuitive DSL
+- Only one runtime dependency
 
 ## Requirements
 
@@ -67,7 +68,7 @@ records = {
     ns: %w[ns1.domain.com ns2.domain.com],
     mx: %w[mx1.domain.com mx2.domain.com:50], # you can specify host(s) or host(s) with priority, use '.:0' for definition null MX record
     txt: %w[txt_record_1 txt_record_2],
-    cname: 'some.domain.com',
+    cname: 'mañana.com', # you can specify hostname in UTF-8. It will be converted to xn--maana-pta.com automatically
     soa: [
       {
         mname: 'dns1.domain.com',
@@ -85,7 +86,7 @@ records = {
   }
 }
 
-# Main DnsMock interface
+# Public DnsMock interface
 # records:Hash, port:Integer, exception_if_not_found:Boolean
 # are optional params. By default creates dns mock server with
 # empty records. A free port for server will be randomly assigned
@@ -136,7 +137,7 @@ require 'dns_mock/test_framework/rspec'
 
 #### DnsMock RSpec helper
 
-Just add `DnsMock::TestFramework::RSpec::Helper` if you wanna use shortcut `dns_mock_server` for DnsMock server instance into your `RSpec.describe` blocks:
+Just add `DnsMock::TestFramework::RSpec::Helper` if you wanna use shortcut `dns_mock_server` for DnsMock server instance inside of your `RSpec.describe` blocks:
 
 ```ruby
 # spec/support/config/dns_mock.rb

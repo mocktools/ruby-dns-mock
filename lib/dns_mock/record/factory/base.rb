@@ -23,8 +23,13 @@ module DnsMock
           end
         end
 
-        def initialize(dns_name = ::Resolv::DNS::Name, record_data:)
+        def initialize(
+          dns_name = ::Resolv::DNS::Name,
+          punycode_representer = DnsMock::Representer::Punycode,
+          record_data:
+        )
           @dns_name = dns_name
+          @punycode_representer = punycode_representer
           @record_data = record_data
         end
 
@@ -38,7 +43,7 @@ module DnsMock
 
         private
 
-        attr_reader :dns_name, :record_data
+        attr_reader :dns_name, :punycode_representer, :record_data
 
         def record_type
           self.class.name.split('::').last.upcase
@@ -46,7 +51,7 @@ module DnsMock
 
         def create_dns_name(hostname)
           raise ::ArgumentError, "cannot interpret as DNS name: #{hostname}" unless hostname.is_a?(::String)
-          dns_name.create("#{hostname}.")
+          dns_name.create("#{punycode_representer.call(hostname)}.")
         end
       end
     end

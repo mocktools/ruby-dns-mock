@@ -20,12 +20,29 @@ RSpec.describe DnsMock::Record::Factory::Mx do
     subject(:create_factory) { described_class.new(record_data: record_data).create }
 
     context 'when valid record context' do
-      let(:record_data) { [10, random_hostname] }
+      let(:record_data) { [10, hostname] }
 
-      it 'returns instance of target class' do
-        expect(create_factory).to be_an_instance_of(described_class.target_class)
-        expect(create_factory.preference).to eq(record_data.first)
-        expect(create_factory.exchange.to_s).to eq(record_data.last)
+      shared_examples 'returns instance of target class' do
+        it 'returns instance of target class' do
+          expect(DnsMock::Representer::Punycode).to receive(:call).with(hostname).and_call_original
+          expect(create_factory).to be_an_instance_of(described_class.target_class)
+          expect(create_factory.preference).to eq(record_data.first)
+          expect(create_factory.exchange.to_s).to eq(converted_hostname)
+        end
+      end
+
+      context 'when ASCII hostname' do
+        let(:hostname) { random_hostname }
+        let(:converted_hostname) { hostname }
+
+        include_examples 'returns instance of target class'
+      end
+
+      context 'when non ASCII hostname' do
+        let(:hostname) { random_non_ascii_hostname }
+        let(:converted_hostname) { to_punycode_hostname(hostname) }
+
+        include_examples 'returns instance of target class'
       end
     end
 

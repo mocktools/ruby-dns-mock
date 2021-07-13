@@ -20,11 +20,26 @@ RSpec.describe DnsMock::Record::Factory::Ptr do
     subject(:create_factory) { described_class.new(record_data: record_data).create }
 
     context 'when valid record context' do
-      let(:record_data) { random_hostname }
+      shared_examples 'returns instance of target class' do
+        it 'returns instance of target class' do
+          expect(DnsMock::Representer::Punycode).to receive(:call).with(record_data).and_call_original
+          expect(create_factory).to be_an_instance_of(described_class.target_class)
+          expect(create_factory.name.to_s).to eq(converted_record_data)
+        end
+      end
 
-      it 'returns instance of target class' do
-        expect(create_factory).to be_an_instance_of(described_class.target_class)
-        expect(create_factory.name.to_s).to eq(record_data)
+      context 'when ASCII hostname' do
+        let(:record_data) { random_hostname }
+        let(:converted_record_data) { record_data }
+
+        include_examples 'returns instance of target class'
+      end
+
+      context 'when non ASCII hostname' do
+        let(:record_data) { random_non_ascii_hostname }
+        let(:converted_record_data) { to_punycode_hostname(record_data) }
+
+        include_examples 'returns instance of target class'
       end
     end
 

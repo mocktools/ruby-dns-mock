@@ -1,6 +1,42 @@
 # frozen_string_literal: true
 
 RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disable RSpec/FilePath
+  describe 'defined constants' do
+    it { expect(described_class).to be_const_defined(:NON_ASCII_WORDS) }
+  end
+
+  describe 'DnsMock::ContextGeneratorHelper::NON_ASCII_WORDS' do
+    it do
+      expect(described_class::NON_ASCII_WORDS.none?(:ascii_only?)).to be(true)
+    end
+  end
+
+  describe '.faker' do
+    it do
+      expect(described_class.faker).to eq(Faker::Internet)
+    end
+  end
+
+  describe '.random_hostname' do
+    it 'returns random hostname' do
+      expect(Faker::Internet).to receive(:domain_name).and_call_original
+      expect(described_class.random_hostname).to be_an_instance_of(::String)
+    end
+  end
+
+  describe '#faker' do
+    it do
+      expect(faker).to eq(Faker::Internet)
+    end
+  end
+
+  describe '#random_hostname' do
+    it 'returns random hostname' do
+      expect(Faker::Internet).to receive(:domain_name).and_call_original
+      expect(random_hostname).to be_an_instance_of(::String)
+    end
+  end
+
   describe '#random_dns_record_type' do
     it do
       expect(DnsMock::AVAILABLE_DNS_RECORD_TYPES).to include(random_dns_record_type)
@@ -10,13 +46,6 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
   describe '#random_dns_record_types' do
     it do
       expect(DnsMock::AVAILABLE_DNS_RECORD_TYPES).to include(*random_dns_record_types)
-    end
-  end
-
-  describe '#random_hostname' do
-    it 'returns random hostname' do
-      expect(Faker::Internet).to receive(:domain_name).and_call_original
-      expect(random_hostname).to be_an_instance_of(::String)
     end
   end
 
@@ -61,12 +90,13 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
   end
 
   describe '#create_records_dictionary' do
-    subject(:helper) { create_records(hostname, *options) }
+    subject(:helper) { create_records(hostname, *records, **options) }
 
     let(:hostname) { random_hostname }
-    let(:options) { [] }
+    let(:records) { [] }
+    let(:options) { {} }
 
-    context 'without positional and key words arguments' do
+    context 'without positional, records and key words arguments' do
       subject(:helper) { create_records_dictionary }
 
       it 'returns records dictionary with random hostname and records' do
@@ -75,7 +105,7 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
       end
     end
 
-    context 'with default options' do
+    context 'with default records' do
       it 'has hostname as key' do
         expect(helper).to include(hostname)
       end
@@ -85,8 +115,8 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
       end
     end
 
-    context 'with custom options' do
-      let(:options) { %i[a aaaa] }
+    context 'with custom records' do
+      let(:records) { %i[a aaaa] }
 
       it 'has hostname as key' do
         expect(helper).to include(hostname)
@@ -94,6 +124,14 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
 
       it 'has DnsMock::AVAILABLE_DNS_RECORD_TYPES as nested key values' do
         expect(helper[hostname].keys).to include(*options)
+      end
+    end
+
+    context 'with key words arguments' do
+      let(:options) { { a: 1 } }
+
+      it 'returns custom records by hostname key' do
+        expect(helper).to eq(hostname => options)
       end
     end
   end
@@ -109,7 +147,7 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
     end
   end
 
-  describe 'random_port_number' do
+  describe '#random_port_number' do
     subject(:helper) { random_port_number }
 
     let(:port_number) { 42 }
@@ -117,6 +155,69 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
     it 'returns random port number as Integer' do
       expect(::Random).to receive(:rand).with((49_152..65_535)).and_call_original
       expect(helper).to be_an_instance_of(::Integer)
+    end
+  end
+
+  describe '#random_non_ascii_hostname' do
+    it 'returns hostname with non ASCII chars' do
+      stub_const('DnsMock::ContextGeneratorHelper::NON_ASCII_WORDS', ['ĉapelo.org'])
+      expect(Faker::Internet).to receive(:domain_suffix).and_call_original
+      expect(random_non_ascii_hostname.ascii_only?).to be(false)
+    end
+  end
+
+  describe '#to_punycode_hostname' do
+    subject(:helper) { to_punycode_hostname(hostname, rspec_dns: rspec_dns) }
+
+    let(:hostname) { '買@屋企.買@' }
+
+    context 'when rspec_dns disabled' do
+      let(:rspec_dns) { false }
+
+      it 'returns ASCII hostname without backslash' do
+        expect(SimpleIDN).to receive(:to_ascii).with(hostname).and_call_original
+        expect(helper.ascii_only?).to be(true)
+        expect(helper).not_to include('\@')
+      end
+    end
+
+    context 'when rspec_dns enabled' do
+      let(:rspec_dns) { true }
+
+      it 'returns ASCII hostname with backslashes' do
+        expect(SimpleIDN).to receive(:to_ascii).with(hostname).and_call_original
+        expect(helper.ascii_only?).to be(true)
+        expect(helper).to eq('xn--\@-p26a383bwg1c.xn--\@-fv2d')
+      end
+    end
+  end
+
+  describe '#random_hostname_by_ascii' do
+    context 'when ASCII hostname' do
+      let(:hostname) { random_hostname }
+
+      it 'returns new ASCII random hostname' do
+        result = random_hostname_by_ascii(hostname)
+        expect(result.ascii_only?).to be(true)
+        expect(result).not_to eq(hostname)
+      end
+    end
+
+    context 'when not ASCII hostname' do
+      let(:hostname) { random_non_ascii_hostname }
+
+      it 'returns new random not ASCII hostname' do
+        result = random_hostname_by_ascii(hostname)
+        expect(result.ascii_only?).to be(false)
+        expect(result).not_to eq(hostname)
+      end
+    end
+  end
+
+  describe '#to_rdns_hostaddress' do
+    it do
+      expect(DnsMock::Representer::RdnsLookup).to receive(:call).and_call_original
+      to_rdns_hostaddress(random_ip_v4_address)
     end
   end
 end

@@ -6,8 +6,6 @@ module DnsMock
       include DnsMock::Error::Helper
 
       IP_ADDRESS_PATTERN = /\A((1\d|[1-9]|2[0-4])?\d|25[0-5])(\.\g<1>){3}\z/.freeze
-      IP_OCTET_GROUPS = /(\d+).(\d+).(\d+).(\d+)/.freeze
-      RDNS_LOOKUP_REPRESENTATION = '\4.\3.\2.\1.in-addr.arpa'
       TYPE_MAPPER = DnsMock::AVAILABLE_DNS_RECORD_TYPES.zip(
         [
           [DnsMock::Record::Builder::A, DnsMock::Record::Factory::A, ::Array],
@@ -27,7 +25,12 @@ module DnsMock
 
       attr_reader :records
 
-      def initialize
+      def initialize(
+        punycode_representer = DnsMock::Representer::Punycode,
+        rdns_lookup_representer = DnsMock::Representer::RdnsLookup
+      )
+        @punycode_representer = punycode_representer
+        @rdns_lookup_representer = rdns_lookup_representer
         @records = {}
       end
 
@@ -35,7 +38,7 @@ module DnsMock
         raise_unless(DnsMock::Error::ArgumentType.new(records_to_build.class), records_to_build.is_a?(::Hash))
         records_to_build.each do |hostname, dns_records|
           raise_unless(DnsMock::Error::RecordHostType.new(hostname, hostname.class), hostname.is_a?(::String))
-          records[rdns_lookup_prefix(hostname)] = dns_records.each_with_object({}) do |(record_type, records_data), records_instances_by_type|
+          records[representer(hostname)] = dns_records.each_with_object({}) do |(record_type, records_data), records_instances_by_type|
             records_instances_by_type[record_type] = build_records_instances_by_type(record_type, records_data)
           end
         end
@@ -45,13 +48,12 @@ module DnsMock
 
       private
 
-      def rdns_lookup_prefix(hostname)
-        return hostname unless hostname[DnsMock::Server::RecordsDictionaryBuilder::IP_ADDRESS_PATTERN]
+      attr_reader :punycode_representer, :rdns_lookup_representer
 
-        hostname.gsub(
-          DnsMock::Server::RecordsDictionaryBuilder::IP_OCTET_GROUPS,
-          DnsMock::Server::RecordsDictionaryBuilder::RDNS_LOOKUP_REPRESENTATION
-        )
+      def representer(hostname)
+        return rdns_lookup_representer.call(hostname) if hostname[DnsMock::Server::RecordsDictionaryBuilder::IP_ADDRESS_PATTERN]
+
+        punycode_representer.call(hostname)
       end
 
       def build_records_instances_by_type(record_type, records_to_build)

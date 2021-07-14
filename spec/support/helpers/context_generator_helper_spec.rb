@@ -167,28 +167,14 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
   end
 
   describe '#to_punycode_hostname' do
-    subject(:helper) { to_punycode_hostname(hostname, rspec_dns: rspec_dns) }
+    subject(:helper) { to_punycode_hostname(hostname) }
 
-    let(:hostname) { '買@屋企.買@' }
+    let(:hostname) { '買.屋企' }
 
-    context 'when rspec_dns disabled' do
-      let(:rspec_dns) { false }
-
-      it 'returns ASCII hostname without backslash' do
-        expect(SimpleIDN).to receive(:to_ascii).with(hostname).and_call_original
-        expect(helper.ascii_only?).to be(true)
-        expect(helper).not_to include('\@')
-      end
-    end
-
-    context 'when rspec_dns enabled' do
-      let(:rspec_dns) { true }
-
-      it 'returns ASCII hostname with backslashes' do
-        expect(SimpleIDN).to receive(:to_ascii).with(hostname).and_call_original
-        expect(helper.ascii_only?).to be(true)
-        expect(helper).to eq('xn--\@-p26a383bwg1c.xn--\@-fv2d')
-      end
+    it 'returns ASCII hostname with backslashes' do
+      expect(SimpleIDN).to receive(:to_ascii).with(hostname).and_call_original
+      expect(helper.ascii_only?).to be(true)
+      expect(helper).to eq('xn--uk3a.xn--hoqu73a')
     end
   end
 

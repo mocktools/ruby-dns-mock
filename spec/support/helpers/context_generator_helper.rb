@@ -2,7 +2,7 @@
 
 module DnsMock
   module ContextGeneratorHelper
-    NON_ASCII_WORDS = %w[mañana ĉapelo dấu παράδειγμα 買@屋企].freeze
+    NON_ASCII_WORDS = %w[mañana ĉapelo dấu παράδειγμα 屋企].freeze
 
     def random_dns_record_type
       DnsMock::AVAILABLE_DNS_RECORD_TYPES.sample
@@ -79,12 +79,8 @@ module DnsMock
       DnsMock::Representer::RdnsLookup.call(ip_address)
     end
 
-    def to_punycode_hostname(hostname, rspec_dns: nil)
-      # TODO: remove rspec_dns option after fix https://github.com/spotify/rspec-dns/issues/33
-      punycode = SimpleIDN.to_ascii(hostname)
-      return punycode unless rspec_dns
-
-      punycode.gsub(/@/, '\@')
+    def to_punycode_hostname(hostname)
+      SimpleIDN.to_ascii(hostname)
     end
 
     module_function

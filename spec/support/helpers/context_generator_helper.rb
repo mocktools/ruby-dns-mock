@@ -30,6 +30,10 @@ module DnsMock
       faker.uuid
     end
 
+    def random_non_ascii_hostname
+      "#{DnsMock::ContextGeneratorHelper::NON_ASCII_WORDS.sample}#{random_hostname}"
+    end
+
     def random_hostname_by_ascii(hostname)
       hostname.ascii_only? ? random_hostname : random_non_ascii_hostname
     end
@@ -69,10 +73,6 @@ module DnsMock
 
     def random_port_number
       ::Random.rand(49_152..65_535)
-    end
-
-    def random_non_ascii_hostname
-      "#{DnsMock::ContextGeneratorHelper::NON_ASCII_WORDS.sample}.#{faker.domain_suffix}"
     end
 
     def to_rdns_hostaddress(ip_address)

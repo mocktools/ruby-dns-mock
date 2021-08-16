@@ -11,28 +11,28 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
     end
   end
 
-  describe '.faker' do
+  describe '.ffaker' do
     it do
-      expect(described_class.faker).to eq(Faker::Internet)
+      expect(described_class.ffaker).to eq(FFaker::Internet)
     end
   end
 
   describe '.random_hostname' do
     it 'returns random hostname' do
-      expect(Faker::Internet).to receive(:domain_name).and_call_original
+      expect(FFaker::Internet).to receive(:domain_name).and_call_original
       expect(described_class.random_hostname).to be_an_instance_of(::String)
     end
   end
 
-  describe '#faker' do
+  describe '#ffaker' do
     it do
-      expect(faker).to eq(Faker::Internet)
+      expect(ffaker).to eq(FFaker::Internet)
     end
   end
 
   describe '#random_hostname' do
     it 'returns random hostname' do
-      expect(Faker::Internet).to receive(:domain_name).and_call_original
+      expect(FFaker::Internet).to receive(:domain_name).and_call_original
       expect(random_hostname).to be_an_instance_of(::String)
     end
   end
@@ -66,7 +66,7 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
     subject(:helper) { random_ip_v4_address }
 
     it 'returns random ipv4 address as String' do
-      expect(Faker::Internet).to receive(:ip_v4_address).and_call_original
+      expect(FFaker::Internet).to receive(:ip_v4_address).and_call_original
       expect(helper).to be_an_instance_of(::String)
     end
   end
@@ -75,7 +75,6 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
     subject(:helper) { random_ip_v6_address }
 
     it 'returns random ipv6 address as String' do
-      expect(Faker::Internet).to receive(:ip_v6_address).and_call_original
       expect(helper).to be_an_instance_of(::String)
     end
   end
@@ -84,7 +83,7 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
     subject(:helper) { random_txt_record_context }
 
     it 'returns random txt record context as String' do
-      expect(Faker::Internet).to receive(:uuid).and_call_original
+      expect(::SecureRandom).to receive(:uuid).and_call_original
       expect(helper).to be_an_instance_of(::String)
     end
   end
@@ -161,7 +160,7 @@ RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disab
   describe '#random_non_ascii_hostname' do
     it 'returns hostname with non ASCII chars' do
       stub_const('DnsMock::ContextGeneratorHelper::NON_ASCII_WORDS', ['ĉapelo.org'])
-      expect(Faker::Internet).to receive(:domain_suffix).and_call_original
+      expect(FFaker::Internet).to receive(:domain_suffix).and_call_original
       expect(random_non_ascii_hostname.ascii_only?).to be(false)
     end
   end

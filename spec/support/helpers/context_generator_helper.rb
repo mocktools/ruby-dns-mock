@@ -19,15 +19,15 @@ module DnsMock
     end
 
     def random_ip_v4_address
-      faker.ip_v4_address
+      ffaker.ip_v4_address
     end
 
     def random_ip_v6_address
-      faker.ip_v6_address
+      "2001:db8:#{%w[11a3 9d7 1f34 8a2e 7a0 765d].shuffle.join(':')}"
     end
 
     def random_txt_record_context
-      faker.uuid
+      ::SecureRandom.uuid
     end
 
     def random_non_ascii_hostname
@@ -85,12 +85,12 @@ module DnsMock
 
     module_function
 
-    def faker
-      Faker::Internet
+    def ffaker
+      FFaker::Internet
     end
 
     def random_hostname
-      faker.domain_name
+      ffaker.domain_name
     end
   end
 end

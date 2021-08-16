@@ -198,28 +198,28 @@ RSpec.describe DnsMock do
       it 'returns predefined NS record' do
         expect(domain).to have_dns
           .with_type('NS')
-          .and_domainname(to_punycode_hostname(records_by_domain[:ns].first, rspec_dns: true))
+          .and_domainname(to_punycode_hostname(records_by_domain[:ns].first))
           .config(**rspec_dns_config)
       end
 
       it 'returns predefined host name PTR record' do
         expect(domain).to have_dns
           .with_type('PTR')
-          .and_domainname(to_punycode_hostname(records_by_domain[:ptr].first, rspec_dns: true))
+          .and_domainname(to_punycode_hostname(records_by_domain[:ptr].first))
           .config(**rspec_dns_config)
       end
 
       it 'returns predefined host address PTR record' do
         expect(to_rdns_hostaddress(ip_address)).to have_dns
           .with_type('PTR')
-          .and_domainname(to_punycode_hostname(records_by_ip_address[:ptr].first, rspec_dns: true))
+          .and_domainname(to_punycode_hostname(records_by_ip_address[:ptr].first))
           .config(**rspec_dns_config)
       end
 
       it 'returns predefined MX record' do
         expect(domain).to have_dns
           .with_type('MX')
-          .and_exchange(to_punycode_hostname(records_by_domain[:mx].first, rspec_dns: true))
+          .and_exchange(to_punycode_hostname(records_by_domain[:mx].first))
           .config(**rspec_dns_config)
       end
 
@@ -233,7 +233,7 @@ RSpec.describe DnsMock do
       it 'returns predefined CNAME record' do
         expect(domain).to have_dns
           .with_type('CNAME')
-          .and_domainname(to_punycode_hostname(records_by_domain[:cname], rspec_dns: true))
+          .and_domainname(to_punycode_hostname(records_by_domain[:cname]))
           .config(**rspec_dns_config)
       end
 
@@ -242,11 +242,11 @@ RSpec.describe DnsMock do
 
         expect(domain).to have_dns
           .with_type('SOA')
-          .and_mname(to_punycode_hostname(soa_record[:mname], rspec_dns: true))
+          .and_mname(to_punycode_hostname(soa_record[:mname]))
           .config(**rspec_dns_config)
         expect(domain).to have_dns
           .with_type('SOA')
-          .and_rname(to_punycode_hostname(soa_record[:rname], rspec_dns: true))
+          .and_rname(to_punycode_hostname(soa_record[:rname]))
           .config(**rspec_dns_config)
         expect(domain).to have_dns
           .with_type('SOA')

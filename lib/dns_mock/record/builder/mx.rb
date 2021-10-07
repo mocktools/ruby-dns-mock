@@ -14,7 +14,7 @@ module DnsMock
             record_data, custom_record_preference = parse_mx_record_data(record_data)
             target_factory.new(
               record_data: [
-                custom_record_preference&.to_i || record_preference * DnsMock::Record::Builder::Mx::RECORD_PREFERENCE_STEP,
+                custom_record_preference&.to_i || (record_preference * DnsMock::Record::Builder::Mx::RECORD_PREFERENCE_STEP),
                 record_data
               ]
             ).create

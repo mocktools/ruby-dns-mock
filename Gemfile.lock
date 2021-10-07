@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    dns_mock (1.4.2)
+    dns_mock (1.4.3)
       simpleidn (~> 0.2.1)
 
 GEM
@@ -22,7 +22,7 @@ GEM
     fasterer (0.9.0)
       colorize (~> 0.7)
       ruby_parser (>= 3.14.1)
-    ffaker (2.19.0)
+    ffaker (2.20.0)
     iniparse (1.5.0)
     json (2.5.1)
     kwalify (0.7.2)
@@ -31,7 +31,7 @@ GEM
       childprocess (>= 0.6.3, < 5)
       iniparse (~> 1.4)
       rexml (~> 3.2)
-    parallel (1.20.1)
+    parallel (1.21.0)
     parser (3.0.2.0)
       ast (~> 2.4.1)
     pry (0.13.1)
@@ -65,23 +65,22 @@ GEM
       diff-lcs (>= 1.2.0, < 2.0)
       rspec-support (~> 3.10.0)
     rspec-support (3.10.2)
-    rubocop (1.20.0)
+    rubocop (1.22.1)
       parallel (~> 1.10)
       parser (>= 3.0.0.0)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 1.8, < 3.0)
       rexml
-      rubocop-ast (>= 1.9.1, < 2.0)
+      rubocop-ast (>= 1.12.0, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 3.0)
-    rubocop-ast (1.11.0)
+    rubocop-ast (1.12.0)
       parser (>= 3.0.1.1)
     rubocop-performance (1.11.5)
       rubocop (>= 1.7.0, < 2.0)
       rubocop-ast (>= 0.4.0)
-    rubocop-rspec (2.4.0)
-      rubocop (~> 1.0)
-      rubocop-ast (>= 1.1.0)
+    rubocop-rspec (2.5.0)
+      rubocop (~> 1.19)
     ruby-progressbar (1.11.0)
     ruby_parser (3.17.0)
       sexp_processor (~> 4.15, >= 4.15.1)
@@ -96,28 +95,28 @@ GEM
     thor (1.1.0)
     unf (0.1.4)
       unf_ext
-    unf_ext (0.0.7.7)
-    unicode-display_width (2.0.0)
+    unf_ext (0.0.8)
+    unicode-display_width (2.1.0)
 
 PLATFORMS
   x86_64-darwin-20
 
 DEPENDENCIES
-  bundler (~> 2.2, >= 2.2.27)
+  bundler (~> 2.2, >= 2.2.28)
   bundler-audit (~> 0.9.0.1)
   dns_mock!
   fasterer (~> 0.9.0)
-  ffaker (~> 2.19)
+  ffaker (~> 2.20)
   overcommit (~> 0.58.0)
   pry-byebug (~> 3.9)
   rake (~> 13.0, >= 13.0.6)
   reek (~> 6.0, >= 6.0.6)
   rspec (~> 3.10)
   rspec-dns (~> 0.1.8)
-  rubocop (~> 1.20)
+  rubocop (~> 1.22, >= 1.22.1)
   rubocop-performance (~> 1.11, >= 1.11.5)
-  rubocop-rspec (~> 2.4)
+  rubocop-rspec (~> 2.5)
   simplecov (~> 0.17.1)
 
 BUNDLED WITH
-   2.2.27
+   2.2.28

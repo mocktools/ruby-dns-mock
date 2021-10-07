@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
-rspec_custom = File.join(File.dirname(__FILE__), 'support/**/*.rb')
-Dir[File.expand_path(rspec_custom)].sort.each { |file| require file unless file[/\A.+_spec\.rb\z/] }
+rspec_custom = ::File.join(::File.dirname(__FILE__), 'support/**/*.rb')
+::Dir[::File.expand_path(rspec_custom)].sort.each { |file| require file unless file[/\A.+_spec\.rb\z/] }
 
 require_relative '../lib/dns_mock'
 

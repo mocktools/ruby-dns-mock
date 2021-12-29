@@ -31,6 +31,9 @@ Naming/RescuedExceptionsVariableName:
 Naming/InclusiveLanguage:
   Enabled: false
 
+Naming/BlockForwarding:
+  Enabled: true
+
 Style/Documentation:
   Enabled: false
 
@@ -151,6 +154,18 @@ Style/NumberedParametersLimit:
 Style/SelectByRegexp:
   Enabled: true
 
+Style/FileRead:
+  Enabled: true
+
+Style/FileWrite:
+  Enabled: true
+
+Style/MapToHash:
+  Enabled: true
+
+Style/OpenStructUse:
+  Enabled: true
+
 Layout/LineLength:
   Max: 150
 
@@ -266,8 +281,14 @@ Lint/IncompatibleIoSelectWithFiberScheduler:
 Lint/RequireRelativeSelfPath:
   Enabled: true
 
+Lint/UselessRuby2Keywords:
+  Enabled: true
+
 Gemspec/DateAssignment:
   Enabled: true
+
+Gemspec/RequireMFA:
+  Enabled: false
 
 Security/IoMethods:
   Enabled: true
@@ -323,6 +344,9 @@ Performance/MapCompact:
 Performance/ConcurrentMonotonicTime:
   Enabled: true
 
+Performance/StringIdentifierArgument:
+  Enabled: true
+
 RSpec/ExampleLength:
   Enabled: false
 
@@ -363,4 +387,7 @@ RSpec/ExcessiveDocstringSpacing:
   Enabled: true
 
 RSpec/SubjectDeclaration:
+  Enabled: true
+
+RSpec/FactoryBot/SyntaxMethods:
   Enabled: true

@@ -33,18 +33,18 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 
-  spec.add_development_dependency 'bundler', '~> 2.2', '>= 2.2.31'
   spec.add_development_dependency 'bundler-audit', '~> 0.9.0.1'
   spec.add_development_dependency 'fasterer', '~> 0.9.0'
   spec.add_development_dependency 'ffaker', '~> 2.20'
+  spec.add_development_dependency 'net-ftp', '~> 0.1.3'
   spec.add_development_dependency 'overcommit', '~> 0.58.0'
   spec.add_development_dependency 'pry-byebug', '~> 3.9'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
   spec.add_development_dependency 'reek', '~> 6.0', '>= 6.0.6'
   spec.add_development_dependency 'rspec', '~> 3.10'
   spec.add_development_dependency 'rspec-dns', '~> 0.1.8'
-  spec.add_development_dependency 'rubocop', '~> 1.22', '>= 1.22.3'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.12'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.6'
+  spec.add_development_dependency 'rubocop', '~> 1.24'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.13'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.7'
   spec.add_development_dependency 'simplecov', '~> 0.17.1'
 end

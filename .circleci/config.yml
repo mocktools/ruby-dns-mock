@@ -6,7 +6,7 @@ defaults: &defaults
     - image: cimg/ruby:<< parameters.ruby-version >>
 
 orbs:
-  ruby: circleci/ruby@1.2.0
+  ruby: circleci/ruby@1.4.0
 
 references:
   restore_bundle_cache: &restore_bundle_cache
@@ -33,6 +33,12 @@ references:
       command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
+
+  use_compatible_gemspec: &use_compatible_gemspec
+    run:
+      name: Use compatible gemspec
+      command: |
+            cp dns_mock.gemspec_compatible dns_mock.gemspec
 
 jobs:
   linters-ruby:
@@ -99,8 +105,9 @@ jobs:
       - image: cimg/ruby:<< parameters.ruby-version >>
     steps:
       - checkout
+      - <<: *use_compatible_gemspec
       - ruby/install-deps:
-          bundler-version: "2.3.3"
+          bundler-version: "2.3.5"
           with-cache: false
           path: './vendor/custom_bundle'
       - run:
@@ -113,12 +120,12 @@ workflows:
       - linters-ruby:
           matrix:
             parameters:
-              ruby-version: ["2.5"]
+              ruby-version: ["3.1"]
       - tests-ruby:
           matrix:
             parameters:
-              ruby-version: ["2.5"]
+              ruby-version: ["3.1"]
       - compatibility-ruby:
           matrix:
             parameters:
-              ruby-version: ["2.6", "2.7", "3.0", "3.1"]
+              ruby-version: ["2.5", "2.6", "2.7", "3.0"]

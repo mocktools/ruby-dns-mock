@@ -38,7 +38,7 @@ references:
     run:
       name: Use compatible gemspec
       command: |
-            cp dns_mock.gemspec_compatible dns_mock.gemspec
+            cp .circleci/gemspec_compatible dns_mock.gemspec
 
 jobs:
   linters-ruby:

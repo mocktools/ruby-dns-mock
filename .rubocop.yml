@@ -166,6 +166,9 @@ Style/MapToHash:
 Style/OpenStructUse:
   Enabled: true
 
+Style/NestedFileDirname:
+  Enabled: true
+
 Layout/LineLength:
   Max: 150
 
@@ -390,4 +393,10 @@ RSpec/SubjectDeclaration:
   Enabled: true
 
 RSpec/FactoryBot/SyntaxMethods:
+  Enabled: true
+
+RSpec/BeEq:
+  Enabled: true
+
+RSpec/BeNil:
   Enabled: true

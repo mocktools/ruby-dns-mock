@@ -1,8 +1,6 @@
 # frozen_string_literal: true
 
-lib = ::File.expand_path('lib', __dir__)
-$LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'dns_mock/version'
+require_relative 'lib/dns_mock/version'
 
 Gem::Specification.new do |spec|
   spec.name          = 'dns_mock'
@@ -34,8 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 
   spec.add_development_dependency 'ffaker', '~> 2.20'
-  spec.add_development_dependency 'pry-byebug'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
-  spec.add_development_dependency 'rspec', '~> 3.10'
+  spec.add_development_dependency 'rspec', '~> 3.11'
   spec.add_development_dependency 'rspec-dns', '~> 0.1.8'
 end

@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 
-  spec.add_development_dependency 'ffaker', '~> 2.20'
+  spec.add_development_dependency 'ffaker', '~> 2.21'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
   spec.add_development_dependency 'rspec', '~> 3.11'
   spec.add_development_dependency 'rspec-dns', '~> 0.1.8'

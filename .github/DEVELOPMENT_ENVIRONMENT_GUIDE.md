@@ -12,7 +12,7 @@ cd  ruby-dns-mock
 Configure latest Ruby environment:
 
 ```bash
-echo 'ruby-3.1.1' > .ruby-version
+echo 'ruby-3.1.2' > .ruby-version
 cp .circleci/gemspec_latest dns_mock.gemspec
 ```
 

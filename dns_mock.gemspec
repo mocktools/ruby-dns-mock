@@ -31,7 +31,7 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 
-  spec.add_development_dependency 'ffaker', '~> 2.20'
+  spec.add_development_dependency 'ffaker', '~> 2.21'
   spec.add_development_dependency 'net-ftp', '~> 0.1.3' if ::RUBY_VERSION >= '3.1.0'
   spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
   spec.add_development_dependency 'rspec', '~> 3.11'

@@ -6,6 +6,9 @@ AllCops:
   DisplayCopNames:    true
   DisplayStyleGuide:  true
   TargetRubyVersion:  2.5
+  NewCops: enable
+
+# Metrics ---------------------------------------------------------------------
 
 Metrics/ClassLength:
   Max: 150
@@ -22,6 +25,8 @@ Metrics/CyclomaticComplexity:
 Metrics/PerceivedComplexity:
   Enabled: false
 
+# Naming ----------------------------------------------------------------------
+
 Naming/VariableNumber:
   Enabled: false
 
@@ -31,8 +36,7 @@ Naming/RescuedExceptionsVariableName:
 Naming/InclusiveLanguage:
   Enabled: false
 
-Naming/BlockForwarding:
-  Enabled: true
+# Style -----------------------------------------------------------------------
 
 Style/Documentation:
   Enabled: false
@@ -49,146 +53,10 @@ Style/ParallelAssignment:
 Style/RescueStandardError:
   Enabled: false
 
-Style/HashEachMethods:
-  Enabled: true
-
-Style/HashTransformKeys:
-  Enabled: true
-
-Style/HashTransformValues:
-  Enabled: true
-
-Style/AccessorGrouping:
-  Enabled: true
-
-Style/ArrayCoercion:
-  Enabled: true
-
-Style/BisectedAttrAccessor:
-  Enabled: true
-
-Style/CaseLikeIf:
-  Enabled: true
-
-Style/ExponentialNotation:
-  Enabled: true
-
-Style/HashAsLastArrayItem:
-  Enabled: true
-
-Style/HashLikeCase:
-  Enabled: true
-
-Style/RedundantAssignment:
-  Enabled: true
-
-Style/RedundantFetchBlock:
-  Enabled: true
-
-Style/RedundantFileExtensionInRequire:
-  Enabled: true
-
-Style/RedundantRegexpCharacterClass:
-  Enabled: true
-
-Style/RedundantRegexpEscape:
-  Enabled: true
-
-Style/SlicingWithRange:
-  Enabled: true
-
-Style/ArgumentsForwarding:
-  Enabled: true
-
-Style/CollectionCompact:
-  Enabled: true
-
-Style/DocumentDynamicEvalDefinition:
-  Enabled: true
-
-Style/NegatedIfElseCondition:
-  Enabled: true
-
-Style/NilLambda:
-  Enabled: true
-
-Style/RedundantArgument:
-  Enabled: true
-
-Style/SwapValues:
-  Enabled: true
-
-Style/EndlessMethod:
-  Enabled: true
-
-Style/HashExcept:
-  Enabled: true
-
-Style/IfWithBooleanLiteralBranches:
-  Enabled: true
-
-Style/HashConversion:
-  Enabled: true
-
-Style/StringChars:
-  Enabled: true
-
-Style/InPatternThen:
-  Enabled: true
-
-Style/MultilineInPatternThen:
-  Enabled: true
-
-Style/QuotedSymbols:
-  Enabled: true
-
-Style/RedundantSelfAssignmentBranch:
-  Enabled: true
-
-Style/NumberedParameters:
-  Enabled: true
-
-Style/NumberedParametersLimit:
-  Enabled: true
-
-Style/SelectByRegexp:
-  Enabled: true
-
-Style/FileRead:
-  Enabled: true
-
-Style/FileWrite:
-  Enabled: true
-
-Style/MapToHash:
-  Enabled: true
-
-Style/OpenStructUse:
-  Enabled: true
-
-Style/NestedFileDirname:
-  Enabled: true
-
-Style/EnvHome:
-  Enabled: true
-
-Style/FetchEnvVar:
-  Enabled: true
-
-Style/ObjectThen:
-  Enabled: true
-
-Style/RedundantInitialize:
-  Enabled: true
+# Layout ----------------------------------------------------------------------
 
 Layout/LineLength:
   Max: 150
-
-Layout/EmptyLinesAroundAttributeAccessor:
-  Enabled: true
-
-Layout/SpaceAroundMethodCallOperator:
-  Enabled: true
 
 Layout/ClassStructure:
   Enabled: true
@@ -209,164 +77,17 @@ Layout/ClassStructure:
 Layout/EmptyLineAfterGuardClause:
   Enabled: false
 
-Layout/SpaceBeforeBrackets:
-  Enabled: true
-
-Layout/LineEndStringConcatenationIndentation:
-  Enabled: true
-
-Lint/NonDeterministicRequireOrder:
-  Enabled: true
-
-Lint/DeprecatedOpenSSLConstant:
-  Enabled: true
-
-Lint/DuplicateElsifCondition:
-  Enabled: true
-
-Lint/MixedRegexpCaptureTypes:
-  Enabled: true
-
-Lint/RaiseException:
-  Enabled: true
-
-Lint/StructNewOverride:
-  Enabled: true
-
-Lint/DuplicateBranch:
-  Enabled: true
-
-Lint/DuplicateRegexpCharacterClassElement:
-  Enabled: true
-
-Lint/EmptyBlock:
-  Enabled: true
-
-Lint/EmptyClass:
-  Enabled: true
-
-Lint/NoReturnInBeginEndBlocks:
-  Enabled: true
-
-Lint/ToEnumArguments:
-  Enabled: true
-
-Lint/UnexpectedBlockArity:
-  Enabled: true
-
-Lint/AmbiguousAssignment:
-  Enabled: true
-
-Lint/DeprecatedConstants:
-  Enabled: true
-
-Lint/LambdaWithoutLiteralBlock:
-  Enabled: true
-
-Lint/RedundantDirGlobSort:
-  Enabled: true
-
-Lint/UnmodifiedReduceAccumulator:
-  Enabled: true
-
-Lint/NumberedParameterAssignment:
-  Enabled: true
-
-Lint/OrAssignmentToConstant:
-  Enabled: true
-
-Lint/SymbolConversion:
-  Enabled: true
-
-Lint/TripleQuotes:
-  Enabled: true
-
-Lint/EmptyInPattern:
-  Enabled: true
-
-Lint/AmbiguousRange:
-  Enabled: true
-
-Lint/AmbiguousOperatorPrecedence:
-  Enabled: true
-
-Lint/IncompatibleIoSelectWithFiberScheduler:
-  Enabled: true
-
-Lint/RequireRelativeSelfPath:
-  Enabled: true
-
-Lint/UselessRuby2Keywords:
-  Enabled: true
-
-Lint/RefinementImportMethods:
-  Enabled: true
-
-Gemspec/DateAssignment:
-  Enabled: true
+# Gemspec ---------------------------------------------------------------------
 
 Gemspec/RequireMFA:
   Enabled: false
 
-Security/IoMethods:
-  Enabled: true
-
-Security/CompoundHash:
-  Enabled: true
-
-Performance/AncestorsInclude:
-  Enabled: true
-
-Performance/BigDecimalWithNumericArgument:
-  Enabled: true
-
-Performance/RedundantSortBlock:
-  Enabled: true
-
-Performance/RedundantStringChars:
-  Enabled: true
-
-Performance/ReverseFirst:
-  Enabled: true
-
-Performance/SortReverse:
-  Enabled: true
-
-Performance/Squeeze:
-  Enabled: true
-
-Performance/StringInclude:
-  Enabled: true
-
-Performance/BlockGivenWithExplicitBlock:
-  Enabled: true
-
-Performance/CollectionLiteralInLoop:
-  Enabled: true
-
-Performance/ConstantRegexp:
-  Enabled: true
+# Performance -----------------------------------------------------------------
 
 Performance/MethodObjectAsBlock:
   Enabled: false
 
-Performance/Sum:
-  Enabled: true
-
-Performance/RedundantEqualityComparisonBlock:
-  Enabled: true
-
-Performance/RedundantSplitRegexpArgument:
-  Enabled: true
-
-Performance/MapCompact:
-  Enabled: true
-
-Performance/ConcurrentMonotonicTime:
-  Enabled: true
-
-Performance/StringIdentifierArgument:
-  Enabled: true
+# RSpec -----------------------------------------------------------------------
 
 RSpec/ExampleLength:
   Enabled: false
@@ -397,27 +118,6 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/StubbedMock:
   Enabled: false
-
-RSpec/IdenticalEqualityAssertion:
-  Enabled: true
-
-RSpec/Rails/AvoidSetupHook:
-  Enabled: true
-
-RSpec/ExcessiveDocstringSpacing:
-  Enabled: true
-
-RSpec/SubjectDeclaration:
-  Enabled: true
-
-RSpec/FactoryBot/SyntaxMethods:
-  Enabled: true
-
-RSpec/BeEq:
-  Enabled: true
-
-RSpec/BeNil:
-  Enabled: true
 
 RSpec/VerifiedDoubleReference:
   Enabled: false

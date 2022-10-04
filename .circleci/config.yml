@@ -115,7 +115,7 @@ jobs:
       - checkout
       - <<: *use_compatible_gemspec
       - ruby/install-deps:
-          bundler-version: "2.3.19"
+          bundler-version: "2.3.22"
           with-cache: false
           path: './vendor/custom_bundle'
       - run:

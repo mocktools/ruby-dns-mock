@@ -7,6 +7,7 @@
 [![Downloads](https://img.shields.io/gem/dt/dns_mock.svg?colorA=004d99&colorB=0073e6)](https://rubygems.org/gems/dns_mock)
 [![In Awesome Ruby](https://raw.githubusercontent.com/sindresorhus/awesome/main/media/mentioned-badge.svg)](https://github.com/markets/awesome-ruby)
 [![GitHub](https://img.shields.io/github/license/mocktools/ruby-dns-mock)](LICENSE.txt)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmocktools%2Fruby-dns-mock.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmocktools%2Fruby-dns-mock?ref=badge_shield)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
 
 💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.

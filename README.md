@@ -8,6 +8,7 @@
 [![In Awesome Ruby](https://raw.githubusercontent.com/sindresorhus/awesome/main/media/mentioned-badge.svg)](https://github.com/markets/awesome-ruby)
 [![GitHub](https://img.shields.io/github/license/mocktools/ruby-dns-mock)](LICENSE.txt)
 [![Contributor Covenant](https://img.shields.io/badge/Contributor%20Covenant-v1.4%20adopted-ff69b4.svg)](CODE_OF_CONDUCT.md)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmocktools%2Fruby-dns-mock.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmocktools%2Fruby-dns-mock?ref=badge_shield)
 
 💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.
 
@@ -186,6 +187,9 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/mockto
 ## License
 
 The gem is available as open source under the terms of the [MIT License](https://opensource.org/licenses/MIT).
+
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fmocktools%2Fruby-dns-mock.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fmocktools%2Fruby-dns-mock?ref=badge_large)
 
 ## Code of Conduct
 

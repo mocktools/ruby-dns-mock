@@ -1,0 +1,5 @@
+---
+
+exclude_paths:
+  - '.circleci/**/*.rb'
+  - 'spec/dns_mock/record/builder/mx_spec.rb'

@@ -1,3 +1,5 @@
+---
+
 version: 2.1
 
 defaults: &defaults
@@ -6,26 +8,42 @@ defaults: &defaults
     - image: cimg/ruby:<< parameters.ruby-version >>
 
 orbs:
-  ruby: circleci/ruby@1.8.0
+  ruby: circleci/ruby@2.0.0
 
 references:
   restore_bundle_cache: &restore_bundle_cache
     restore_cache:
       keys:
         - ruby-dns-mock-{{ checksum "dns_mock.gemspec" }}
+      paths:
+        - ~/vendor/bundle
 
   bundle_install: &bundle_install
     run:
       name: Installing gems
       command: |
-            bundle config set --local path 'vendor/bundle'
+            bundle config set --local path '~/vendor/bundle'
             bundle install
 
   save_bundle_cache: &save_bundle_cache
     save_cache:
       key: ruby-dns-mock-{{ checksum "dns_mock.gemspec" }}
       paths:
-        - vendor/bundle
+        - ~/vendor/bundle
+
+  install_yamllint: &install_yamllint
+    run:
+      name: Installing Yamllint
+      command: |
+            sudo apt-get update -y
+            sudo apt-get install -y yamllint
+
+  install_lefthook: &install_lefthook
+    run:
+      name: Installing Lefthook
+      command: |
+            curl -1sLf 'https://dl.cloudsmith.io/public/evilmartians/lefthook/setup.deb.sh' | sudo -E bash
+            sudo apt-get install -y lefthook
 
   install_codeclimate_reporter: &install_codeclimate_reporter
     run:
@@ -37,14 +55,12 @@ references:
   use_latest_gemspec: &use_latest_gemspec
     run:
       name: Using latest gemspec
-      command: |
-            cp .circleci/gemspec_latest dns_mock.gemspec
+      command: cp .circleci/gemspecs/latest dns_mock.gemspec
 
   use_compatible_gemspec: &use_compatible_gemspec
     run:
       name: Using compatible gemspec
-      command: |
-            cp .circleci/gemspec_compatible dns_mock.gemspec
+      command: cp .circleci/gemspecs/compatible dns_mock.gemspec
 
 jobs:
   linters-ruby:
@@ -61,12 +77,23 @@ jobs:
       - <<: *restore_bundle_cache
       - <<: *bundle_install
       - <<: *save_bundle_cache
+      - <<: *install_yamllint
+      - <<: *install_lefthook
 
       - run:
-          name: Running Overcommit
+          name: Running code style linters
+          command: lefthook run code-style-linters
+
+      - run:
+          name: Running code performance linters
           command: |
-            bundle exec overcommit -s
-            SKIP=AuthorEmail,AuthorName bundle exec overcommit -r
+                cp .circleci/linter_configs/.fasterer.yml .fasterer.yml
+                lefthook run code-performance-linters
+                rm .fasterer.yml
+
+      - run:
+          name: Running code vulnerability linters
+          command: lefthook run code-vulnerability-linters
 
   tests-ruby:
     parameters:
@@ -109,21 +136,43 @@ jobs:
     parameters:
       ruby-version:
         type: string
-    docker:
-      - image: cimg/ruby:<< parameters.ruby-version >>
+
+    <<: *defaults
+
     steps:
       - checkout
+
       - <<: *use_compatible_gemspec
+
       - ruby/install-deps:
-          bundler-version: "2.3.22"
+          bundler-version: "2.3.26"
           with-cache: false
-          path: './vendor/custom_bundle'
+          path: '~/vendor/custom_bundle'
+
       - run:
           name: Running compatibility tests
           command: bundle exec rspec
 
+  releasing-gem-from-ruby:
+    parameters:
+      ruby-version:
+        type: string
+
+    <<: *defaults
+
+    steps:
+      - checkout
+
+      - add_ssh_keys:
+          fingerprints:
+            - "52:f6:00:b8:8e:08:12:41:61:65:b4:4c:10:93:43:39"
+
+      - run:
+          name: Publishing new release
+          command: ./.circleci/scripts/release.sh
+
 workflows:
-  build_and_test:
+  build_test_deploy:
     jobs:
       - linters-ruby:
           matrix:
@@ -137,3 +186,14 @@ workflows:
           matrix:
             parameters:
               ruby-version: ["2.5", "2.6", "2.7", "3.0"]
+      - releasing-gem-from-ruby:
+          requires:
+            - linters-ruby
+            - tests-ruby
+            - compatibility-ruby
+          matrix:
+            parameters:
+              ruby-version: ["2.5"]
+          filters:
+            branches:
+              only: master

@@ -7,20 +7,10 @@ Gem::Specification.new do |spec|
   spec.version       = DnsMock::VERSION
   spec.authors       = ['Vladislav Trotsenko']
   spec.email         = ['admin@bestweb.com.ua']
-
   spec.summary       = %(dns_mock)
   spec.description   = %(💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.)
-
   spec.homepage      = 'https://github.com/mocktools/ruby-dns-mock'
   spec.license       = 'MIT'
-
-  spec.metadata = {
-    'homepage_uri' => 'https://github.com/mocktools/ruby-dns-mock',
-    'changelog_uri' => 'https://github.com/mocktools/ruby-dns-mock/blob/master/CHANGELOG.md',
-    'source_code_uri' => 'https://github.com/mocktools/ruby-dns-mock',
-    'documentation_uri' => 'https://github.com/mocktools/ruby-dns-mock/blob/master/README.md',
-    'bug_tracker_uri' => 'https://github.com/mocktools/ruby-dns-mock/issues'
-  }
 
   spec.required_ruby_version = '>= 2.5.0'
 
@@ -31,8 +21,8 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 
-  spec.add_development_dependency 'ffaker', '~> 2.21'
-  spec.add_development_dependency 'rake', '~> 13.0', '>= 13.0.6'
-  spec.add_development_dependency 'rspec', '~> 3.11'
-  spec.add_development_dependency 'rspec-dns', '~> 0.1.8'
+  spec.add_development_dependency 'ffaker'
+  spec.add_development_dependency 'rake'
+  spec.add_development_dependency 'rspec'
+  spec.add_development_dependency 'rspec-dns'
 end

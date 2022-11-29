@@ -52,11 +52,15 @@ end
 
 And then execute:
 
-    $ bundle
+```bash
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install dns_mock
+```bash
+gem install dns_mock
+```
 
 ## Usage
 
@@ -181,7 +185,7 @@ DnsMock::TestFramework::RSpec::Interface.clear_server! # stops and clears curren
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/mocktools/ruby-dns-mock. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Please check the [open tickets](https://github.com/mocktools/ruby-dns-mock/issues). Be sure to follow Contributor Code of Conduct below and our [Contributing Guidelines](CONTRIBUTING.md).
+Bug reports and pull requests are welcome on GitHub at <https://github.com/mocktools/ruby-dns-mock>. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct. Please check the [open tickets](https://github.com/mocktools/ruby-dns-mock/issues). Be sure to follow Contributor Code of Conduct below and our [Contributing Guidelines](CONTRIBUTING.md).
 
 ## License
 

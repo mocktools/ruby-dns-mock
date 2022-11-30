@@ -4,6 +4,12 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ## [1.5.11] - 2022-11-30
 
+### Updated
+
+- Updated releasing script, removed git publisher defining
+
+## [1.5.11] - 2022-11-30
+
 ### Fixed
 
 - Fixed releasing script (publisher git details)

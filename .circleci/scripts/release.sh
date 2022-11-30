@@ -6,8 +6,6 @@ FILE_NAME="gh"
 BUILD_ARCHITECTURE="linux_amd64.deb"
 DELIMETER="_"
 PACKAGE_FILE="$FILE_NAME$DELIMETER$BUILD_ARCHITECTURE"
-PUBLISHER_EMAIL="admin@bestweb.com.ua"
-PUBLISHER_NAME="Vladislav Trotsenko"
 
 gh_cli_latest_release() {
   curl -sL -o /dev/null -w %{url_effective} "$RELEASES_URL/latest" | rev | cut -f1 -d'/'| rev

@@ -2,6 +2,25 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.6] - 2022-11-30
+
+### Added
+
+- Added new bunch of project linters
+- Added auto deploy to RubyGems
+- Added auto creating release notes on GitHub
+
+### Updated
+
+- Updated gemspecs
+- Updated codeclimate/circleci configs
+- Updated gem development dependencies
+- Updated gem version
+
+### Removed
+
+- Removed `overcommit` dependency
+
 ## [1.5.5] - 2022-10-04
 
 ### Updated
@@ -117,7 +136,7 @@ DnsMock.start_server(port: 5300, records: records)
 dig @localhost -p 5300 MX xn--maana-pta.com
 ```
 
-```
+```code
 ; <<>> DiG 9.10.6 <<>> @localhost -p 5300 MX xn--maana-pta.com
 ; (2 servers found)
 ;; global options: +cmd
@@ -235,7 +254,7 @@ DnsMock.start_server(records: records)
 dig @localhost -p 5300 MX example.com
 ```
 
-```
+```code
 ; <<>> DiG 9.10.6 <<>> @localhost -p 5300 MX example.com
 
 ;; ANSWER SECTION:
@@ -300,7 +319,7 @@ DnsMock.start_server(port: 5300)
 dig @localhost -p 5300 A example.com
 ```
 
-```
+```code
 ; <<>> DiG 9.10.6 <<>> @localhost -p 5300 A example.com
 ;; Got answer:
 ;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 38632
@@ -360,7 +379,7 @@ DnsMock.start_server(records: records)
 dig @localhost -p 5300 -x 1.2.3.4
 ```
 
-```
+```code
 ; <<>> DiG 9.10.6 <<>> @localhost -p 5300 -x 1.1.1.1
 ; (2 servers found)
 

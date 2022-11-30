@@ -39,8 +39,8 @@ release_to_rubygems() {
   echo "Setting RubyGems publisher credentials..."
   ./.circleci/scripts/set_publisher_credentials.sh
   echo "Preparation for release..."
-  git config --global user.email ${PUBLISHER_EMAIL}
-  git config --global user.name ${PUBLISHER_NAME} 
+  git config --global user.email "${PUBLISHER_EMAIL}"
+  git config --global user.name "${PUBLISHER_NAME}"
   git stash
   git checkout develop
   gem install yard gem-ctags

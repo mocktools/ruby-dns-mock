@@ -38,9 +38,13 @@ is_an_existing_github_release() {
 release_to_rubygems() {
   echo "Setting RubyGems publisher credentials..."
   ./.circleci/scripts/set_publisher_credentials.sh
-  echo "Publishing new gem release to RubyGems..."
+  echo "Preparation for release..."
   git stash
   git checkout develop
+  echo "Installing dependencies..."
+  gem install yard gem-ctags
+  bundle install
+  echo "Publishing new gem release to RubyGems..."
   rake release
 }
 

@@ -6,6 +6,8 @@ FILE_NAME="gh"
 BUILD_ARCHITECTURE="linux_amd64.deb"
 DELIMETER="_"
 PACKAGE_FILE="$FILE_NAME$DELIMETER$BUILD_ARCHITECTURE"
+PUBLISHER_EMAIL="admin@bestweb.com.ua"
+PUBLISHER_NAME="Vladislav Trotsenko"
 
 gh_cli_latest_release() {
   curl -sL -o /dev/null -w %{url_effective} "$RELEASES_URL/latest" | rev | cut -f1 -d'/'| rev
@@ -39,8 +41,8 @@ release_to_rubygems() {
   echo "Setting RubyGems publisher credentials..."
   ./.circleci/scripts/set_publisher_credentials.sh
   echo "Preparation for release..."
-  git config --global user.email "${PUBLISHER_EMAIL}"
-  git config --global user.name "${PUBLISHER_NAME}"
+  git config --global user.email ${PUBLISHER_EMAIL}
+  git config --global user.name ${PUBLISHER_NAME}
   git stash
   git checkout develop
   gem install yard gem-ctags

@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
 module DnsMock
-  VERSION = '1.5.5'
+  VERSION = '1.5.6'
 end

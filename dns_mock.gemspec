@@ -6,7 +6,7 @@ Gem::Specification.new do |spec|
   spec.name          = 'dns_mock'
   spec.version       = DnsMock::VERSION
   spec.authors       = ['Vladislav Trotsenko']
-  spec.email         = ['admin@bestweb.com.ua']
+  spec.email         = %w[admin@bestweb.com.ua]
 
   spec.summary       = %(dns_mock)
   spec.description   = %(💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.)
@@ -23,12 +23,8 @@ Gem::Specification.new do |spec|
   }
 
   spec.required_ruby_version = '>= 2.5.0'
-
-  spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
-  spec.files         = `git ls-files -z`.split("\x0").select { |f| f.match(%r{^(bin|lib)/|.ruby-version|dns_mock.gemspec|LICENSE}) }
-  spec.bindir        = 'exe'
-  spec.executables   = spec.files.grep(%r{^exe/}) { |f| ::File.basename(f) }
-  spec.require_paths = ['lib']
+  spec.files = `git ls-files -z`.split("\x0").select { |f| f.match(%r{^(bin|lib)/|.ruby-version|dns_mock.gemspec|LICENSE}) }
+  spec.require_paths = %w[lib]
 
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 

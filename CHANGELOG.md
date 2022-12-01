@@ -2,41 +2,18 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.5.11] - 2022-11-30
+## [1.5.13] - 2022-12-01
 
 ### Updated
 
-- Updated releasing script, removed git publisher defining
+- Updated releasing script, gemspecs, linter configs
+- Updated gem version
 
-## [1.5.11] - 2022-11-30
-
-### Fixed
-
-- Fixed releasing script (publisher git details)
-
-## [1.5.10] - 2022-11-30
+## [1.5.7 - 1.5.12] - 2022-11-30
 
 ### Fixed
 
 - Fixed releasing script (publisher git details)
-
-## [1.5.9] - 2022-11-30
-
-### Fixed
-
-- Fixed releasing script (publisher details)
-
-## [1.5.8] - 2022-11-30
-
-### Fixed
-
-- Fixed releasing script (publisher details)
-
-## [1.5.7] - 2022-11-30
-
-### Fixed
-
-- Fixed releasing script
 
 ## [1.5.6] - 2022-11-30
 

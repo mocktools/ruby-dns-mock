@@ -1,14 +1,14 @@
 # !/bin/sh
 set -e
 
-RELEASES_URL="https://github.com/cli/cli/releases"
+GH_CLI_RELEASES_URL="https://github.com/cli/cli/releases"
 FILE_NAME="gh"
 BUILD_ARCHITECTURE="linux_amd64.deb"
 DELIMETER="_"
 PACKAGE_FILE="$FILE_NAME$DELIMETER$BUILD_ARCHITECTURE"
 
 gh_cli_latest_release() {
-  curl -sL -o /dev/null -w %{url_effective} "$RELEASES_URL/latest" | rev | cut -f1 -d'/'| rev
+  curl -sL -o /dev/null -w %{url_effective} "$GH_CLI_RELEASES_URL/latest" | rev | cut -f1 -d'/'| rev
 }
 
 download_gh_cli() {
@@ -17,7 +17,7 @@ download_gh_cli() {
     echo "Unable to get GitHub CLI release." >&2
     exit 1
   }
-  curl -s -L -o "$PACKAGE_FILE" "$RELEASES_URL/download/$VERSION/$FILE_NAME$DELIMETER${VERSION:1}$DELIMETER$BUILD_ARCHITECTURE"
+  curl -s -L -o "$PACKAGE_FILE" "$GH_CLI_RELEASES_URL/download/$VERSION/$FILE_NAME$DELIMETER${VERSION:1}$DELIMETER$BUILD_ARCHITECTURE"
 }
 
 install_gh_cli() {

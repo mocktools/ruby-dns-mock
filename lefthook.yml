@@ -1,3 +1,5 @@
+---
+
 skip_output:
   - meta
 code-style-linters:

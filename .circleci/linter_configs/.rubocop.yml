@@ -56,6 +56,9 @@ Style/ParallelAssignment:
 Style/RescueStandardError:
   Enabled: false
 
+Style/RedundantConstantBase:
+  Enabled: false
+
 # Layout ----------------------------------------------------------------------
 
 Layout/LineLength:

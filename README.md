@@ -30,7 +30,7 @@
 ## Features
 
 - Ability to mimic any DNS records (`A`, `AAAA`, `CNAME`, `MX`, `NS`, `PTR`, `SOA` and `TXT`)
-- Automatically converts hostnames to RDNS/[Punycode](https://en.wikipedia.org/wiki/Punycode) representation
+- Automatically converts host names to RDNS/[Punycode](https://en.wikipedia.org/wiki/Punycode) representation
 - Lightweight UDP DNS mock server with dynamic/manual port assignment
 - Test framework agnostic (it's PORO, so you can use it outside of `RSpec`, `Test::Unit` or `MiniTest`)
 - Simple and intuitive DSL

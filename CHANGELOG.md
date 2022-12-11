@@ -2,6 +2,27 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.5.14] - 2022-12-11
+
+### Added
+
+- Added [`cspell`](https://cspell.org) linter
+- Added [`markdownlint`](https://github.com/DavidAnson/markdownlint) linter
+- Added [`shellcheck`](https://www.shellcheck.net) linter
+- Added [`yamllint`](https://yamllint.readthedocs.io) linter
+
+### Fixed
+
+- Fixed typos in project's codebase
+- Fixed new project's linter issues
+
+### Updated
+
+- Updated `CircleCI` config
+- Updated [`lefthook`](https://github.com/evilmartians/lefthook) linters aggregator config
+- Updated releasing script, gemspecs
+- Updated gem version
+
 ## [1.5.13] - 2022-12-01
 
 ### Updated
@@ -26,7 +47,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Updated gemspecs
-- Updated codeclimate/circleci configs
+- Updated `codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem version
 
@@ -39,7 +60,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Updated gemspecs
-- Updated codeclimate/circleci configs
+- Updated `codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem version
 
@@ -48,7 +69,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Updated gemspecs
-- Updated rubocop/codeclimate/circleci configs
+- Updated `rubocop`/`codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem version
 
@@ -57,7 +78,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Updated gemspecs
-- Updated codeclimate/circleci configs
+- Updated `codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem version
 
@@ -70,7 +91,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Updated gemspecs
-- Updated codeclimate/circleci configs
+- Updated `codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem version
 
@@ -79,7 +100,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 ### Updated
 
 - Updated native Ruby test environment from 2.5 to 3.1
-- Updated codeclimate/circleci configs
+- Updated `codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem docs, version
 
@@ -91,7 +112,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Updated
 
-- Updated rubocop/codeclimate/circleci configs
+- Updated `rubocop`/`codeclimate`/`circleci` configs
 - Updated gem development dependencies
 - Updated gem docs, version
 
@@ -131,7 +152,7 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 
 ### Added
 
-- Added ability to use internationalized hostnames. All hostnames in UTF-8 will be represented as [Punycode](https://en.wikipedia.org/wiki/Punycode)
+- Added ability to use internationalized host names. All host names in UTF-8 will be represented as [Punycode](https://en.wikipedia.org/wiki/Punycode)
 - Added `simpleidn` as runtime dependency
 - Added `DnsMock::Representer::Punycode`, tests
 
@@ -161,10 +182,10 @@ dig @localhost -p 5300 MX xn--maana-pta.com
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4096
 ;; QUESTION SECTION:
-;xn--maana-pta.com.		IN	MX
+;xn--maana-pta.com. IN MX
 
 ;; ANSWER SECTION:
-xn--maana-pta.com.	1	IN	MX	10 xn--msletras-8ya.xn--maana-pta.com.
+xn--maana-pta.com. 1 IN MX 10 xn--msletras-8ya.xn--maana-pta.com.
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#5300(127.0.0.1)
@@ -191,7 +212,7 @@ xn--maana-pta.com.	1	IN	MX	10 xn--msletras-8ya.xn--maana-pta.com.
 ### Changed
 
 - Updated gem development dependencies
-- Updated rubocop/codeclimate config
+- Updated `rubocop`/`codeclimate` config
 - Updated gem documentation, version
 
 ## [1.3.0] - 2021-06-14
@@ -219,29 +240,29 @@ xn--maana-pta.com.	1	IN	MX	10 xn--msletras-8ya.xn--maana-pta.com.
 ### Changed
 
 - Updated gem development dependencies
-- Updated CircleCI config
+- Updated `circleci` config
 
 ## [1.2.3] - 2021-05-11
 
 ### Changed
 
 - Updated gem development dependencies
-- Updated CircleCI config
+- Updated `circleci` config
 
 ## [1.2.2] - 2021-05-06
 
 ### Changed
 
 - Updated gem development dependencies
-- Updated rubocop/codeclimate config
-- Updated CircleCI config
+- Updated `rubocop`/`codeclimate` config
+- Updated `circleci` config
 
 ## [1.2.1] - 2021-03-23
 
 ### Changed
 
 - Updated gem development dependencies
-- Updated rubocop/codeclimate config
+- Updated `rubocop`/`codeclimate` config
 - Updated gem documentation
 - Updated tests
 
@@ -271,10 +292,10 @@ dig @localhost -p 5300 MX example.com
 ; <<>> DiG 9.10.6 <<>> @localhost -p 5300 MX example.com
 
 ;; ANSWER SECTION:
-example.com.		1	IN	MX	0 .
-example.com.		1	IN	MX	10 mx1.domain.com.
-example.com.		1	IN	MX	10 mx2.domain.com.
-example.com.		1	IN	MX	40 mx3.domain.com.
+example.com. 1 IN MX 0 .
+example.com. 1 IN MX 10 mx1.domain.com.
+example.com. 1 IN MX 10 mx2.domain.com.
+example.com. 1 IN MX 40 mx3.domain.com.
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#5300(127.0.0.1)
@@ -342,7 +363,7 @@ dig @localhost -p 5300 A example.com
 ;; OPT PSEUDOSECTION:
 ; EDNS: version: 0, flags:; udp: 4096
 ;; QUESTION SECTION:
-;example.com.			IN	A
+;example.com. IN A
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#5300(127.0.0.1)
@@ -368,7 +389,7 @@ DnsMock.start_server(exception_if_not_found: true)
 
 ### Fixed
 
-- RDNS lookup representatin for IP address in PTR record feature.
+- RDNS lookup representation for IP address in PTR record feature.
 
 ## [0.2.0] - 2021-01-26
 
@@ -397,8 +418,8 @@ dig @localhost -p 5300 -x 1.2.3.4
 ; (2 servers found)
 
 ;; ANSWER SECTION:
-4.3.2.1.in-addr.arpa.	1	IN	PTR	domain_1.com.
-4.3.2.1.in-addr.arpa.	1	IN	PTR	domain_2.com.
+4.3.2.1.in-addr.arpa. 1 IN PTR domain_1.com.
+4.3.2.1.in-addr.arpa. 1 IN PTR domain_2.com.
 
 ;; Query time: 0 msec
 ;; SERVER: 127.0.0.1#5300(127.0.0.1)

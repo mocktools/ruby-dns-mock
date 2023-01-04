@@ -8,7 +8,7 @@ get_current_gem_version() {
 }
 
 latest_changelog_tag() {
-  grep -Po "(?<=\#\# \[)[0-9]+\.[0-9]+\.[0-9]+?(?=\])" "$changelog" | cut -b 1-100 | head -n 1
+  grep -Po "(?<=\#\# \[)[0-9]+\.[0-9]+\.[0-9]+?(?=\])" "$changelog" | head -n 1
 }
 
 current_gem_version="$(get_current_gem_version)"

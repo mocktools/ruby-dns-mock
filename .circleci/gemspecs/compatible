@@ -19,6 +19,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
 
   spec.add_development_dependency 'ffaker'
+  spec.add_development_dependency 'net-ftp' if ::Gem::Version.new(::RUBY_VERSION) >= ::Gem::Version.new('3.1.0')
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
   spec.add_development_dependency 'rspec-dns'

@@ -35,7 +35,7 @@ module DnsMock
       begin
         loop do
           packet, addr = socket.recvfrom(DnsMock::Server::PACKET_MAX_BYTES_SIZE)
-          break if packet.size.zero?
+          break if packet.empty?
 
           address, port = addr.values_at(3, 1)
           socket.send(DnsMock::Response::Message.new(packet, records, exception_if_not_found).as_binary_string, 0, address, port)

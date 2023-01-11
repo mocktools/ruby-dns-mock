@@ -1,5 +1,6 @@
 ---
 
+no_tty: true
 skip_output:
   - meta
 
@@ -31,3 +32,8 @@ code-documentation-linters:
       run: cspell-cli lint -c '.circleci/linter_configs/.cspell.yml' '**/*.{txt,md}'
     markdownlint:
       run: markdownlint -c '.circleci/linter_configs/.markdownlint.yml' '**/*.md'
+
+release-linters:
+  commands:
+    changeloglint:
+      run: .circleci/scripts/changeloglint.sh

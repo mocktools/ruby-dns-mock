@@ -11,25 +11,12 @@ orbs:
   ruby: circleci/ruby@2.0.0
 
 references:
-  restore_bundle_cache: &restore_bundle_cache
-    restore_cache:
-      keys:
-        - ruby-dns-mock-{{ checksum "dns_mock.gemspec" }}
-      paths:
-        - ~/vendor/bundle
-
   bundle_install: &bundle_install
     run:
       name: Installing gems
       command: |
             bundle config set --local path '~/vendor/bundle'
             bundle install
-
-  save_bundle_cache: &save_bundle_cache
-    save_cache:
-      key: ruby-dns-mock-{{ checksum "dns_mock.gemspec" }}
-      paths:
-        - ~/vendor/bundle
 
   install_linters: &install_linters
     run:
@@ -48,6 +35,11 @@ references:
       command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
             chmod +x ./cc-test-reporter
+
+  use_latest_bundler: &use_latest_bundler
+    run:
+      name: Using latest bundler
+      command: gem install bundler
 
   use_latest_gemspec: &use_latest_gemspec
     run:
@@ -70,10 +62,9 @@ jobs:
     steps:
       - checkout
 
+      - <<: *use_latest_bundler
       - <<: *use_latest_gemspec
-      - <<: *restore_bundle_cache
       - <<: *bundle_install
-      - <<: *save_bundle_cache
       - <<: *install_linters
 
       - run:
@@ -106,10 +97,9 @@ jobs:
     steps:
       - checkout
 
+      - <<: *use_latest_bundler
       - <<: *use_latest_gemspec
-      - <<: *restore_bundle_cache
       - <<: *bundle_install
-      - <<: *save_bundle_cache
       - <<: *install_codeclimate_reporter
 
       - run:

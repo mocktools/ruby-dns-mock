@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do
+RSpec.describe DnsMock::RspecHelper::ContextGenerator, type: :helper do
   describe 'defined constants' do
     it { expect(described_class).to be_const_defined(:NON_ASCII_WORDS) }
   end

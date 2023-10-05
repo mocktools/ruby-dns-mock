@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::ServerHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::RspecHelper::Server, type: :helper do
   describe '#start_random_server' do
     let(:server_instance) { instance_double('DnsMockServer') }
 

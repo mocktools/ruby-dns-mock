@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require_relative './interface'
+require_relative 'interface'
 
 module DnsMock
   module TestFramework

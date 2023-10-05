@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::RspecHelper::RecordsDictionary, type: :helper do
   describe '#create_records_dictionary' do
     subject(:records_dictionary) { create_records_dictionary(hostname, *options) }
 
@@ -19,7 +19,7 @@ RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disa
       subject(:records_dictionary) { create_records_dictionary }
 
       it 'returns records dictionary with random hostname and records' do
-        expect(DnsMock::ContextGeneratorHelper).to receive(:random_hostname).and_call_original
+        expect(DnsMock::RspecHelper::ContextGenerator).to receive(:random_hostname).and_call_original
         expect(records_dictionary).to be_an_instance_of(::Hash)
       end
     end

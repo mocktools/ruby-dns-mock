@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::DnsMessageHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::RspecHelper::DnsMessage, type: :helper do
   describe '#create_request_binary_dns_message' do
     subject(:request_binary_dns_message) { create_request_binary_dns_message(hostname, record_type) }
 

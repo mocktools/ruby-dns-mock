@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::PortInUseHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::RspecHelper::PortInUse, type: :helper do
   let(:port_number) { 49_978 }
 
   describe '#udp_service' do
     context 'when port number is free' do
       it 'has the same port number' do
-        expect(udp_service(port_number)).to be_an_instance_of(DnsMock::PortInUseHelper::UdpService)
+        expect(udp_service(port_number)).to be_an_instance_of(DnsMock::RspecHelper::PortInUse::UdpService)
         expect(udp_service.port).to eq(port_number)
       end
 
@@ -34,7 +34,7 @@ RSpec.describe DnsMock::PortInUseHelper, type: :helper do # rubocop:disable RSpe
   describe '#tcp_service' do
     context 'when port number is free' do
       it 'has the same port number' do
-        expect(tcp_service(port_number)).to be_an_instance_of(DnsMock::PortInUseHelper::TcpService)
+        expect(tcp_service(port_number)).to be_an_instance_of(DnsMock::RspecHelper::PortInUse::TcpService)
         expect(tcp_service.port).to eq(port_number)
       end
 

@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::PortInUseHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::PortInUseHelper, type: :helper do
   let(:port_number) { 49_978 }
 
   describe '#udp_service' do

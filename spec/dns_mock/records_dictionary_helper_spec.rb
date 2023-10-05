@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::RecordsDictionaryHelper, type: :helper do
   describe '#create_records_dictionary' do
     subject(:records_dictionary) { create_records_dictionary(hostname, *options) }
 

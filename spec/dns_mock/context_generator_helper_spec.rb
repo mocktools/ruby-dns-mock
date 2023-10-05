@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do # rubocop:disable RSpec/FilePath
+RSpec.describe DnsMock::ContextGeneratorHelper, type: :helper do
   describe 'defined constants' do
     it { expect(described_class).to be_const_defined(:NON_ASCII_WORDS) }
   end

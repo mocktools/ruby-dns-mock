@@ -61,6 +61,14 @@ module DnsMock
                 expire: 604_800,
                 minimum: 3_600
               }
+            ],
+            srv: [
+              {
+                priority: 0,
+                weight: 10,
+                port: 5_060,
+                target: random_hostname_by_ascii(hostname)
+              }
             ]
           }.slice(*(records.empty? ? DnsMock::AVAILABLE_DNS_RECORD_TYPES : records))
         }

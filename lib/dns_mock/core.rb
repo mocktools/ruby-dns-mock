@@ -4,7 +4,7 @@ require 'resolv'
 require 'socket'
 
 module DnsMock
-  AVAILABLE_DNS_RECORD_TYPES = %i[a aaaa cname mx ns ptr soa txt].freeze
+  AVAILABLE_DNS_RECORD_TYPES = %i[a aaaa cname mx ns ptr soa srv txt].freeze
 
   module Error
     require_relative '../dns_mock/error/argument_type'
@@ -33,6 +33,7 @@ module DnsMock
       require_relative '../dns_mock/record/factory/ns'
       require_relative '../dns_mock/record/factory/ptr'
       require_relative '../dns_mock/record/factory/soa'
+      require_relative '../dns_mock/record/factory/srv'
       require_relative '../dns_mock/record/factory/txt'
     end
   end
@@ -47,6 +48,7 @@ module DnsMock
       require_relative '../dns_mock/record/builder/ns'
       require_relative '../dns_mock/record/builder/ptr'
       require_relative '../dns_mock/record/builder/soa'
+      require_relative '../dns_mock/record/builder/srv'
       require_relative '../dns_mock/record/builder/txt'
     end
   end

@@ -15,6 +15,7 @@ module DnsMock
           [DnsMock::Record::Builder::Ns, DnsMock::Record::Factory::Ns, ::Array],
           [DnsMock::Record::Builder::Ptr, DnsMock::Record::Factory::Ptr, ::Array],
           [DnsMock::Record::Builder::Soa, DnsMock::Record::Factory::Soa, ::Array],
+          [DnsMock::Record::Builder::Srv, DnsMock::Record::Factory::Srv, ::Array],
           [DnsMock::Record::Builder::Txt, DnsMock::Record::Factory::Txt, ::Array]
         ]
       ).to_h.freeze

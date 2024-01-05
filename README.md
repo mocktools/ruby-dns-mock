@@ -88,6 +88,16 @@ records = {
   },
   '1.2.3.4' => { # You can define RDNS host address without lookup prefix. It will be converted to 4.3.2.1.in-addr.arpa automatically
     ptr: %w[domain_1.com domain_2.com]
+  },
+  '_sip._tcp.example.com' => { # Please use {_service._proto.domain} pattern to follow the valid RFC-2782 SRV host pattern representation
+    srv: [
+      {
+        priority: 0,
+        weight: 10,
+        port: 5_060,
+        target: 'domain.com'
+      }
+    ]
   }
 }
 

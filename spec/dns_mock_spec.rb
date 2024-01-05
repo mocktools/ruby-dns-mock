@@ -173,6 +173,27 @@ RSpec.describe DnsMock do
           .and_minimum(soa_record[:minimum])
           .config(**rspec_dns_config)
       end
+
+      it 'returns predefined SRV record' do
+        srv_record = records_by_domain[:srv].first
+
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_priority(srv_record[:priority])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_weight(srv_record[:weight])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_port(srv_record[:port])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_target(srv_record[:target])
+          .config(**rspec_dns_config)
+      end
     end
 
     context 'when internationalized records' do
@@ -267,6 +288,27 @@ RSpec.describe DnsMock do
         expect(domain).to have_dns
           .with_type('SOA')
           .and_minimum(soa_record[:minimum])
+          .config(**rspec_dns_config)
+      end
+
+      it 'returns predefined SRV record' do
+        srv_record = records_by_domain[:srv].first
+
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_priority(srv_record[:priority])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_weight(srv_record[:weight])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_port(srv_record[:port])
+          .config(**rspec_dns_config)
+        expect(domain).to have_dns
+          .with_type('SRV')
+          .and_target(to_punycode_hostname(srv_record[:target]))
           .config(**rspec_dns_config)
       end
     end

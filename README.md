@@ -29,7 +29,7 @@
 
 ## Features
 
-- Ability to mimic any DNS records (`A`, `AAAA`, `CNAME`, `MX`, `NS`, `PTR`, `SOA` and `TXT`)
+- Ability to mimic any DNS records (`A`, `AAAA`, `CNAME`, `MX`, `NS`, `PTR`, `SOA`, `SRV` and `TXT`)
 - Automatically converts host names to RDNS/[Punycode](https://en.wikipedia.org/wiki/Punycode) representation
 - Lightweight UDP DNS mock server with dynamic/manual port assignment
 - Test framework agnostic (it's PORO, so you can use it outside of `RSpec`, `Test::Unit` or `MiniTest`)
@@ -66,6 +66,7 @@ gem install dns_mock
 
 ```ruby
 # Example of mocked DNS records, please follow this data structure
+
 records = {
   'example.com' => {
     a: %w[1.1.1.1 2.2.2.2],
@@ -137,6 +138,7 @@ Require this either in your Gemfile or in RSpec's support scripts. So either:
 
 ```ruby
 # Gemfile
+
 group :test do
   gem 'rspec'
   gem 'dns_mock', require: 'dns_mock/test_framework/rspec'
@@ -147,6 +149,7 @@ or
 
 ```ruby
 # spec/support/config/dns_mock.rb
+
 require 'dns_mock/test_framework/rspec'
 ```
 
@@ -156,13 +159,15 @@ Just add `DnsMock::TestFramework::RSpec::Helper` if you wanna use shortcut `dns_
 
 ```ruby
 # spec/support/config/dns_mock.rb
+
 RSpec.configure do |config|
   config.include DnsMock::TestFramework::RSpec::Helper
 end
 ```
 
 ```ruby
-# your awesome first_a_record_spec.rb
+# Your awesome first_a_record_spec.rb
+
 RSpec.describe FirstARecord do
   subject(:service) do
     described_class.call(

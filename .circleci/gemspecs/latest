@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler-audit', '~> 0.9.1'
   spec.add_development_dependency 'fasterer', '~> 0.11.0'
   spec.add_development_dependency 'ffaker', '~> 2.23'
-  spec.add_development_dependency 'net-ftp', '~> 0.3.3'
+  spec.add_development_dependency 'net-ftp', '~> 0.3.4'
   spec.add_development_dependency 'pry-byebug', '~> 3.10', '>= 3.10.1'
   spec.add_development_dependency 'rake', '~> 13.1'
   spec.add_development_dependency 'reek', '~> 6.2'
@@ -29,6 +29,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec-dns', '~> 0.1.8'
   spec.add_development_dependency 'rubocop', '~> 1.59'
   spec.add_development_dependency 'rubocop-performance', '~> 1.20', '>= 1.20.1'
-  spec.add_development_dependency 'rubocop-rspec', '~> 2.25'
+  spec.add_development_dependency 'rubocop-rspec', '~> 2.26', '>= 2.26.1'
   spec.add_development_dependency 'simplecov', '~> 0.22.0'
 end

@@ -7,7 +7,7 @@ Gem::Specification.new do |spec|
   spec.version       = DnsMock::VERSION
   spec.authors       = ['Vladislav Trotsenko']
   spec.email         = %w[admin@bestweb.com.ua]
-  spec.summary       = %(dns_mock)
+  spec.summary       = %(💎 Ruby DNS mock. Mimic any DNS records for your test environment)
   spec.description   = %(💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.)
   spec.homepage      = 'https://github.com/mocktools/ruby-dns-mock'
   spec.license       = 'MIT'
@@ -24,11 +24,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'net-ftp', '~> 0.3.4'
   spec.add_development_dependency 'pry-byebug', '~> 3.10', '>= 3.10.1'
   spec.add_development_dependency 'rake', '~> 13.1'
-  spec.add_development_dependency 'reek', '~> 6.2'
+  spec.add_development_dependency 'reek', '~> 6.3'
   spec.add_development_dependency 'rspec', '~> 3.12'
   spec.add_development_dependency 'rspec-dns', '~> 0.1.8'
-  spec.add_development_dependency 'rubocop', '~> 1.59'
-  spec.add_development_dependency 'rubocop-performance', '~> 1.20', '>= 1.20.1'
+  spec.add_development_dependency 'rubocop', '~> 1.60', '>= 1.60.2'
+  spec.add_development_dependency 'rubocop-performance', '~> 1.20', '>= 1.20.2'
   spec.add_development_dependency 'rubocop-rspec', '~> 2.26', '>= 2.26.1'
   spec.add_development_dependency 'simplecov', '~> 0.22.0'
 end

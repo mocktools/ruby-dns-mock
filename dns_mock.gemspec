@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Vladislav Trotsenko']
   spec.email         = %w[admin@bestweb.com.ua]
 
-  spec.summary       = %(dns_mock)
+  spec.summary       = %(💎 Ruby DNS mock. Mimic any DNS records for your test environment)
   spec.description   = %(💎 Ruby DNS mock. Mimic any DNS records for your test environment and even more.)
 
   spec.homepage      = 'https://github.com/mocktools/ruby-dns-mock'

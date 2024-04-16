@@ -74,8 +74,7 @@ RSpec.describe DnsMock do
     let(:port) { 5300 }
     let(:ip_address) { random_ip_v4_address }
     let(:rspec_dns_config) { { nameserver: 'localhost', port: port } }
-
-    before { described_class.start_server(records: records, port: port) }
+    let!(:server_instance) { described_class.start_server(records: records, port: port) }
 
     after { stop_all_running_servers }
 
@@ -321,6 +320,31 @@ RSpec.describe DnsMock do
           .with_type('A')
           .and_address(random_ip_v4_address)
           .config(**rspec_dns_config)
+      end
+    end
+
+    describe 'reading exchanged messages' do
+      let(:domain) { random_hostname }
+      let(:records) { create_records(domain) }
+
+      it 'returns the question and answer' do
+        expect(domain).to(have_dns.with_type('A').config(**rspec_dns_config))
+
+        messages = server_instance.messages
+        expect(messages.length).to(eq(1))
+        resolved = messages[0].resolved
+
+        expect(resolved.length).to(eq(1))
+        lookup = resolved[0]
+
+        host_records = records.fetch(domain)
+        dns_name = Resolv::DNS::Name.create("#{domain}.")
+
+        expect(lookup.question).to(eq([dns_name, Resolv::DNS::Resource::IN::A]))
+
+        expect(lookup.answer).to(eq(host_records.fetch(:a).map do |ip|
+          [dns_name, 1, Resolv::DNS::Resource::IN::A.new(ip)]
+        end))
       end
     end
   end

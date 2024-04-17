@@ -3,9 +3,7 @@
 module DnsMock
   module Response
     class Message
-      Lookup = ::Struct.new(:question, :answer, keyword_init: true)
-
-      attr_reader :lookup
+      attr_reader :dns_message
 
       def initialize(
         packet,
@@ -27,16 +25,11 @@ module DnsMock
 
       private
 
-      attr_reader :dns_answer, :dns_message
-      attr_writer :lookup
+      attr_reader :dns_answer
 
       def compose_answer
         dns_message.each_question do |hostname, record_type|
-          self.lookup = DnsMock::Response::Message::Lookup.new(
-            question: [hostname, record_type],
-            answer: dns_answer.build(hostname, record_type)
-          )
-          dns_message.answer.push(*lookup.answer)
+          dns_message.answer.push(*dns_answer.build(hostname, record_type))
         end
       end
     end

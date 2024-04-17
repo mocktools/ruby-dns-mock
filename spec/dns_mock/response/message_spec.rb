@@ -2,7 +2,7 @@
 
 RSpec.describe DnsMock::Response::Message do
   describe '#as_binary_string' do
-    subject(:message_instance) { described_class.new(packet, records, exception_if_not_found) }
+    subject(:binary_dns_message) { described_class.new(packet, records, exception_if_not_found).as_binary_string }
 
     let(:hostname) { random_hostname }
     let(:packet) { create_request_binary_dns_message(hostname, record_type) }
@@ -15,11 +15,7 @@ RSpec.describe DnsMock::Response::Message do
 
         it "consists collection of #{type} records in dns answer section" do
           records_by_record_type = records.dig(hostname, record_type)
-          expect(message_instance.as_binary_string).to have_answer_section_with(hostname, records_by_record_type)
-          lookup = message_instance.lookup
-          expect(lookup.question[0].to_s).to eq(hostname)
-          expect(lookup.question[1].to_s).to match(/\A.+::#{type}/i)
-          expect(lookup.answer[0][2]).to eq(records.values[0][type][0])
+          expect(binary_dns_message).to have_answer_section_with(hostname, records_by_record_type)
         end
       end
     end

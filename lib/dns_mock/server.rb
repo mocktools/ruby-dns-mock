@@ -41,7 +41,7 @@ module DnsMock
           address, port = addr.values_at(3, 1)
           message = DnsMock::Response::Message.new(packet, records, exception_if_not_found)
           socket.send(message.as_binary_string, 0, address, port)
-          messages.push(message.lookup)
+          messages.push(message.dns_message)
         end
       ensure
         socket.close

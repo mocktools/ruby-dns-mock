@@ -324,7 +324,9 @@ RSpec.describe DnsMock do
           .with_type('A')
           .and_address(random_ip_v4_address)
           .config(**rspec_dns_config)
-        expect(server_instance.messages.first.answer).to be_empty
+        dns_message = server_instance.messages.first
+        expect(dns_message).to be_an_instance_of(::Resolv::DNS::Message)
+        expect(dns_message.answer).to be_empty
       end
     end
   end

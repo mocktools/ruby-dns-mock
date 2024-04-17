@@ -3,7 +3,9 @@
 module DnsMock
   module Response
     class Message
-      Lookup = Struct.new(:question, :answer)
+      Lookup = ::Struct.new(:question, :answer, keyword_init: true)
+
+      attr_reader :lookup
 
       def initialize(
         packet,
@@ -14,26 +16,29 @@ module DnsMock
       )
         @dns_answer = dns_answer.new(records, exception_if_not_found)
         @dns_message = dns_message.decode(packet)
-        @resolved = nil
-      end
-
-      def resolved
-        @resolved ||= dns_message.question.map do |hostname, record_type|
-          answer = dns_answer.build(hostname, record_type)
-          dns_message.answer.push(*answer)
-
-          Lookup.new(question: [hostname, record_type], answer: answer)
-        end
       end
 
       def as_binary_string
-        resolved
-        dns_message.encode
+        @as_binary_string ||= begin
+          compose_answer
+          dns_message.encode
+        end
       end
 
       private
 
       attr_reader :dns_answer, :dns_message
+      attr_writer :lookup
+
+      def compose_answer
+        dns_message.each_question do |hostname, record_type|
+          self.lookup = DnsMock::Response::Message::Lookup.new(
+            question: [hostname, record_type],
+            answer: dns_answer.build(hostname, record_type)
+          )
+          dns_message.answer.push(*lookup.answer)
+        end
+      end
     end
   end
 end

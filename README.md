@@ -115,12 +115,19 @@ dns_mock_server = DnsMock.start_server(records: records) # => DnsMock::Server in
 # returns current dns mock server port
 dns_mock_server.port # => 49322
 
+# returns current collected server lookup messsages
+# represented as array of DnsMock::Response::Message::Lookup instances
+dns_mock_server.messages # => [#<struct DnsMock::Response::Message::Lookup>]
+
 # interface to setup mock records.
 # Available only in case when server mocked records is empty
 dns_mock_server.assign_mocks(records) # => true/nil
 
 # interface to reset current mocked records
 dns_mock_server.reset_mocks! # => true
+
+# interface to clear collected lookup messages
+dns_mock_server.clear_messages! # => true
 
 # interface to stop current dns mock server
 dns_mock_server.stop! # => true

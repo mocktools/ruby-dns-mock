@@ -29,7 +29,7 @@ module DnsMock
       prepare_server_thread
     end
 
-    def run
+    def run # rubocop:disable Metrics/AbcSize
       prepare_socket_for_session
       update_server_port
 
@@ -40,8 +40,8 @@ module DnsMock
 
           address, port = addr.values_at(3, 1)
           message = DnsMock::Response::Message.new(packet, records, exception_if_not_found)
-          @messages.push(message)
           socket.send(message.as_binary_string, 0, address, port)
+          messages.push(message.lookup)
         end
       ensure
         socket.close
@@ -54,6 +54,10 @@ module DnsMock
 
     def reset_mocks!
       records.clear.empty?
+    end
+
+    def clear_messages!
+      !!messages.clear
     end
 
     def without_mocks?

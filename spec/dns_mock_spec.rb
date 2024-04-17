@@ -171,6 +171,7 @@ RSpec.describe DnsMock do
           .with_type('SOA')
           .and_minimum(soa_record[:minimum])
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(7)
       end
 
       it 'returns predefined SRV record' do
@@ -192,6 +193,7 @@ RSpec.describe DnsMock do
           .with_type('SRV')
           .and_target(srv_record[:target])
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(4)
       end
     end
 
@@ -288,6 +290,7 @@ RSpec.describe DnsMock do
           .with_type('SOA')
           .and_minimum(soa_record[:minimum])
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(7)
       end
 
       it 'returns predefined SRV record' do
@@ -309,6 +312,7 @@ RSpec.describe DnsMock do
           .with_type('SRV')
           .and_target(to_punycode_hostname(srv_record[:target]))
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(4)
       end
     end
 
@@ -320,31 +324,7 @@ RSpec.describe DnsMock do
           .with_type('A')
           .and_address(random_ip_v4_address)
           .config(**rspec_dns_config)
-      end
-    end
-
-    describe 'reading exchanged messages' do
-      let(:domain) { random_hostname }
-      let(:records) { create_records(domain) }
-
-      it 'returns the question and answer' do
-        expect(domain).to(have_dns.with_type('A').config(**rspec_dns_config))
-
-        messages = server_instance.messages
-        expect(messages.length).to(eq(1))
-        resolved = messages[0].resolved
-
-        expect(resolved.length).to(eq(1))
-        lookup = resolved[0]
-
-        host_records = records.fetch(domain)
-        dns_name = Resolv::DNS::Name.create("#{domain}.")
-
-        expect(lookup.question).to(eq([dns_name, Resolv::DNS::Resource::IN::A]))
-
-        expect(lookup.answer).to(eq(host_records.fetch(:a).map do |ip|
-          [dns_name, 1, Resolv::DNS::Resource::IN::A.new(ip)]
-        end))
+        expect(server_instance.messages.first.answer).to be_empty
       end
     end
   end

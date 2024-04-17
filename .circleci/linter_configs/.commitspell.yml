@@ -27,6 +27,7 @@ words:
   - lefthook
   - markdownlint
   - mocktools
+  - mroach
   - mdlrc
   - punycode
   - rubocop

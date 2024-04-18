@@ -74,8 +74,7 @@ RSpec.describe DnsMock do
     let(:port) { 5300 }
     let(:ip_address) { random_ip_v4_address }
     let(:rspec_dns_config) { { nameserver: 'localhost', port: port } }
-
-    before { described_class.start_server(records: records, port: port) }
+    let!(:server_instance) { described_class.start_server(records: records, port: port) }
 
     after { stop_all_running_servers }
 
@@ -172,6 +171,7 @@ RSpec.describe DnsMock do
           .with_type('SOA')
           .and_minimum(soa_record[:minimum])
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(7)
       end
 
       it 'returns predefined SRV record' do
@@ -193,6 +193,7 @@ RSpec.describe DnsMock do
           .with_type('SRV')
           .and_target(srv_record[:target])
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(4)
       end
     end
 
@@ -289,6 +290,7 @@ RSpec.describe DnsMock do
           .with_type('SOA')
           .and_minimum(soa_record[:minimum])
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(7)
       end
 
       it 'returns predefined SRV record' do
@@ -310,6 +312,7 @@ RSpec.describe DnsMock do
           .with_type('SRV')
           .and_target(to_punycode_hostname(srv_record[:target]))
           .config(**rspec_dns_config)
+        expect(server_instance.messages.size).to eq(4)
       end
     end
 
@@ -321,6 +324,9 @@ RSpec.describe DnsMock do
           .with_type('A')
           .and_address(random_ip_v4_address)
           .config(**rspec_dns_config)
+        dns_message = server_instance.messages.first
+        expect(dns_message).to be_an_instance_of(::Resolv::DNS::Message)
+        expect(dns_message.answer).to be_empty
       end
     end
   end

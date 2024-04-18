@@ -9,7 +9,7 @@ module DnsMock
     WARMUP_DELAY = 0.1
     PACKET_MAX_BYTES_SIZE = 65_535
 
-    attr_reader :port
+    attr_reader :port, :messages
 
     def initialize( # rubocop:disable Metrics/ParameterLists
       socket = ::UDPSocket.new,
@@ -25,10 +25,11 @@ module DnsMock
       @records = records_dictionary_builder.call(records || {})
       @port = port || 0
       @exception_if_not_found = exception_if_not_found
+      @messages = []
       prepare_server_thread
     end
 
-    def run
+    def run # rubocop:disable Metrics/AbcSize
       prepare_socket_for_session
       update_server_port
 
@@ -38,7 +39,9 @@ module DnsMock
           break if packet.empty?
 
           address, port = addr.values_at(3, 1)
-          socket.send(DnsMock::Response::Message.new(packet, records, exception_if_not_found).as_binary_string, 0, address, port)
+          message = DnsMock::Response::Message.new(packet, records, exception_if_not_found)
+          socket.send(message.as_binary_string, 0, address, port)
+          messages.push(message.dns_message)
         end
       ensure
         socket.close
@@ -51,6 +54,10 @@ module DnsMock
 
     def reset_mocks!
       records.clear.empty?
+    end
+
+    def clear_messages!
+      !!messages.clear
     end
 
     def without_mocks?

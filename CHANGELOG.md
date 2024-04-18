@@ -2,6 +2,17 @@
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.0] - 2024-04-18
+
+### Added
+
+- Added ability to interact with DNS message question/answer context. Thanks [@mroach](https://github.com/mroach) for feature suggestion and PR
+
+### Updated
+
+- Updated gem documentation
+- Updated gem version
+
 ## [1.6.2] - 2024-01-31
 
 ### Added

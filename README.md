@@ -115,12 +115,19 @@ dns_mock_server = DnsMock.start_server(records: records) # => DnsMock::Server in
 # returns current dns mock server port
 dns_mock_server.port # => 49322
 
+# returns current collected server lookup messsages
+# represented as array of Resolv::DNS::Message instances
+dns_mock_server.messages # => [#<Resolv::DNS::Message>]
+
 # interface to setup mock records.
 # Available only in case when server mocked records is empty
 dns_mock_server.assign_mocks(records) # => true/nil
 
 # interface to reset current mocked records
 dns_mock_server.reset_mocks! # => true
+
+# interface to clear collected lookup messages
+dns_mock_server.clear_messages! # => true
 
 # interface to stop current dns mock server
 dns_mock_server.stop! # => true
@@ -192,10 +199,11 @@ end
 If you won't use `DnsMock::TestFramework::RSpec::Helper` you can use `DnsMock::TestFramework::RSpec::Interface` directly instead:
 
 ```ruby
-DnsMock::TestFramework::RSpec::Interface.start_server  # creates and runs DnsMock server instance
-DnsMock::TestFramework::RSpec::Interface.stop_server!  # stops current DnsMock server instance
-DnsMock::TestFramework::RSpec::Interface.reset_mocks!  # resets mocks in current DnsMock server instance
-DnsMock::TestFramework::RSpec::Interface.clear_server! # stops and clears current DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.start_server    # creates and runs DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.stop_server!    # stops current DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.reset_mocks!    # resets mocks in current DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.clear_messages! # clears collected lookup messages in current DnsMock server instance
+DnsMock::TestFramework::RSpec::Interface.clear_server!   # stops and clears current DnsMock server instance
 ```
 
 ## Contributing

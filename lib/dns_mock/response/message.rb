@@ -3,6 +3,8 @@
 module DnsMock
   module Response
     class Message
+      attr_reader :dns_message
+
       def initialize(
         packet,
         records,
@@ -23,7 +25,7 @@ module DnsMock
 
       private
 
-      attr_reader :dns_answer, :dns_message
+      attr_reader :dns_answer
 
       def compose_answer
         dns_message.each_question do |hostname, record_type|

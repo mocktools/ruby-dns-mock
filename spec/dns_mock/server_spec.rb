@@ -156,6 +156,24 @@ RSpec.describe DnsMock::Server do
     end
   end
 
+  describe '#clear_messages!' do
+    subject(:clear_messages) { server_instance.clear_messages! }
+
+    let(:server_instance) { described_class.new }
+    let(:message) { instance_double('SomeServerMessage') }
+
+    before { server_instance.messages << message }
+
+    it 'erases all server messages' do
+      expect { clear_messages }
+        .to change(server_instance, :messages)
+        .from([message])
+        .to([])
+      expect(clear_messages).to be(true)
+      expect(server_instance.messages).to be_empty
+    end
+  end
+
   describe '#without_mocks?' do
     subject(:without_mocks) { server_instance.without_mocks? }
 

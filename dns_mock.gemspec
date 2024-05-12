@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   spec.files = `git ls-files -z`.split("\x0").select { |f| f.match(%r{^(bin|lib)/|.ruby-version|dns_mock.gemspec|LICENSE}) }
   spec.require_paths = %w[lib]
 
-  spec.add_runtime_dependency 'simpleidn', '~> 0.2.1'
+  spec.add_runtime_dependency 'simpleidn', '~> 0.2.2'
 
   spec.add_development_dependency 'ffaker', ffaker_version
   spec.add_development_dependency 'net-ftp', '~> 0.3.4' if current_ruby_version >= ::Gem::Version.new('3.1.0')

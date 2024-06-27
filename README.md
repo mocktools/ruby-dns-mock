@@ -202,7 +202,6 @@ If you won't use `DnsMock::TestFramework::RSpec::Helper` you can use `DnsMock::T
 DnsMock::TestFramework::RSpec::Interface.start_server    # creates and runs DnsMock server instance
 DnsMock::TestFramework::RSpec::Interface.stop_server!    # stops current DnsMock server instance
 DnsMock::TestFramework::RSpec::Interface.reset_mocks!    # resets mocks in current DnsMock server instance
-DnsMock::TestFramework::RSpec::Interface.clear_messages! # clears collected lookup messages in current DnsMock server instance
 DnsMock::TestFramework::RSpec::Interface.clear_server!   # stops and clears current DnsMock server instance
 ```
 

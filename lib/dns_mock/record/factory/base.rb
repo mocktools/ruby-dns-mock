@@ -36,7 +36,7 @@ module DnsMock
         def instance_params; end
 
         def create
-          self.class.target_class.public_send(:new, *instance_params)
+          self.class.target_class.new(*instance_params)
         rescue => error
           raise DnsMock::Error::RecordContext.new(error.message, record_type)
         end

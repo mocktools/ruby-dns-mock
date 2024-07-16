@@ -91,6 +91,9 @@ Gemspec/RequireMFA:
 Gemspec/DevelopmentDependencies:
   Enabled: false
 
+Gemspec/AddRuntimeDependency:
+  Enabled: false
+
 # Performance -----------------------------------------------------------------
 
 Performance/MethodObjectAsBlock:

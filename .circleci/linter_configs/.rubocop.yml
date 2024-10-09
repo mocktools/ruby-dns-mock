@@ -136,3 +136,6 @@ RSpec/VerifiedDoubleReference:
 
 RSpec/IndexedLet:
   Enabled: false
+
+RSpec/StringAsInstanceDoubleConstant:
+  Enabled: false

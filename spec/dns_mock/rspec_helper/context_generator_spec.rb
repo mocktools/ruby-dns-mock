@@ -122,7 +122,7 @@ RSpec.describe DnsMock::RspecHelper::ContextGenerator, type: :helper do
       end
 
       it 'has DnsMock::AVAILABLE_DNS_RECORD_TYPES as nested key values' do
-        expect(helper[hostname].keys).to include(*options)
+        expect(helper[hostname].keys).to include(*records)
       end
     end
 

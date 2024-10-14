@@ -8,7 +8,7 @@ defaults: &defaults
     - image: cimg/ruby:<< parameters.ruby-version >>
 
 orbs:
-  ruby: circleci/ruby@2.1.1
+  ruby: circleci/ruby@2.2.1
 
 references:
   bundle_install: &bundle_install

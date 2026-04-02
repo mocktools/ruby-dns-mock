@@ -49,7 +49,7 @@ module DnsMock
     end
 
     def assign_mocks(new_records)
-      !!self.records = records_dictionary_builder.call(new_records) if records.empty?
+      !!self.records = records_dictionary_builder.call(new_records)
     end
 
     def reset_mocks!
